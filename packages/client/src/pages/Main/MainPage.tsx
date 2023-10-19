@@ -1,7 +1,12 @@
 import React from 'react'
 
 const MainPage = () => {
-  return <div>MainPage</div>
+  return (
+    <>
+      {' '}
+      Вот тут будет жить ваше приложение :) <div>MainPage</div>
+    </>
+  )
 }
 
 export default MainPage
