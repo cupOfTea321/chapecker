@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import StartScreen from './pages/StartScreen/StartScreen'
 
 function App() {
   useEffect(() => {
@@ -12,7 +14,16 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/start" element={<StartScreen />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  )
 }
 
 export default App
