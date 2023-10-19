@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { routes } from './router/router'
 
 function App() {
   useEffect(() => {
@@ -12,7 +14,17 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          {routes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+        </Routes>
+      </BrowserRouter>
+    </div>
+  )
 }
 
 export default App
