@@ -1,5 +1,10 @@
 import { useEffect } from 'react'
-import './App.css'
+import './App.scss'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { getForumPath } from './routes'
+
+import ForumDashBoard from './pages/forumDashBoard/forums'
+import ForumPage from './components/forum_page'
 
 function App() {
   useEffect(() => {
@@ -12,7 +17,15 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route index path={getForumPath()} element={<ForumDashBoard />} />
+        <Route path="/forum/:userId" element={<ForumPage />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App

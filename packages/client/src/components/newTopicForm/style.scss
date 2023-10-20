@@ -1,0 +1,73 @@
+@import '../../App.scss';
+
+.newTopicForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        @media (min-width: 640px) {
+            width: 50%;
+        }
+    }
+
+    &__input {
+        padding: 10px;
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    &__itemUpload {
+        width: 80%;
+        text-wrap: nowrap;
+
+        @media (min-width: 640px) {
+            width: 70%;
+        }
+
+        @media (min-width: 1020px) {
+            width: 40%;
+        }
+
+        &--ordinar {
+            cursor: pointer;
+            padding: 10px;
+            color: $brigth-chess-square;
+            border-radius: 25px;
+            background-color: $dark-chess-square;
+        }
+    }
+
+    &__topicText {
+        padding: 10px;
+    }
+
+    &__button {
+        width: 70%;
+        text-wrap: nowrap;
+
+        @media (min-width: 640px) {
+            width: 70%;
+        }
+
+        @media (min-width: 1020px) {
+            width: 40%;
+        }
+
+        &--ordinar {
+            border: 0;
+            cursor: pointer;
+            padding: 10px;
+            color: $brigth-chess-square;
+            border-radius: 25px;
+            background-color: $dark-chess-square;
+        }
+    }
+
+}
