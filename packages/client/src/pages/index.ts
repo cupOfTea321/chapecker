@@ -1,6 +1,6 @@
-export { default as Error500 } from './500/Error500'
+export { default as Error500 } from './errors/500/Error500'
 export { default as ProfilePage } from './Profile/ProfilePage'
-export { default as Error404 } from './404/Error404'
+export { default as Error404 } from './errors/404/Error404'
 export { default as EndPage } from './End/EndPage'
 export { default as AuthPage } from './Auth/AuthPage'
 export { default as ForumPage } from './Forum/ForumPage'
