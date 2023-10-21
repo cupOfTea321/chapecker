@@ -1,0 +1,12 @@
+$dark-theme-secondary-main: #555;
+
+.primitive-paper {
+    display: flex;
+    justify-content: center;
+
+    &__content {
+        padding: 16px;
+        background-color: $dark-theme-secondary-main;
+        border-radius: 16px;
+    }
+}
