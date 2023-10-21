@@ -1,4 +1,4 @@
-$dark-theme-secondary-main: #555;
+@use '../../colors.scss';
 
 .primitive-paper {
     display: flex;
@@ -6,7 +6,7 @@ $dark-theme-secondary-main: #555;
 
     &__content {
         padding: 16px;
-        background-color: $dark-theme-secondary-main;
+        background-color: colors.$dark-theme-background-lighter;
         border-radius: 16px;
     }
 }

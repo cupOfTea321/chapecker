@@ -1,7 +1,4 @@
-$dark-theme-primary-main: #7CFC00;
-$dark-theme-primary-darker: #66e000;
-$dark-theme-text-main: #fff;
-$dark-theme-text-shadow: #444;
+@use '../../colors.scss';
 
 .contained-button {
     border: none;
@@ -9,12 +6,12 @@ $dark-theme-text-shadow: #444;
     border-radius: 10px;
     padding: 5px 20px;
     font: inherit;
-    background-color: $dark-theme-primary-main;
-    box-shadow: 0 3px $dark-theme-text-shadow;
-    color: $dark-theme-text-main;
-    text-shadow: 1px 1px $dark-theme-text-shadow;
+    background-color: colors.$primary-main;
+    box-shadow: 0 3px colors.$dark-theme-text-shadow;
+    color: colors.$dark-theme-text-main;
+    text-shadow: 1px 1px colors.$dark-theme-text-shadow;
 
     &:active {
-        background-color: $dark-theme-primary-darker;
+        background-color: colors.$primary-darker;
     }
 }
