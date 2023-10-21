@@ -1,14 +1,19 @@
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import NewTopicForm from '../../components/newTopicForm/newTopicForm'
+import ForumPreviewTable from '../../components/forumPreviewTable/forumPreviewTable'
 
 import bem from 'bem-ts'
 import './style.scss'
 
 import { forumTabs } from './model'
+import { forums, forumsFree } from '../../components/forumPreviewTable/stubs'
 
 const ForumDashboard = () => {
   const cn = bem('forumDashboard')
   const tabsArr = Object.values(forumTabs)
+
+  const mainForums = useMemo(() => forums, [forums])
+  const freeForums = useMemo(() => forumsFree, [forums])
 
   return (
     <div className={cn({ chesBackgrounded: true })}>
@@ -50,8 +55,8 @@ const ForumDashboard = () => {
 
         <div className="content">
           <section>
-            <h2>{forumTabs.allTopics}</h2>
-            <div></div>
+            <ForumPreviewTable forums={mainForums} header="Main" />
+            <ForumPreviewTable forums={freeForums} header="Free discussions" />
           </section>
           <section>
             <h2>{forumTabs.newTopic}</h2>

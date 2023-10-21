@@ -76,7 +76,11 @@ const NewTopicForm = () => {
           placeholder={newTopicFileds.description}
         />
       </label>
-      <button className={cn('button', { ordinar: true })}>Start topic</button>
+      <div className={cn('field')}>
+        <button type="submit" className={cn('button', { ordinar: true })}>
+          Start topic
+        </button>
+      </div>
     </form>
   )
 }

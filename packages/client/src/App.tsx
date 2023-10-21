@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { getForumPath } from './routes'
 
 import ForumDashBoard from './pages/forumDashBoard/forums'
-import ForumPage from './components/forum_page'
+import ForumPage from './components/forum'
 
 function App() {
   useEffect(() => {
