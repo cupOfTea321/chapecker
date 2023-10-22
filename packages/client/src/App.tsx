@@ -1,10 +1,8 @@
 import { useEffect } from 'react'
 import './App.scss'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { getForumPath } from './routes'
-
-import ForumDashBoard from './pages/forumDashBoard/forums'
-import ForumPage from './pages/forumPage/forumPage'
+import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { routes } from './router/router'
 
 function App() {
   useEffect(() => {
@@ -17,14 +15,16 @@ function App() {
 
     fetchServerData()
   }, [])
-
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index path={getForumPath()} element={<ForumDashBoard />} />
-        <Route path="/forum/:id" element={<ForumPage />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          {routes.map(route => (
+            <Route key={route.path} path={route.path} element={route.element} />
+          ))}
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
