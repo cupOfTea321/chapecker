@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { TMessage } from '../../pages/forumPage/model'
+import { TMessage } from '../../pages/forumItemPage/model'
 
 import bem from 'bem-ts'
 import './styles.scss'
