@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { getForumPath } from './routes'
 
 import ForumDashBoard from './pages/forumDashBoard/forums'
-import ForumPage from './components/forum'
+import ForumPage from './pages/forumPage/forumPage'
 
 function App() {
   useEffect(() => {
@@ -22,7 +22,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index path={getForumPath()} element={<ForumDashBoard />} />
-        <Route path="/forum/:userId" element={<ForumPage />} />
+        <Route path="/forum/:id" element={<ForumPage />} />
       </Routes>
     </BrowserRouter>
   )

@@ -51,10 +51,6 @@ $breakpoints: (
                 &:active {
                     outline: 0;
                     color: lighten($dark-chess-square, 15%);
-
-                    svg {
-                        fill: lighten($dark-chess-square, 15%);
-                    }
                 }
             }
 

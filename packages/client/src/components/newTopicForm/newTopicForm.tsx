@@ -39,7 +39,7 @@ const NewTopicForm = () => {
       onSubmit={callbacks.handleStartNewTopic}
       encType="multipart/form-data">
       <label className={cn('field')} htmlFor={newTopicFileds.label}>
-        Topic theme:
+        Topic theme: *
         <input
           type="text"
           name={newTopicFileds.label}
@@ -48,7 +48,10 @@ const NewTopicForm = () => {
           onChange={callbacks.handleLabelInput}
           value={labelValue}
           placeholder={newTopicFileds.label}
+          required
+          maxLength={150}
         />
+        <span>* - max length 150 symbols</span>
       </label>
       <label className={cn('field')} htmlFor={newTopicFileds.media}>
         <span className={cn('itemUpload', { ordinar: true })}>
@@ -76,11 +79,13 @@ const NewTopicForm = () => {
           placeholder={newTopicFileds.description}
         />
       </label>
-      <div className={cn('field')}>
-        <button type="submit" className={cn('button', { ordinar: true })}>
-          Start topic
-        </button>
-      </div>
+      <label className={cn('field')}>
+        <input
+          type="submit"
+          className={cn('button', { ordinar: true })}
+          value="Start topic"
+        />
+      </label>
     </form>
   )
 }

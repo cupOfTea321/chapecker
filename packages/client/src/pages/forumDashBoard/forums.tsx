@@ -19,19 +19,15 @@ const ForumDashboard = () => {
     <div className={cn({ chesBackgrounded: true })}>
       <h1 hidden>Chapeaker forum</h1>
       <div className={cn('container')}>
-        <input
-          hidden
-          type="radio"
-          id={forumTabs.allTopics.split(' ').join('')}
-          name="tab-control"
-          defaultChecked
-        />
-        <input
-          hidden
-          type="radio"
-          id={forumTabs.newTopic.split(' ').join('')}
-          name="tab-control"
-        />
+        {tabsArr.map((tab, i) => (
+          <input
+            hidden
+            type="radio"
+            id={tab.split(' ').join('')}
+            name="tab-control"
+            defaultChecked={i === 0}
+          />
+        ))}
         <ul className={cn('forumNavigationList')}>
           {tabsArr.map(tab => (
             <li

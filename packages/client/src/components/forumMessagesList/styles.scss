@@ -1,0 +1,16 @@
+@import '../../App.scss';
+
+.forumMessages {
+    &__message {
+        padding: 10px 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid $dark-chess-square;
+    }
+
+    &__messageHeader {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        background: $brigth-chess-square;
+    }
+}
