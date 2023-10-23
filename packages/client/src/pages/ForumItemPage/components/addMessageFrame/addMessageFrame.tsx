@@ -1,21 +1,23 @@
-import { memo } from 'react'
+import { FormEvent, memo } from 'react'
 
 import bem from 'bem-ts'
 import './styles.scss'
 
-const AddMessageFrame = ({ onAddMessage }) => {
+type TAddMessageFrameProps = { inputName: string, onAddMessage: (e: FormEvent) => void }
+
+const AddMessageFrame = ({ inputName, onAddMessage }: TAddMessageFrameProps) => {
   const cn = bem('addMessageFrame')
 
   return (
     <div className={cn()}>
       <div>Admin</div>
       <form onSubmit={onAddMessage} className={cn('form')}>
-        <label htmlFor="message" className={cn('label')}>
+        <label htmlFor={inputName} className={cn('label')}>
           <textarea
-            name="forumMessage"
+            name={inputName}
             className={cn('messageText')}
-            title="wrtite message here"
-            id="message"
+            title="Поле для ввода текста сообщения"
+            id={inputName}
             required
             maxLength={450}
           />

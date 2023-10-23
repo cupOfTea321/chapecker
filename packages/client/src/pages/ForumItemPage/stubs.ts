@@ -3,7 +3,7 @@ import { TForum } from './model'
 export const forums: TForum[] = [
   {
     id: '00000000-0000-0000-0000-000000000000',
-    theme: 'Forum rules',
+    theme: 'Правила форума',
     messages: [
       {
         messageId: '1',
@@ -16,7 +16,7 @@ export const forums: TForum[] = [
   },
   {
     id: '00000000-0000-0000-0000-000000000001',
-    theme: 'Game rules',
+    theme: 'Правила игры',
     messages: [
       {
         messageId: '2',
@@ -29,7 +29,7 @@ export const forums: TForum[] = [
   },
   {
     id: '00000000-0000-0000-0000-000000000002',
-    theme: 'Game news',
+    theme: 'Новости',
     messages: [
       {
         messageId: '3',
@@ -42,7 +42,7 @@ export const forums: TForum[] = [
   },
   {
     id: '00000000-0000-0000-0000-000000000003',
-    theme: 'Free talks',
+    theme: 'Флудильня',
     messages: [
       {
         messageId: '4',
@@ -55,7 +55,7 @@ export const forums: TForum[] = [
   },
   {
     id: '00000000-0000-0000-0000-000000000004',
-    theme: 'Forum rules',
+    theme: 'Юмор',
     messages: [
       {
         messageId: '5',

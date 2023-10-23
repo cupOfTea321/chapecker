@@ -40,7 +40,7 @@ $content-selector: "~ .content > section";
             }
 
             #{$slider-selector} {
-                transform: translateX(calc($chess-square-witdh * 4 * ($i - 1)));
+                transform: translateX(calc($chess-square-witdh * 3 * ($i - 1)));
             }
 
             #{$content-selector}:nth-child(#{$i}) {

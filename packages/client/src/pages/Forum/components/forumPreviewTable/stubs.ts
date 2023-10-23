@@ -3,7 +3,7 @@ import { TForumPreview } from './model'
 export const forums: TForumPreview = [
   {
     id: '00000000-0000-0000-0000-000000000000',
-    theme: 'Forum rules',
+    theme: 'Правила форума',
     messages: 1,
     lastMessage: {
       user: 'Admin',
@@ -13,7 +13,7 @@ export const forums: TForumPreview = [
   },
   {
     id: '00000000-0000-0000-0000-000000000001',
-    theme: 'Game rules',
+    theme: 'Правила игры',
     messages: 1,
     lastMessage: {
       user: 'Admin',
@@ -23,7 +23,7 @@ export const forums: TForumPreview = [
   },
   {
     id: '00000000-0000-0000-0000-000000000002',
-    theme: 'Game news',
+    theme: 'Новости',
     messages: 1,
     lastMessage: {
       user: 'Admin',
@@ -36,7 +36,7 @@ export const forums: TForumPreview = [
 export const forumsFree: TForumPreview = [
   {
     id: '00000000-0000-0000-0000-000000000003',
-    theme: 'Free talks',
+    theme: 'Флудильня',
     messages: 1,
     lastMessage: {
       user: 'Admin',
@@ -46,7 +46,7 @@ export const forumsFree: TForumPreview = [
   },
   {
     id: '00000000-0000-0000-0000-000000000004',
-    theme: 'Humor',
+    theme: 'Юмор',
     messages: 1,
     lastMessage: {
       user: 'Admin',

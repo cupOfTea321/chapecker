@@ -1,4 +1,4 @@
 export enum forumTabs {
-  allTopics = 'All topics',
-  newTopic = 'Start topic',
+  allTopics = 'Все',
+  newTopic = 'Новый форум',
 }

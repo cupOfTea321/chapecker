@@ -39,7 +39,7 @@ const NewTopicForm = () => {
       onSubmit={callbacks.handleStartNewTopic}
       encType="multipart/form-data">
       <label className={cn('field')} htmlFor={newTopicFileds.label}>
-        Topic theme: *
+        Тема: *
         <input
           type="text"
           name={newTopicFileds.label}
@@ -51,11 +51,11 @@ const NewTopicForm = () => {
           required
           maxLength={150}
         />
-        <span>* - max length 150 symbols</span>
+        <span>* - до 150 знаков</span>
       </label>
       <label className={cn('field')} htmlFor={newTopicFileds.media}>
         <span className={cn('itemUpload', { ordinar: true })}>
-          Upload topic media
+          Загрузить картинку
         </span>
         <input
           type="file"
@@ -67,7 +67,7 @@ const NewTopicForm = () => {
         />
       </label>
       <label className={cn('field')} htmlFor={newTopicFileds.description}>
-        Enter topic description here:
+        Начальное сообщение:
         <textarea
           name={newTopicFileds.description}
           className={cn('topicText')}
@@ -83,7 +83,7 @@ const NewTopicForm = () => {
         <input
           type="submit"
           className={cn('button', { ordinar: true })}
-          value="Start topic"
+          value="Создать топик"
         />
       </label>
     </form>

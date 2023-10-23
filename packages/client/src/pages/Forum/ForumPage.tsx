@@ -18,10 +18,10 @@ const ForumDashboard = () => {
 
   return (
     <div className={cn({ chesBackgrounded: true })}>
-      <h1 hidden>Chapeaker forum</h1>
+      <h1 hidden>Форум игры Шашки Чапаева</h1>
       <div className={cn('container')}>
         {tabsArr.map((tab, i) => (
-          <input
+          <input key={tab.split(' ').join('')}
             hidden
             type="radio"
             id={tab.split(' ').join('')}
@@ -60,8 +60,8 @@ const ForumDashboard = () => {
 
         <div className="content">
           <section>
-            <ForumPreviewTable forums={mainForums} header="Main" />
-            <ForumPreviewTable forums={freeForums} header="Free discussions" />
+            <ForumPreviewTable forums={mainForums} header="Основные" />
+            <ForumPreviewTable forums={freeForums} header="Свободный клуб" />
           </section>
           <section>
             <h2>{forumTabs.newTopic}</h2>

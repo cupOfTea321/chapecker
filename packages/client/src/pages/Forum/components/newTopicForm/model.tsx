@@ -1,10 +1,10 @@
 export enum forumTabs {
-  allTopics = 'All topics',
-  newTopic = 'Start topic',
+  allTopics = 'Все форумы',
+  newTopic = 'Новый форум',
 }
 
 export enum newTopicFileds {
-  label = 'Label',
-  media = 'Media',
-  description = 'Description',
+  label = 'Тема',
+  media = 'Картинки',
+  description = 'Описание',
 }

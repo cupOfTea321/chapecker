@@ -17,9 +17,11 @@ const ForumPreviewTable = (props: {
     <table className={cn()}>
       <caption className={cn('caption')}>{props.header}</caption>
       <thead className={cn('haeder')}>
-        <th className={cn('haederTheme')}>Theme</th>
-        <th className={cn('haederMessagesCount')}>Messages</th>
-        <th className={cn('haederLastMessage')}>Last message</th>
+        <tr>
+          <th className={cn('haederTheme')}>Тема</th>
+          <th className={cn('haederMessagesCount')}>Сообщений</th>
+          <th className={cn('haederLastMessage')}>Последнее сообщение</th>
+        </tr>
       </thead>
       <tbody>
         {props.forums.map(
