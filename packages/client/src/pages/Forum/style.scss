@@ -12,8 +12,8 @@ $indicator-width: 50px;
 $indicator-height: 4px;
 
 $breakpoints: (
-    medium: calc($tab-count * 250px),
-    small: calc($tab-count * 150px)
+    medium: 840px,
+    small: 450px
 );
 
 $label-selector: "~ ul > li";
@@ -40,7 +40,7 @@ $content-selector: "~ .content > section";
             }
 
             #{$slider-selector} {
-                transform: translateX(calc($chess-square-witdh * 3 * ($i - 1)));
+                transform: translateX(calc($chess-square-witdh * 4 * ($i - 1)));
             }
 
             #{$content-selector}:nth-child(#{$i}) {
@@ -134,7 +134,7 @@ $content-selector: "~ .content > section";
                     cursor: default;
                     color: $accent;
 
-                    svg {
+                    img {
                         fill: $accent;
                     }
 
@@ -152,7 +152,7 @@ $content-selector: "~ .content > section";
             ul li label {
                 white-space: initial;
 
-                svg {
+                img {
                     height: 1.5em;
                 }
             }
@@ -200,13 +200,21 @@ $content-selector: "~ .content > section";
         transition: all 0.2s ease-in-out;
         white-space: nowrap;
 
+        img {
+            fill: $secondary;
+            height: 1.2em;
+            vertical-align: bottom;
+            margin-right: 0.2em;
+            transition: all 0.2s ease-in-out;
+        }
+
         &:hover,
         &:focus,
         &:active {
             outline: 0;
             color: lighten($secondary, 15%);
 
-            svg {
+            img {
                 fill: lighten($secondary, 15%);
             }
         }

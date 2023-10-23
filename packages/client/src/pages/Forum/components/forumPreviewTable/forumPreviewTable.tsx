@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { getForumPath } from '../../routes'
+import { getForumPath } from '../../../../routes'
 
 import bem from 'bem-ts'
 import './styles.scss'

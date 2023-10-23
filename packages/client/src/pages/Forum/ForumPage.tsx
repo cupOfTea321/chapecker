@@ -1,12 +1,13 @@
 import { memo, useMemo } from 'react'
-import NewTopicForm from '../../components/newTopicForm/newTopicForm'
-import ForumPreviewTable from '../../components/forumPreviewTable/forumPreviewTable'
+import NewTopicForm from './components/newTopicForm/newTopicForm'
+import ForumPreviewTable from './components/forumPreviewTable/forumPreviewTable'
 
 import bem from 'bem-ts'
 import './style.scss'
 
 import { forumTabs } from './model'
-import { forums, forumsFree } from '../../components/forumPreviewTable/stubs'
+import { forums, forumsFree } from './components/forumPreviewTable/stubs'
+import getImageUrl from '../../utils/getImageUrl'
 
 const ForumDashboard = () => {
   const cn = bem('forumDashboard')
@@ -29,21 +30,29 @@ const ForumDashboard = () => {
           />
         ))}
         <ul className={cn('forumNavigationList')}>
-          {tabsArr.map(tab => (
-            <li
-              key={tab.split(' ').join('')}
-              className={cn('forumNavigationItem')}
-              title={tab}>
-              <label
-                className={cn('forumNavigationItemLabel')}
-                htmlFor={tab.split(' ').join('')}
-                role="button">
-                <span className={cn('forumNavigationItemLabelName')}>
-                  {tab}
-                </span>
-              </label>
-            </li>
-          ))}
+          {tabsArr.map(tab => {
+            const tabHtmlAllias = tab.split(' ').join('')
+            return (
+              <li
+                key={tabHtmlAllias}
+                className={cn('forumNavigationItem')}
+                title={tab}>
+                <label
+                  className={cn('forumNavigationItemLabel')}
+                  htmlFor={tabHtmlAllias}
+                  role="button">
+                  <img
+                    className={cn('tabPicture')}
+                    alt={tab}
+                    src={getImageUrl('../assets/' + tabHtmlAllias + '.svg')}
+                  />
+                  <span className={cn('forumNavigationItemLabelName')}>
+                    {tab}
+                  </span>
+                </label>
+              </li>
+            )
+          })}
         </ul>
         <div className="slider">
           <div className="indicator"></div>

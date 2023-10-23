@@ -1,9 +1,9 @@
-import { memo, useRef } from 'react'
+import { memo } from 'react'
 
 import bem from 'bem-ts'
 import './styles.scss'
 
-const AddMessageFrame = ({ inputName, onAddMessage }) => {
+const AddMessageFrame = ({ onAddMessage }) => {
   const cn = bem('addMessageFrame')
 
   return (
@@ -12,7 +12,7 @@ const AddMessageFrame = ({ inputName, onAddMessage }) => {
       <form onSubmit={onAddMessage} className={cn('form')}>
         <label htmlFor="message" className={cn('label')}>
           <textarea
-            name={inputName}
+            name="forumMessage"
             className={cn('messageText')}
             title="wrtite message here"
             id="message"

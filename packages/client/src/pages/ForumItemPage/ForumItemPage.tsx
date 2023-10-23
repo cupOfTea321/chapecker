@@ -1,20 +1,21 @@
 import { FormEvent, memo, useCallback, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 
 import bem from 'bem-ts'
 import './styles.scss'
 
 import { forums } from './stubs'
+import { forums as previeForums } from '../Forum/components/forumPreviewTable/stubs'
 import { TForum, TMessage, messageFormFileds } from './model'
-import ForumMessagesList from '../../components/forumMessagesList/forumMessagesList'
-import AddMessageFrame from '../../components/addMessageFrame/addMessageFrame'
+import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
+import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
 
 const ForumPage = () => {
-  const cn = bem('forumPage')
   const { id } = useParams()
   const forum = useMemo(() => forums.find(el => el.id === id), [id])
-  if (!forum) throw Error('No forum by id ' + id)
+  const cn = bem('forumPage')
+  if (!forum) return <Navigate to="*" />
   const { theme, messages }: TForum = forum
   const [forumMessages, updateForum] = useState(messages)
 
@@ -36,6 +37,8 @@ const ForumPage = () => {
         }
         forum.messages.push(newMesage)
         updateForum(prev => [...prev, newMesage])
+        const searchedForum = previeForums.find(el => el.id === id)
+        if (searchedForum) searchedForum.messages += 1
       },
       [id]
     ),

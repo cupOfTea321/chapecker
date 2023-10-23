@@ -1,8 +1,9 @@
 import { memo } from 'react'
-import { TMessage } from '../../pages/forumItemPage/model'
+import { TMessage } from '../../model'
 
 import bem from 'bem-ts'
 import './styles.scss'
+import { forums } from '../../../Forum/components/forumPreviewTable/stubs'
 
 const ForumMessagesList = ({ messages }: { messages: TMessage[] }) => {
   const cn = bem('forumMessages')
