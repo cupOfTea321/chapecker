@@ -1,0 +1,60 @@
+@import '../../App.scss';
+
+$chess-square-witdh: 30px;
+$tab-count: 2;
+
+$accent: $main-background-color;
+$accent-inactive: desaturate($accent, 85%);
+$secondary: $accent-inactive;
+
+$breakpoints: (
+    medium: calc($tab-count * 250px),
+    small: calc($tab-count * 150px)
+);
+
+@keyframes content {
+    from {
+        opacity: 0;
+        transform: translateY(5%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+.forumPage {
+    background: $main-background-color;
+
+    &--chesBackgrounded {
+        background-image:
+            linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh),
+            linear-gradient(90deg, $brigth-chess-square $chess-square-witdh, $dark-chess-square $chess-square-witdh),
+            linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh);
+        background-position: 0 0, 0 $chess-square-witdh, 0 $chess-square-witdh * 2;
+        background-repeat: repeat-x;
+        background-size: $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh;
+        height: $chess-square-witdh * 3;
+    }
+
+    &__container {
+        padding: 25px;
+        top: $chess-square-witdh;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        background: $secondary-background-color;
+        width: 80%;
+        min-height: 90vh;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        border-radius: 5px;
+        min-width: calc($tab-count * 60px);
+    }
+
+    &__theme {
+        background-color: $dark-chess-square;
+    }
+}
+
+@media (max-width: map-get($breakpoints, medium)) {}
