@@ -1,0 +1,88 @@
+@import '../../../../App.scss';
+
+$tab-count: 2;
+
+$breakpoints: (
+    medium: calc($tab-count * 250px),
+    small: calc($tab-count * 150px)
+);
+
+.forumPreview {
+    width: 100%;
+    margin: 20px 0;
+
+    &__caption {
+        padding: 0 10px;
+        text-align: left;
+        background-color: $dark-chess-square;
+        color: $brigth-chess-square;
+    }
+
+    &__haeder {
+        background-color: $brigth-chess-square;
+
+        &Theme {
+            width: 70%;
+        }
+
+        &MessagesCount {
+            width: 10%;
+        }
+
+        &LastMessage {
+            width: 20%;
+        }
+    }
+
+    &__item {
+
+        border: 1px solid $brigth-chess-square;
+
+        &Division {
+            padding: 10px;
+
+            &--link {
+                cursor: pointer;
+                text-decoration: none;
+                color: $main-background-color;
+
+                &:hover,
+                &:focus,
+                &:active {
+                    outline: 0;
+                    color: lighten($dark-chess-square, 15%);
+                }
+            }
+
+            &--info {
+                text-align: center;
+            }
+        }
+    }
+}
+
+@media (max-width: map-get($breakpoints, medium)) {
+    .forumPreview {
+        &__haeder {
+            &Theme {
+                width: 100%;
+            }
+
+            &MessagesCount {
+                display: none;
+            }
+
+            &LastMessage {
+                display: none;
+            }
+        }
+
+        &__item {
+            &Division {
+                &--info {
+                    display: none;
+                }
+            }
+        }
+    }
+}
