@@ -1,0 +1,17 @@
+@use '../../colors.scss';
+
+.contained-button {
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 5px 20px;
+    font: inherit;
+    background-color: colors.$primary-main;
+    box-shadow: 0 3px colors.$dark-theme-text-shadow;
+    color: colors.$dark-theme-text-main;
+    text-shadow: 1px 1px colors.$dark-theme-text-shadow;
+
+    &:active {
+        background-color: colors.$primary-darker;
+    }
+}
