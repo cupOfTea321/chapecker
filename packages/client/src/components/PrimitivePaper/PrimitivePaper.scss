@@ -1,0 +1,14 @@
+@use '../../colors.scss';
+
+.primitive-paper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+
+    &__content {
+        padding: 16px;
+        background-color: colors.$dark-theme-background-lighter;
+        border-radius: 16px;
+    }
+}
