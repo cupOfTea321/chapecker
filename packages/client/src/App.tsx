@@ -3,6 +3,7 @@ import './App.scss'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { routes } from './router/router'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 
 function App() {
   useEffect(() => {
@@ -18,11 +19,17 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          {routes.map(route => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
-        </Routes>
+        <ErrorBoundary>
+          <Routes>
+            {routes.map(route => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
+          </Routes>
+        </ErrorBoundary>
       </BrowserRouter>
     </div>
   )
