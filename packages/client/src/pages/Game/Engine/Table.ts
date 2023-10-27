@@ -1,12 +1,9 @@
-import Sound from '../Engine/Sound'
 import {
   AbstractGameObject,
   GameObjectType,
   TGameObjectOptions,
 } from './AbstractGameObject'
-import { soundMap, SoundType, spriteMap, SpriteType } from './assets'
-import { PLAYER_FIRE_RATE } from './const'
-import Sprite from './Sprite'
+import { spriteMap } from './assets'
 
 type TPlayerOptions = TGameObjectOptions & {
   onFire: (p: AbstractGameObject) => void
@@ -18,12 +15,10 @@ export class Table extends AbstractGameObject {
   private _ctx: CanvasRenderingContext2D
 
   constructor(options: TPlayerOptions) {
-    const { onFire, ...superOptions } = options
-    super(superOptions)
+    super(options)
   }
 
   public async init(): Promise<boolean> {
-    await soundMap.init()
     await spriteMap.init()
 
     // this._fireSound = soundMap.getSoundByName(SoundType.fire)
