@@ -1,5 +1,3 @@
-import { Vector } from './Vector'
-
 export enum GameObjectType {
   Table,
   Player,
@@ -17,8 +15,10 @@ export interface IGameObject {
 export type TGameObjectOptions = {
   ctx: CanvasRenderingContext2D
   debug?: boolean
-  position: Vector
-  velocity: Vector
+  x: number
+  y: number
+  vx: number
+  vy: number
   width: number
   height: number
 }
@@ -26,9 +26,10 @@ export type TGameObjectOptions = {
 export abstract class AbstractGameObject implements IGameObject {
   static type = GameObjectType.Unknown
 
-  public position: Vector
-
-  public velocity: Vector
+  protected x: number
+  protected y: number
+  protected vx: number
+  protected vy: number
 
   public width: number
 
@@ -40,18 +41,13 @@ export abstract class AbstractGameObject implements IGameObject {
 
   private _hasDelete = false
 
-  constructor({
-    ctx,
-    debug,
-    position,
-    velocity,
-    width,
-    height,
-  }: TGameObjectOptions) {
+  constructor({ ctx, debug, x, y, vx, vy, width, height }: TGameObjectOptions) {
     this.ctx = ctx
     this.debug = debug ?? false
-    this.position = position
-    this.velocity = velocity
+    this.x = x
+    this.y = y
+    this.vx = vx
+    this.vy = vy
     this.width = width
     this.height = height
   }
@@ -98,34 +94,29 @@ export abstract class AbstractGameObject implements IGameObject {
   protected debugDraw(color: string) {
     if (this.debug) {
       this.ctx.strokeStyle = color
-      this.ctx.strokeRect(
-        this.position.x,
-        this.position.y,
-        this.width,
-        this.height
-      )
+      this.ctx.strokeRect(this.x, this.y, this.width, this.height)
     }
   }
 }
 
-/**
- * Проверяет на пересечение два объекта
- *
- * @param obj1 - Первый проверяемый объект
- * @param obj2 - Второй проверяемый объект
- * @returns Результат проверки true - есть пересечение иначе false
- */
-export function isRectCollide(
-  obj1: AbstractGameObject,
-  obj2: AbstractGameObject
-): boolean {
-  if (
-    obj1.position.x + obj1.width >= obj2.position.x &&
-    obj1.position.x <= obj2.position.x + obj2.width &&
-    obj1.position.y + obj1.height >= obj2.position.y &&
-    obj1.position.y <= obj2.position.y + obj2.width
-  ) {
-    return true
-  }
-  return false
-}
+// /**
+//  * Проверяет на пересечение два объекта
+//  *
+//  * @param obj1 - Первый проверяемый объект
+//  * @param obj2 - Второй проверяемый объект
+//  * @returns Результат проверки true - есть пересечение иначе false
+//  */
+// export function isRectCollide(
+//   obj1: AbstractGameObject,
+//   obj2: AbstractGameObject
+// ): boolean {
+//   if (
+//     obj1.x + obj1.width >= obj2.x &&
+//     obj1.x <= obj2.x + obj2.width &&
+//     obj1.y + obj1.height >= obj2.y &&
+//     obj1.y <= obj2.y + obj2.width
+//   ) {
+//     return true
+//   }
+//   return false
+// }

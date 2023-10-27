@@ -1,88 +1,37 @@
-import Sound from './Sound'
-import { AbstractGameObject, GameObjectType } from './AbstractGameObject'
-import { soundMap, SoundType, spriteMap, SpriteType } from './assets'
-import { PLAYER_FIRE_RATE } from './const'
-import { createPlayerProjectile } from './Projectile'
-import Sprite from './Sprite'
-import { Vector } from './Vector'
+import { AbstractGameObject, TGameObjectOptions } from './AbstractGameObject'
 
-type TPlayerOptions = {
-  ctx: CanvasRenderingContext2D
-  x: number
-  y: number
+/**
+ * Определяет расстояние между двумя точками
+ */
+function dist(x1: number, y1: number, x2: number, y2: number): number {
+  return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+}
+
+type TCheckerOptions = TGameObjectOptions & {
   radius: number
-  startAngle: number
-  endAngle: number
-  // counterClockwise: number
   color: string
 }
 
 export class Checker extends AbstractGameObject {
   private _ctx: CanvasRenderingContext2D
 
-  private _x = 0
-
-  private _y = 0
+  private _active = false
 
   private _radius = 30
 
-  private _startAngle = 0
-
-  private _endAngle = 0
-
   private _color = 'gray'
 
-  private _mousePosition: any
-
-  constructor(options: TPlayerOptions) {
-    const { ctx, x, y, radius, startAngle, endAngle, color } = options
+  constructor(options: TCheckerOptions) {
+    const { ctx, radius, color } = options
     super(options)
     this._ctx = ctx
-    this._x = x
-    this._y = y
     this._radius = radius
-    this._startAngle = startAngle
-    this._endAngle = endAngle
     // this._counterClockwise = counterClockwise
     this._color = color
-    this._mousePosition = this._oMousePos.bind(this)
-  }
-
-  private _oMousePos(canvas, evt) {
-    const ClientRect = canvas.getBoundingClientRect()
-    return {
-      x: Math.round(evt.clientX - ClientRect.left),
-      y: Math.round(evt.clientY - ClientRect.top),
-    }
   }
 
   public async init(): Promise<boolean> {
-    await soundMap.init()
-    await spriteMap.init()
-
-    this._ctx.fillStyle = this._color
-    this._ctx.beginPath()
-    this._ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2)
-    this._ctx.fill()
-
-    this._ctx.canvas.addEventListener(
-      'click',
-      function (event) {
-        // const mouse = this._mousePosition(this._ctx.canvas, event)
-        // elements.forEach(function (element) {
-        //   drawElement(element, context)
-        //   if (context.isPointInPath(mouse.x, mouse.y)) {
-        //     console.log(mouse)
-        //   } else {
-        //     console.log('not in path')
-        //   }
-        // })
-      },
-      false
-    )
-
-    // this._fireSound = soundMap.getSoundByName(SoundType.fire)
-    // this._killSound = soundMap.getSoundByName(SoundType.kill)
+    this.draw()
 
     // this._idleSprite = await spriteMap.getSpriteByName(SpriteType.player)
     // this._explosionSprite = await spriteMap.getSpriteByName(
@@ -91,24 +40,13 @@ export class Checker extends AbstractGameObject {
     return true
   }
 
-  // private _drawCheckers(ctx, y, color, step) {
-  //   ctx.fillStyle = color
+  public makeActive() {
+    this._active = true
+  }
 
-  //   for (let i = y; i < 2 * step + y; i += step) {
-  //     for (let j = step / 2; j < 8 * step; j += step) {
-  //       // arc(x, y, radius, startAngle, endAngle, counterclockwise)
-  //       ctx.beginPath()
-  //       ctx.arc(
-  //         this._x,
-  //         this._y,
-  //         this._startAngle,
-  //         this._endAngle,
-  //         this._counterClockwise
-  //       )
-  //       ctx.fill()
-  //     }
-  //   }
-  // }
+  public makeInactive() {
+    this._active = false
+  }
 
   public update(dt: number): void {
     // if (!this._idleSprite || !this._explosionSprite) {
@@ -122,11 +60,26 @@ export class Checker extends AbstractGameObject {
   }
 
   public override delete() {
-    this._killSound?.play()
-    this._dead = true
+    // Завершающие действия
   }
 
   protected draw(): void {
-    super.debugDraw('green')
+    // super.debugDraw('green')
+
+    this._ctx.shadowColor = 'red'
+    if (this._active) this._ctx.shadowBlur = 10
+    this._ctx.fillStyle = this._color
+    this._ctx.beginPath()
+    this._ctx.arc(this.x, this.y, this._radius, 0, Math.PI * 2)
+    this._ctx.fill()
+    this._ctx.shadowBlur = 0
+  }
+
+  /**
+   * Определяет, лежит ли поданная на вход
+   * точка на шашке в текущем положении
+   */
+  public pointFromHere(x: number, y: number) {
+    return dist(this.x, this.y, x, y) < this._radius
   }
 }
