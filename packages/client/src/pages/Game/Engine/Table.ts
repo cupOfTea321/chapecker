@@ -3,7 +3,6 @@ import {
   GameObjectType,
   TGameObjectOptions,
 } from './AbstractGameObject'
-import { spriteMap } from './assets'
 
 type TPlayerOptions = TGameObjectOptions & {
   onFire: (p: AbstractGameObject) => void
@@ -19,8 +18,6 @@ export class Table extends AbstractGameObject {
   }
 
   public async init(): Promise<boolean> {
-    await spriteMap.init()
-
     // this._fireSound = soundMap.getSoundByName(SoundType.fire)
     // this._killSound = soundMap.getSoundByName(SoundType.kill)
 

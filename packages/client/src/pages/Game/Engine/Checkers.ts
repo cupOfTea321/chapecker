@@ -20,14 +20,6 @@ type TPlayerOptions = TGameObjectOptions
 export class Checkers extends AbstractGameObject {
   static type = GameObjectType.Player
 
-  // private _onFire: (p: AbstractGameObject) => void
-
-  // private _elapsedTimeOnFile = 0
-
-  // private _idleSprite: Sprite | null = null
-
-  // private _explosionSprite: Sprite | null = null
-
   private checkersPlayer: Checker[] = []
   private checkersEnemy: Checker[] = []
 
@@ -39,18 +31,8 @@ export class Checkers extends AbstractGameObject {
 
   public async init(): Promise<boolean> {
     this.ctx.canvas.onclick = this._userClickHandler.bind(this)
+    this.ctx.canvas.oncontextmenu = this._userRightClickHandler.bind(this)
 
-    // for (let i = 0; i <= 7; i++) {
-    //   this.checkersEnemy.push({
-    //     x: x + step / 2 + step * i,
-    //     y: y + step / 2
-    //   })
-    // }
-
-    // this._idleSprite = await spriteMap.getSpriteByName(SpriteType.player)
-    // this._explosionSprite = await spriteMap.getSpriteByName(
-    //   SpriteType.playerExplosion
-    // )
     return true
   }
 
@@ -81,14 +63,25 @@ export class Checkers extends AbstractGameObject {
     }
   }
 
+  private _userRightClickHandler(e: MouseEvent): void {
+    e.preventDefault()
+    this.selectedChecker?.makeInactive()
+    this.selectedChecker = null
+  }
+
   private _userClickHandler(e: MouseEvent): void {
     const x = e.clientX - this.x
     const y = e.clientY - this.y
     this.selectedChecker?.makeInactive()
 
-    this.selectedChecker = this._findCheckerByCords(x, y)
-    // if (this.selectedChecker in this.checkersPlayer) {
-    this.selectedChecker?.makeActive()
+    const newChecker = this._findCheckerByCords(x, y)
+    if (newChecker && this.checkersPlayer.indexOf(newChecker) !== -1) {
+      this.selectedChecker = newChecker
+      newChecker.makeActive()
+    } else if (this.selectedChecker) {
+      this.selectedChecker.throw(x, y)
+      this.selectedChecker = null
+    }
   }
 
   private _findCheckerByCords(x: number, y: number): Checker | null {

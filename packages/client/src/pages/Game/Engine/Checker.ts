@@ -1,4 +1,10 @@
 import { AbstractGameObject, TGameObjectOptions } from './AbstractGameObject'
+import {
+  CHECKER_SHADOW_COLOR,
+  FRICTION_COEFFICIENT,
+  MAXSPEED,
+  MAXSPEED_DISTANCE,
+} from './const'
 
 /**
  * Определяет расстояние между двумя точками
@@ -13,8 +19,6 @@ type TCheckerOptions = TGameObjectOptions & {
 }
 
 export class Checker extends AbstractGameObject {
-  private _ctx: CanvasRenderingContext2D
-
   private _active = false
 
   private _radius = 30
@@ -22,9 +26,8 @@ export class Checker extends AbstractGameObject {
   private _color = 'gray'
 
   constructor(options: TCheckerOptions) {
-    const { ctx, radius, color } = options
+    const { radius, color } = options
     super(options)
-    this._ctx = ctx
     this._radius = radius
     // this._counterClockwise = counterClockwise
     this._color = color
@@ -49,12 +52,21 @@ export class Checker extends AbstractGameObject {
   }
 
   public update(dt: number): void {
+    if (this.vy !== 0 || this.vx !== 0) {
+      this.x += (this.vx * dt) / 1000
+      this.y += (this.vy * dt) / 1000
+      this.vx -= (FRICTION_COEFFICIENT * this.vx * dt) / 1000
+      this.vy -= (FRICTION_COEFFICIENT * this.vy * dt) / 1000
+      if (Math.abs(this.vx) < 5) this.vx = 0
+      if (Math.abs(this.vy) < 5) this.vy = 0
+    }
+
     // if (!this._idleSprite || !this._explosionSprite) {
     //   throw new Error('Не задан спрайт для бездействия игрока')
     // }
-    // this._ctx.beginPath()
-    // this._ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2)
-    // this._ctx.fill()
+    // this.ctx.beginPath()
+    // this.ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2)
+    // this.ctx.fill()
 
     this.draw()
   }
@@ -66,13 +78,20 @@ export class Checker extends AbstractGameObject {
   protected draw(): void {
     // super.debugDraw('green')
 
-    this._ctx.shadowColor = 'red'
-    if (this._active) this._ctx.shadowBlur = 10
-    this._ctx.fillStyle = this._color
-    this._ctx.beginPath()
-    this._ctx.arc(this.x, this.y, this._radius, 0, Math.PI * 2)
-    this._ctx.fill()
-    this._ctx.shadowBlur = 0
+    this.ctx.shadowColor = CHECKER_SHADOW_COLOR
+    if (this._active) {
+      this.ctx.lineWidth = 5
+      this.ctx.beginPath()
+      this.ctx.arc(this.x, this.y, MAXSPEED_DISTANCE, 0, Math.PI * 2)
+      this.ctx.stroke()
+      this.ctx.lineWidth = 1
+      this.ctx.shadowBlur = 10
+    }
+    this.ctx.fillStyle = this._color
+    this.ctx.beginPath()
+    this.ctx.arc(this.x, this.y, this._radius, 0, Math.PI * 2)
+    this.ctx.fill()
+    this.ctx.shadowBlur = 0
   }
 
   /**
@@ -81,5 +100,21 @@ export class Checker extends AbstractGameObject {
    */
   public pointFromHere(x: number, y: number) {
     return dist(this.x, this.y, x, y) < this._radius
+  }
+
+  public throw(x: number, y: number) {
+    this.vx = x - this.x
+    this.vy = y - this.y
+    const len = dist(0, 0, this.vx, this.vy)
+
+    const distToThrowPoint = Math.min(
+      MAXSPEED_DISTANCE,
+      dist(this.x, this.y, x, y)
+    )
+
+    this.vx =
+      ((this.vx / len) * MAXSPEED * distToThrowPoint) / MAXSPEED_DISTANCE
+    this.vy =
+      ((this.vy / len) * MAXSPEED * distToThrowPoint) / MAXSPEED_DISTANCE
   }
 }
