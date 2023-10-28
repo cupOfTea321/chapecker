@@ -1,10 +1,20 @@
+export enum ProfileTabs {
+  userData = 'Данные пользователя',
+  changePassword = 'Смена пароля',
+}
 export enum ProfileFormFileds {
-  first_name = 'First name',
-  second_name = 'Second name',
-  display_name = 'Display name',
-  login = 'login',
-  email = 'email',
-  phone = 'phone',
+  first_name = 'Имя',
+  second_name = 'Фамилия',
+  display_name = 'Никнейм',
+  login = 'логин',
+  email = 'e-mail',
+  phone = 'телефон',
+}
+
+export enum ChangePasswordFormFields {
+  oldPassword = 'Пароль',
+  newPassword = 'Новый пароль',
+  confirm = 'Подтвреждение',
 }
 export interface IUser {
   first_name: string
@@ -13,7 +23,7 @@ export interface IUser {
   login: string
   email: string
   phone: string
-  avatarSrc: string
+  avatar: string
 }
 
 export interface IProfileFormInputProps {
@@ -21,6 +31,9 @@ export interface IProfileFormInputProps {
   filedKey: string
   fieldText: string
   user: IUser
+  cn: (arg1: string, arg2?: { [x: string]: boolean }) => string
+  isActive: boolean
+  ref: React.Ref<HTMLInputElement> | undefined
 }
 
 export const getFieldType = (key: string) => {
@@ -29,6 +42,10 @@ export const getFieldType = (key: string) => {
       return 'email'
     case 'phone':
       return 'tel'
+    case 'oldPassword':
+    case 'newPassword':
+    case 'confirm':
+      return 'password'
     default:
       return 'text'
   }

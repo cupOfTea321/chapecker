@@ -1,0 +1,260 @@
+@import '../../colors.scss';
+
+$chess-square-witdh: 30px;
+$dark-chess-square: $primary-darker;
+$brigth-chess-square: $primary-lighter;
+
+$accent: $dark-theme-text-main;
+$accent-inactive: desaturate($accent, 50%);
+$secondary: $accent-inactive;
+
+$tab-count: 2;
+$indicator-width: 100px;
+$indicator-height: 4px;
+
+$breakpoints: (
+    medium: 840px,
+    small: 450px
+);
+
+$label-selector: "~ ul > li";
+$slider-selector: "~ .slider";
+$content-selector: "~ .content > section";
+
+@keyframes content {
+    from {
+        opacity: 0;
+        transform: translateY(5%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+@mixin tabs() {
+    @for $i from 1 through $tab-count {
+        &:nth-of-type(#{$i}):checked {
+            #{$label-selector}:nth-child(#{$i}) {
+                @content;
+            }
+
+            #{$slider-selector} {
+                transform: translateX(calc($chess-square-witdh * 7 * ($i - 1)));
+            }
+
+            #{$content-selector}:nth-child(#{$i}) {
+                display: block;
+            }
+        }
+    }
+}
+
+.profile {
+    &--chesBackgrounded {
+        background-image:
+            linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh),
+            linear-gradient(90deg, $brigth-chess-square $chess-square-witdh, $dark-chess-square $chess-square-witdh),
+            linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh);
+        background-position: 0 0, 0 $chess-square-witdh, 0 $chess-square-witdh * 2;
+        background-repeat: repeat-x;
+        background-size: $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh;
+        height: $chess-square-witdh * 3;
+    }
+
+    &__container {
+        padding: 25px;
+        top: $chess-square-witdh;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        background: $dark-theme-background;
+        width: 80%;
+        min-height: 90vh;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        border-radius: 5px;
+        color: $dark-theme-text-main;
+
+        .slider {
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            width: calc($tab-count * 2);
+            transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
+
+            .indicator {
+                margin-right: $chess-square-witdh * 8;
+                width: $indicator-width;
+                max-width: 100%;
+                height: $indicator-height;
+                background: $dark-chess-square;
+                border-radius: 1px;
+            }
+
+        }
+
+        .content {
+            margin-top: 30px;
+
+            section {
+                display: none;
+
+                animation: {
+                    name: content;
+                    direction: normal;
+                    duration: 0.3s;
+                    timing-function: ease-in-out;
+                    iteration-count: 1;
+                }
+            }
+        }
+
+        input[name="tab-control"] {
+            @include tabs {
+                >label {
+                    cursor: default;
+                    color: $accent;
+
+                    @media (max-width: map-get($breakpoints, small)) {
+                        background: invert($color: $dark-theme-text-main);
+                    }
+                }
+            }
+
+        }
+
+        @media (max-width: map-get($breakpoints, small)) {
+            ul li label {
+                padding: 5px;
+                border-radius: 5px;
+
+                span {
+                    display: none;
+                }
+            }
+
+            .slider {
+                display: none;
+            }
+
+            .content {
+                margin-top: 20px;
+
+                section h2 {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    &__header {
+        text-align: center;
+    }
+
+    &__navigationList {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    &__navigationItemLabel {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__tabPicture {
+        width: 32px;
+        height: 32px;
+    }
+
+    &__dataForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__fieldset {
+        width: 100%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border: 1px solid black;
+        padding: 5px;
+        border-radius: 5px;
+
+        @media (min-width: 1080px) {
+            width: 40%;
+        }
+    }
+
+    &__legend {
+        padding: 0 10px;
+        text-transform: capitalize;
+        color: lighten($dark-theme-background-lighter, 25%);
+    }
+
+    &__input {
+        padding: 5px;
+        width: 95%;
+        background-color: transparent;
+        color: $dark-theme-text-main;
+        border: 0;
+
+        &:focus {
+            outline: none;
+        }
+
+        &--active {
+            align-self: center;
+            background-color: $dark-theme-background-lighter;
+        }
+    }
+
+    &__control {
+        margin: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        @media (min-width: 640px) {
+            width: 40%;
+        }
+    }
+
+    &__controlAbolution {
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        padding: 5px 20px;
+        font: inherit;
+        background-color: $secondary-main;
+        box-shadow: 0 3px $dark-theme-text-shadow;
+        color: $dark-theme-text-main;
+        text-shadow: 1px 1px $dark-theme-text-shadow;
+
+        &:active {
+            background-color: $primary-darker;
+        }
+    }
+
+    &__controlCofirm {
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        padding: 5px 20px;
+        font: inherit;
+        background-color: $primary-main;
+        box-shadow: 0 3px $dark-theme-text-shadow;
+        color: $dark-theme-text-main;
+        text-shadow: 1px 1px $dark-theme-text-shadow;
+
+        &:active {
+            background-color: $primary-darker;
+        }
+    }
+}

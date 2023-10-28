@@ -1,0 +1,112 @@
+@import '../../../colors.scss';
+
+$mColor: black;
+$eyeColor: black;
+$mouthColor: white;
+$circle: 40px;
+
+@keyframes shakeL {
+    0% {
+        border-radius: 0 0 0 1000%;
+    }
+
+    25% {
+        border-radius: 0 0 50% 1000%;
+    }
+
+    50% {
+        border-radius: 0 0 100% 1000%;
+    }
+
+    100% {
+        border-radius: 500% 0 50% 1000%;
+    }
+}
+
+@keyframes shakeR {
+    0% {
+        border-radius: 0 0 1000% 0;
+    }
+
+    25% {
+        border-radius: 0 0 1000% 50%;
+    }
+
+    50% {
+        border-radius: 0 0 1000% 100%;
+    }
+
+    100% {
+        border-radius: 0 500% 1000% 50%;
+    }
+}
+
+.userAvatar {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__picture {
+        margin: 10px;
+        width: 124px;
+        height: 124px;
+        border-radius: 50%;
+        border: 1px solid $primary-main;
+    }
+
+    &__left,
+    &__right {
+        display: block;
+        content: "XXXX";
+        position: absolute;
+        height: 50px;
+        width: 150px;
+        border-bottom: 5px solid $mColor;
+        animation-duration: 1.5s;
+        animation-timing-function: ease-in-out;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+
+    &__left {
+        top: 145px;
+        left: 195px;
+        border-radius: 0 0 0 1000%;
+        transform: rotate(1deg);
+        animation-name: shakeL;
+
+    }
+
+    &__right {
+        top: 140px;
+        right: 195px;
+        border-radius: 0 0 1000% 0;
+        transform: rotate(-5deg);
+        animation-name: shakeR;
+    }
+
+    &__input {
+        cursor: pointer;
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+    &__inputButton {
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        padding: 5px 20px;
+        font: inherit;
+        background-color: $primary-main;
+        box-shadow: 0 3px $dark-theme-text-shadow;
+        color: $dark-theme-text-main;
+        text-shadow: 1px 1px $dark-theme-text-shadow;
+
+        &:active {
+            background-color: $primary-darker;
+        }
+    }
+}

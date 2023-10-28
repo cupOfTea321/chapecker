@@ -5,5 +5,5 @@ export const userInfo = {
   login: 'Chapaev',
   email: 'Chapeaker.email@yamdex.ru',
   phone: '+7 123 456 78 90',
-  avatarSrc: '',
+  avatar: '',
 }
