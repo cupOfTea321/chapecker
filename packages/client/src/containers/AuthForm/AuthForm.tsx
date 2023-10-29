@@ -1,62 +1,85 @@
-import React, { PropsWithChildren, useMemo } from 'react'
+import { PropsWithChildren } from 'react'
 import { Form } from '../../components/Form'
 import { TextField } from '../../components/TextField'
 import { Button } from '../../components/Button'
 import styles from './AuthForm.module.scss'
 import Divider from '@mui/material/Divider'
-import { AuthFormContext } from './AuthContext'
+import { AuthFormContext, useAuthFormContext } from './AuthContext'
 import { Link } from 'react-router-dom'
-
-// TODO: для темизации
-interface IAuthFormProps {
-  theme?: 'light' | 'dark'
-}
-
-type FieldProps = {
-  label: string
-  type: React.InputHTMLAttributes<unknown>['type']
-}
-
-type ButtonProps = {
-  title: string
-}
-
-type SubmitButtonProps = ButtonProps
-
-type RedirectButtonProps = ButtonProps & {
-  redirectUrl: string
-}
+import { useForm, Controller } from 'react-hook-form'
+import {
+  AuthFormProps,
+  FieldProps,
+  RedirectButtonProps,
+  SubmitButtonProps,
+} from './interfaces'
+import { INPUT_TYPES, LABELS } from '../../constants/fields'
+import { FIELD_REGEX, FIELD_ERROR_MESSAGES } from '../../constants/validations'
 
 const AuthForm = ({
   theme = 'light',
+  defaultFormValues,
   children,
-}: PropsWithChildren<IAuthFormProps>) => {
-  const memoizedContextValue = useMemo(
-    () => ({
-      theme,
-    }),
-    [theme]
-  )
+}: PropsWithChildren<AuthFormProps>) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'all',
+    defaultValues: defaultFormValues,
+  })
+
+  const contextValue = {
+    theme,
+    control,
+    errors,
+  }
+
+  const onSubmit = (data: typeof defaultFormValues) => {
+    console.log('DATA', data)
+  }
 
   return (
     <>
       <header className={styles.header}> Chapecker </header>
       <main className={styles.authContainer}>
-        <AuthFormContext.Provider value={memoizedContextValue}>
-          <Form
-            onSubmit={e => {
-              e.preventDefault()
-            }}>
-            {children}
-          </Form>
+        <AuthFormContext.Provider value={contextValue}>
+          <Form onSubmit={handleSubmit(onSubmit)}>{children}</Form>
         </AuthFormContext.Provider>
       </main>
     </>
   )
 }
 
-AuthForm.Field = function Field({ label, type }: FieldProps) {
-  return <TextField type={type} label={label} fullWidth />
+AuthForm.Field = ({ fieldName, required }: FieldProps) => {
+  const { control, errors } = useAuthFormContext()
+
+  return (
+    <>
+      <Controller
+        control={control}
+        name={fieldName}
+        rules={{ required: required, pattern: FIELD_REGEX[fieldName] }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            type={INPUT_TYPES[fieldName]}
+            label={LABELS[fieldName]}
+            fullWidth
+            required={required}
+            error={!!errors[fieldName]}
+          />
+        )}
+      />
+
+      {errors[fieldName] && (
+        <span className={styles.errorMessage}>
+          {FIELD_ERROR_MESSAGES[fieldName]}
+        </span>
+      )}
+    </>
+  )
 }
 
 AuthForm.SubmitButton = function SubmitButton({ title }: SubmitButtonProps) {
@@ -98,12 +121,7 @@ AuthForm.RedirectButton = function RedirectButton({
 
 AuthForm.Divider = ({ text }: { text: string }) => (
   <Divider
-    style={{
-      width: '100%',
-      color: 'hsla(0,0%,100%,.72)',
-      fontSize: '14px',
-      margin: '1rem 0',
-    }}
+    className={styles.divider}
     orientation="horizontal"
     light={true}
     sx={{

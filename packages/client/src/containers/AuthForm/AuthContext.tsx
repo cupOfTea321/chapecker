@@ -1,8 +1,7 @@
 import React, { createContext } from 'react'
+import { AuthContext } from './interfaces'
 
-type TAuthContext = { [key: string]: unknown } | null
-
-export const AuthFormContext = createContext<TAuthContext>(null)
+export const AuthFormContext = createContext<AuthContext>(null)
 
 export const useAuthFormContext = () => {
   const context = React.useContext(AuthFormContext)

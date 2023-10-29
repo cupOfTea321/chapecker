@@ -1,5 +1,4 @@
 import TextField, { BaseTextFieldProps } from '@mui/material/TextField'
-import React from 'react'
 
 import styles from './TextFieldWrapper.module.scss'
 import { styled } from '@mui/material/styles'
@@ -20,32 +19,61 @@ const StyledTextField = styled(TextField)({
   [`& .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]: {
     borderColor: borderColor,
   },
-  [`&:hover .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]:
-    {
-      borderColor: borderFocus,
-    },
+
   [`& .${outlinedInputClasses.root}.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline}`]:
     {
       borderColor: borderFocus,
     },
+
+  [`& .${outlinedInputClasses.root}.${outlinedInputClasses.focused}.${inputLabelClasses.error} .${outlinedInputClasses.notchedOutline}`]:
+    {
+      borderColor: 'red',
+    },
+
   [`& .${outlinedInputClasses.input}`]: {
     color: textColor,
   },
-  [`&:hover .${outlinedInputClasses.input}`]: {
-    borderColor: borderFocus,
-  },
+
   [`& .${outlinedInputClasses.root}.${outlinedInputClasses.focused} .${outlinedInputClasses.input}`]:
     {
       color: textColor,
     },
+
+  [`& .${inputLabelClasses.outlined}.${inputLabelClasses.focused}`]: {
+    color: colorGreen300,
+  },
+
+  [`& .${inputLabelClasses.outlined}.${inputLabelClasses.focused}.${inputLabelClasses.error}`]:
+    {
+      color: 'red',
+    },
+
   [`& .${inputLabelClasses.outlined}`]: {
     color: secondaryTextColor,
   },
+
+  [`&:hover .${outlinedInputClasses.input}`]: {
+    borderColor: borderFocus,
+  },
+
+  [`&:hover .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]:
+    {
+      borderColor: borderFocus,
+    },
+
+  [`&:hover .${outlinedInputClasses.input}`]: {
+    borderColor: borderFocus,
+  },
+
+  [`& :hover .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]:
+    {
+      borderColor: borderFocus,
+    },
   [`&:hover .${inputLabelClasses.outlined}`]: {
     color: colorGreen300,
   },
-  [`& .${inputLabelClasses.outlined}.${inputLabelClasses.focused}`]: {
-    color: colorGreen300,
+  [`&:hover .${inputLabelClasses.error}`]: {
+    color: 'red',
   },
 })
 

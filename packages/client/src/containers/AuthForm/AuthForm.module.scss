@@ -4,13 +4,11 @@
   margin: 0 auto;
   max-width: 100%;
   width: 33rem;
-
   line-height: 3rem;
   font-size: 2.5rem;
   font-weight: 600;
   text-align: center;
   color: hsla(0, 0%, 100%, 0.72);
-
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -31,4 +29,21 @@
   @media screen and (max-width: 320px) {
     min-width: 16rem;
   }
+}
+
+.errorMessage {
+  display: inline-block;
+  margin: -0.6rem 0.6rem 0;
+  width: 100%;
+  text-align: start;
+  color: red;
+  line-height: 1rem;
+  font-size: 0.8rem;
+}
+
+.divider {
+  width: 100%;
+  color: hsla(0, 0%, 100%, 0.72);
+  font-size: 14px;
+  margin: 1rem 0;
 }

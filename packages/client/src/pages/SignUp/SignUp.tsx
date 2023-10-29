@@ -3,15 +3,24 @@ import { AuthForm } from '../../containers/AuthForm'
 import { Layout } from '../../containers/Layout'
 
 const SignUp = () => {
+  const defaultFormValues = {
+    first_name: '',
+    second_name: '',
+    login: '',
+    email: '',
+    password: '',
+    phone: '',
+  }
+
   return (
     <Layout>
-      <AuthForm>
-        <AuthForm.Field type="text" label="First name" />
-        <AuthForm.Field type="text" label="Second name" />
-        <AuthForm.Field type="text" label="Login" />
-        <AuthForm.Field type="email" label="Email" />
-        <AuthForm.Field type="password" label="Password" />
-        <AuthForm.Field type="tel" label="Phone" />
+      <AuthForm defaultFormValues={defaultFormValues}>
+        <AuthForm.Field required fieldName="first_name" />
+        <AuthForm.Field required fieldName="second_name" />
+        <AuthForm.Field required fieldName="login" />
+        <AuthForm.Field required fieldName="email" />
+        <AuthForm.Field required fieldName="password" />
+        <AuthForm.Field required fieldName="phone" />
         <AuthForm.SubmitButton title="Sign up" />
         <AuthForm.Divider text="OR" />
         <AuthForm.RedirectButton title="Go to Login" redirectUrl="/login" />
