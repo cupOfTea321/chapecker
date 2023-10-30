@@ -1,20 +1,20 @@
 import { NAMES } from './fields'
 
 export const ERROR_MESSAGES = {
-  password: 'Invalid password',
-  email: 'Invalid email',
-  login: 'Invalid login',
-  phone: 'Invalid phone',
-  name: 'Invalid name',
-  surname: 'Invalid surname',
-  displayName: 'Invalid display name',
-  empty: 'The field cannot be empty',
-  required: 'The field is required',
-  invalidPasswordOrLogin: 'Login or password is incorrect',
-  userAlreadyExist: 'User with this email or login already exists',
-  userAlreadyInSystem: 'User already in system',
-  loginError: 'Error while logging in, try again later',
-  signUpError: 'Error while signing up, try again later',
+  password: 'Неверный пароль',
+  email: 'Неверный email',
+  login: 'Неверный логин',
+  phone: 'Неверный номер телефона',
+  name: 'Неверное имя',
+  surname: 'Неверная фамилия',
+  displayName: 'Неверное имя для отображения',
+  empty: 'Поле не может быть пустым',
+  required: 'Поле обязательно для заполнения',
+  invalidPasswordOrLogin: 'Неверный логин или пароль',
+  userAlreadyExist: 'Пользователь с таким email или логином уже существует',
+  userAlreadyInSystem: 'Пользователь уже в системе',
+  loginError: 'Ошибка при входе, попробуйте позже',
+  signUpError: 'Ошибка при регистрации, попробуйте позже',
 }
 
 export const REGEX = {

@@ -57,21 +57,21 @@ export const NAMES: Record<TFieldKeys, TFieldNames> = {
 }
 
 export const LABELS = {
-  [NAMES.login]: 'Login',
-  [NAMES.password]: 'Password',
-  [NAMES.passwordAgain]: 'Password again',
-  [NAMES.firstName]: 'Name',
-  [NAMES.secondName]: 'Surname',
+  [NAMES.login]: 'Логин',
+  [NAMES.password]: 'Пароль',
+  [NAMES.passwordAgain]: 'Подтвердите пароль',
+  [NAMES.firstName]: 'Имя',
+  [NAMES.secondName]: 'Фамилия',
   [NAMES.email]: 'Email',
-  [NAMES.phone]: 'Phone number',
+  [NAMES.phone]: 'Номер телефона',
   [NAMES.displayName]: 'Имя в чате',
   [NAMES.avatar]: 'Аватар',
-  [NAMES.oldPassword]: 'Old password',
-  [NAMES.newPassword]: 'New password',
-  [NAMES.newPasswordAgain]: 'New password again',
-  [NAMES.editProfileBtn]: 'Edit profile',
-  [NAMES.editPasswordBtn]: 'Edit passord',
-  [NAMES.logoutBtn]: 'Log out',
+  [NAMES.oldPassword]: 'Старый пароль',
+  [NAMES.newPassword]: 'Новый пароль',
+  [NAMES.newPasswordAgain]: 'Подтвердите новый пароль',
+  [NAMES.editProfileBtn]: 'Редактировать профиль',
+  [NAMES.editPasswordBtn]: 'Редактировать пароль',
+  [NAMES.logoutBtn]: 'Выйти',
 }
 
 export const IDS = {
