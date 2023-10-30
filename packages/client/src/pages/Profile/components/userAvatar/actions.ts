@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { changeAvatarEndpoint } from '../../../API/endpoints'
-import { IUser } from '../model'
+import { changeAvatarEndpoint } from '../../../../API/endpoints'
+import { IUser } from '../../model'
 
 export const changeUserAvatar = async (file: File): Promise<IUser> => {
   const formData = new FormData()

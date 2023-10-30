@@ -1,5 +1,5 @@
 import { FormEvent, forwardRef, memo, useCallback, useState } from 'react'
-import { IProfileFormInputProps, IUser, getFieldType } from '../model'
+import { IProfileFormInputProps, IUser, getFieldType } from '../../model'
 
 const LabeledInput = forwardRef(function (
   { filedKey, fieldText, user, cn, isActive }: IProfileFormInputProps,

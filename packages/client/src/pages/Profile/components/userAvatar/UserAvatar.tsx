@@ -1,8 +1,8 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react'
 import Mustache from '../mustache/Mustache'
-import { IUser } from '../model'
+import { IUser } from '../../model'
 import { AvatarFormFileds } from './model'
-import { sourceEndpoint } from '../../../API/endpoints'
+import { sourceEndpoint } from '../../../../API/endpoints'
 import { changeUserAvatar } from './actions'
 
 import bem from 'bem-ts'

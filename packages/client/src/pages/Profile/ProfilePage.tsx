@@ -1,5 +1,5 @@
 import { useState, useMemo, memo, useCallback, useRef } from 'react'
-import UserAvatar from './userAvatar/UserAvatar'
+import UserAvatar from './components/userAvatar/UserAvatar'
 
 import bem from 'bem-ts'
 import './styles.scss'
@@ -11,7 +11,7 @@ import {
 } from './model'
 import { userInfo } from './mock'
 import { changePassword, changeUserInfo } from './actions'
-import LabeledInput from './input/LabeledInput'
+import LabeledInput from './components/input/LabeledInput'
 import getImageUrl from '../../utils/getImageUrl'
 
 const ProfilePage = () => {
@@ -138,7 +138,7 @@ const ProfilePage = () => {
                   className={cn('controlAbolution')}
                   type="button"
                   title="Cancel change"
-                  value="Переиначить все или часть"
+                  value="Нажми, чтобы внести изменения"
                 />
                 <input
                   onClick={onAbolution}

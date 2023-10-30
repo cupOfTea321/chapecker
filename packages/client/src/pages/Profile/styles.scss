@@ -18,13 +18,13 @@ $breakpoints: (
 );
 
 $label-selector: "~ ul > li";
-$slider-selector: "~ .slider";
+$slider-selector: "~ .slider .indicator";
 $content-selector: "~ .content > section";
 
 @keyframes content {
     from {
         opacity: 0;
-        transform: translateY(5%);
+        transform: translateY(55%);
     }
 
     to {
@@ -81,17 +81,17 @@ $content-selector: "~ .content > section";
             display: flex;
             justify-content: center;
             width: calc($tab-count * 2);
-            transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
+
 
             .indicator {
                 margin-right: $chess-square-witdh * 8;
                 width: $indicator-width;
-                max-width: 100%;
+                max-width: $indicator-width;
                 height: $indicator-height;
                 background: $dark-chess-square;
                 border-radius: 1px;
+                transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
             }
-
         }
 
         .content {
@@ -220,6 +220,7 @@ $content-selector: "~ .content > section";
         display: flex;
         align-items: center;
         justify-content: space-evenly;
+        gap: 5px;
 
         @media (min-width: 640px) {
             width: 40%;
