@@ -1,22 +1,16 @@
-import Sound from './Sound'
 import {
   AbstractGameObject,
   GameObjectType,
   TGameObjectOptions,
 } from './AbstractGameObject'
-import { soundMap, SoundType, spriteMap, SpriteType } from './assets'
+import { soundMap, spriteMap } from './assets'
 import {
   BEGIN_COORD_X,
   BEGIN_COORD_Y,
   DARK_CHECKER_COLOR,
   LIGHT_CHECKER_COLOR,
-  PLAYER_FIRE_RATE,
-  RADIUS,
   RADIUS_CHECKER,
 } from './const'
-import { createPlayerProjectile } from './Projectile'
-import Sprite from './Sprite'
-import { Vector } from './Vector'
 import { Checker } from './Checker'
 
 type TPlayerOptions = TGameObjectOptions & {
@@ -25,20 +19,6 @@ type TPlayerOptions = TGameObjectOptions & {
 
 export class Checkers extends AbstractGameObject {
   static type = GameObjectType.Player
-
-  private _onFire: (p: AbstractGameObject) => void
-
-  private _elapsedTimeOnFile = 0
-
-  private _idleSprite: Sprite | null = null
-
-  private _fireSound: Sound | null = null
-
-  private _killSound: Sound | null = null
-
-  private _explosionSprite: Sprite | null = null
-
-  private _dead = false
 
   private checkersPlayer = []
   private checkersEnemy = []
@@ -52,19 +32,6 @@ export class Checkers extends AbstractGameObject {
     await soundMap.init()
     await spriteMap.init()
 
-    // for (let i = 0; i <= 7; i++) {
-    //   this.checkersEnemy.push({
-    //     x: x + step / 2 + step * i,
-    //     y: y + step / 2
-    //   })
-    // }
-    // this._fireSound = soundMap.getSoundByName(SoundType.fire)
-    // this._killSound = soundMap.getSoundByName(SoundType.kill)
-
-    // this._idleSprite = await spriteMap.getSpriteByName(SpriteType.player)
-    // this._explosionSprite = await spriteMap.getSpriteByName(
-    //   SpriteType.playerExplosion
-    // )
     return true
   }
 

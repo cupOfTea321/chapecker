@@ -1,8 +1,5 @@
 import SoundMap from '../Engine/SoundMap'
 import SpriteMap from '../Engine/SpriteMap'
-// import spritesUrl from '../../../assets/images/GalagaOriginalMini.png';
-// import fireSoundUrl from '../../../assets/sounds_firing.mp3';
-// import killSoundUrl from '../../../assets/sounds_kill.mp3';
 
 export const enum SpriteType {
   player = 'player',
@@ -19,19 +16,7 @@ export const enum SoundType {
   kill = 'fill',
 }
 
-// const SoundMap = null
-// const SpriteMap = null
 const spritesUrl = null
-const fireSoundUrl = null
-const killSoundUrl = null
-
-export const formation = [
-  [0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0],
-  [0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0],
-  [0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0],
-  [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-]
 
 export const spriteMap = new SpriteMap({
   url: spritesUrl,

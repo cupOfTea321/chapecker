@@ -1,10 +1,5 @@
-import Sound from './Sound'
-import { AbstractGameObject, GameObjectType } from './AbstractGameObject'
-import { soundMap, SoundType, spriteMap, SpriteType } from './assets'
-import { PLAYER_FIRE_RATE } from './const'
-import { createPlayerProjectile } from './Projectile'
-import Sprite from './Sprite'
-import { Vector } from './Vector'
+import { AbstractGameObject } from './AbstractGameObject'
+import { soundMap, spriteMap } from './assets'
 
 type TPlayerOptions = {
   ctx: CanvasRenderingContext2D
@@ -13,7 +8,6 @@ type TPlayerOptions = {
   radius: number
   startAngle: number
   endAngle: number
-  // counterClockwise: number
   color: string
 }
 
@@ -68,55 +62,18 @@ export class Checker extends AbstractGameObject {
     this._ctx.canvas.addEventListener(
       'click',
       function (event) {
-        // const mouse = this._mousePosition(this._ctx.canvas, event)
-        // elements.forEach(function (element) {
-        //   drawElement(element, context)
-        //   if (context.isPointInPath(mouse.x, mouse.y)) {
-        //     console.log(mouse)
-        //   } else {
-        //     console.log('not in path')
-        //   }
-        // })
+        console.log('here')
       },
       false
     )
 
-    // this._fireSound = soundMap.getSoundByName(SoundType.fire)
-    // this._killSound = soundMap.getSoundByName(SoundType.kill)
-
-    // this._idleSprite = await spriteMap.getSpriteByName(SpriteType.player)
-    // this._explosionSprite = await spriteMap.getSpriteByName(
-    //   SpriteType.playerExplosion
-    // )
     return true
   }
-
-  // private _drawCheckers(ctx, y, color, step) {
-  //   ctx.fillStyle = color
-
-  //   for (let i = y; i < 2 * step + y; i += step) {
-  //     for (let j = step / 2; j < 8 * step; j += step) {
-  //       // arc(x, y, radius, startAngle, endAngle, counterclockwise)
-  //       ctx.beginPath()
-  //       ctx.arc(
-  //         this._x,
-  //         this._y,
-  //         this._startAngle,
-  //         this._endAngle,
-  //         this._counterClockwise
-  //       )
-  //       ctx.fill()
-  //     }
-  //   }
-  // }
 
   public update(dt: number): void {
     // if (!this._idleSprite || !this._explosionSprite) {
     //   throw new Error('Не задан спрайт для бездействия игрока')
     // }
-    // this._ctx.beginPath()
-    // this._ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2)
-    // this._ctx.fill()
 
     this.draw()
   }
