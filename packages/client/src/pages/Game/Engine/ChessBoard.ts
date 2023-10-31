@@ -1,38 +1,18 @@
-import Sound from './Sound'
 import {
   AbstractGameObject,
   GameObjectType,
   TGameObjectOptions,
 } from './AbstractGameObject'
-import { soundMap, SoundType, spriteMap, SpriteType } from './assets'
-import {
-  BEGIN_COORD_X,
-  BEGIN_COORD_Y,
-  DARK_CELL_COLOR,
-  LIGHT_CELL_COLOR,
-} from './const'
-import Sprite from './Sprite'
+import { DARK_CELL_COLOR, LIGHT_CELL_COLOR, CHESSBOARD_WIDTH } from './const'
 
-type TPlayerOptions = TGameObjectOptions & {
-  onFire: (p: AbstractGameObject) => void
-}
+type TPlayerOptions = TGameObjectOptions
 
 export class ChessBoard extends AbstractGameObject {
   static type = GameObjectType.Table
 
-  private _ctx: CanvasRenderingContext2D
-
-  private x = BEGIN_COORD_X
-
-  private y = BEGIN_COORD_Y
-
-  private chessBoardWidth = 600
-
-  private chessBoardHeight = 600
-
   private symbolsArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
-  private delta = this.chessBoardWidth / 8
+  private delta = CHESSBOARD_WIDTH / 8
 
   constructor(options: TPlayerOptions) {
     super(options)
@@ -46,10 +26,6 @@ export class ChessBoard extends AbstractGameObject {
   }
 
   public update(dt: number): void {
-    // if (!this._idleSprite || !this._explosionSprite) {
-    //   throw new Error('Не задан спрайт для бездействия игрока')
-    // }
-
     for (let i = 1; i <= 8; i++) {
       for (let j = 1; j <= 8; j++) {
         this.ctx.fillStyle =
@@ -67,7 +43,7 @@ export class ChessBoard extends AbstractGameObject {
       this.ctx.font = '24px serif'
       this.ctx.fillText(item, this.x + this.delta * index + 30, this.y - 20)
       this.ctx.fillText(
-        String(index + 1),
+        String(8 - index),
         this.x - 40,
         this.y + this.delta * index + 45
       )
@@ -77,8 +53,7 @@ export class ChessBoard extends AbstractGameObject {
   }
 
   public override delete() {
-    // this._killSound?.play()
-    // this._dead = true
+    // завершающие действия
   }
 
   protected draw(): void {

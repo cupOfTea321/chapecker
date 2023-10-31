@@ -6,3 +6,5 @@ export const LIGHT_CHECKER_COLOR = '#ddd'
 export const BEGIN_COORD_X = 100
 export const BEGIN_COORD_Y = 100
 export const RADIUS_CHECKER = 30
+export const CHESSBOARD_WIDTH = 600
+export const CHESSBOARD_HEIGHT = 600

@@ -3,7 +3,6 @@ import {
   GameObjectType,
   TGameObjectOptions,
 } from './AbstractGameObject'
-import { soundMap, spriteMap } from './assets'
 import {
   BEGIN_COORD_X,
   BEGIN_COORD_Y,
@@ -13,9 +12,9 @@ import {
 } from './const'
 import { Checker } from './Checker'
 
-type TPlayerOptions = TGameObjectOptions & {
-  onFire: (p: AbstractGameObject) => void
-}
+type TPlayerOptions = TGameObjectOptions
+
+// В Checkers.x, Checkers.y хранится положение канвы
 
 export class Checkers extends AbstractGameObject {
   static type = GameObjectType.Player
@@ -24,58 +23,89 @@ export class Checkers extends AbstractGameObject {
   private checkersEnemy = []
 
   constructor(options: TPlayerOptions) {
-    const { onFire, ...superOptions } = options
-    super(superOptions)
+    super(options)
   }
 
   public async init(): Promise<boolean> {
-    await soundMap.init()
-    await spriteMap.init()
-
+    this.ctx.canvas.onclick = this._userClickHandler.bind(this)
     return true
   }
 
-  private _drawCheckers(ctx, x, y, step, color) {
+  private _createAndDrawCheckers(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    step: number,
+    color: string,
+    ours: boolean
+  ) {
     for (let i = 0; i <= 7; i++) {
-      new Checker({
+      const checker = new Checker({
         ctx: this.ctx,
         x: x + step / 2 + step * i,
         y: y + step / 2,
+        vx: 0,
+        vy: 0,
         radius: RADIUS_CHECKER,
-        startAngle: 0,
-        endAngle: Math.PI * 2,
         color: color,
-      }).init()
+        width: 0,
+        height: 0,
+      })
+      checker.init()
+      if (ours) this.checkersPlayer.push(checker)
+      else this.checkersEnemy.push(checker)
     }
   }
 
-  public update(dt: number): void {
-    // if (!this._idleSprite || !this._explosionSprite) {
-    //   throw new Error('Не задан спрайт для бездействия игрока')
-    // }
+  private _userClickHandler(e: MouseEvent): void {
+    const x = e.clientX - this.x
+    const y = e.clientY - this.y
+    this.selectedChecker?.makeInactive()
 
-    const step = 75
-    this._drawCheckers(
-      this.ctx,
-      BEGIN_COORD_X,
-      BEGIN_COORD_Y,
-      step,
-      DARK_CHECKER_COLOR
-    )
-    this._drawCheckers(
-      this.ctx,
-      BEGIN_COORD_X,
-      BEGIN_COORD_Y + step * 7,
-      step,
-      LIGHT_CHECKER_COLOR
-    )
+    this.selectedChecker = this._findCheckerByCords(x, y)
+    this.selectedChecker?.makeActive()
+  }
+
+  private _findCheckerByCords(x: number, y: number): Checker | null {
+    for (const checker of this.checkersEnemy) {
+      if (checker.pointFromHere(x, y)) return checker
+    }
+    for (const checker of this.checkersPlayer) {
+      if (checker.pointFromHere(x, y)) return checker
+    }
+    return null
+  }
+
+  public update(dt: number): void {
+    const step = 75 // Размер одной клетки
+    if (this.checkersEnemy.length === 0) {
+      console.log('Creating checkers!')
+      this._createAndDrawCheckers(
+        this.ctx,
+        BEGIN_COORD_X,
+        BEGIN_COORD_Y,
+        step,
+        DARK_CHECKER_COLOR,
+        false
+      )
+      this._createAndDrawCheckers(
+        this.ctx,
+        BEGIN_COORD_X,
+        BEGIN_COORD_Y + step * 7,
+        step,
+        LIGHT_CHECKER_COLOR,
+        true
+      )
+    } else {
+      for (const checker of this.checkersEnemy) checker.update(dt)
+      for (const checker of this.checkersPlayer) checker.update(dt)
+    }
 
     this.draw()
   }
 
   public override delete() {
-    this._killSound?.play()
-    this._dead = true
+    // Завершающие действия
   }
 
   protected draw(): void {

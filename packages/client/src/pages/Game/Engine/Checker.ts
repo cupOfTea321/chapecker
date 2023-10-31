@@ -1,73 +1,50 @@
-import { AbstractGameObject } from './AbstractGameObject'
-import { soundMap, spriteMap } from './assets'
+import { AbstractGameObject, TGameObjectOptions } from './AbstractGameObject'
 
-type TPlayerOptions = {
+/**
+ * Определяет расстояние между двумя точками
+ */
+function dist(x1: number, y1: number, x2: number, y2: number): number {
+  return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+}
+
+type TCheckerOptions = TGameObjectOptions & {
   ctx: CanvasRenderingContext2D
   x: number
   y: number
   radius: number
-  startAngle: number
-  endAngle: number
   color: string
 }
 
 export class Checker extends AbstractGameObject {
   private _ctx: CanvasRenderingContext2D
 
-  private _x = 0
-
-  private _y = 0
+  private _active = false
 
   private _radius = 30
 
-  private _startAngle = 0
-
-  private _endAngle = 0
-
   private _color = 'gray'
 
-  private _mousePosition: any
-
-  constructor(options: TPlayerOptions) {
-    const { ctx, x, y, radius, startAngle, endAngle, color } = options
+  constructor(options: TCheckerOptions) {
+    const { ctx, radius, color } = options
     super(options)
     this._ctx = ctx
-    this._x = x
-    this._y = y
     this._radius = radius
-    this._startAngle = startAngle
-    this._endAngle = endAngle
     // this._counterClockwise = counterClockwise
     this._color = color
-    this._mousePosition = this._oMousePos.bind(this)
-  }
-
-  private _oMousePos(canvas, evt) {
-    const ClientRect = canvas.getBoundingClientRect()
-    return {
-      x: Math.round(evt.clientX - ClientRect.left),
-      y: Math.round(evt.clientY - ClientRect.top),
-    }
   }
 
   public async init(): Promise<boolean> {
-    await soundMap.init()
-    await spriteMap.init()
-
-    this._ctx.fillStyle = this._color
-    this._ctx.beginPath()
-    this._ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2)
-    this._ctx.fill()
-
-    this._ctx.canvas.addEventListener(
-      'click',
-      function (event) {
-        console.log('here')
-      },
-      false
-    )
+    this.draw()
 
     return true
+  }
+
+  public makeActive() {
+    this._active = true
+  }
+
+  public makeInactive() {
+    this._active = false
   }
 
   public update(dt: number): void {
@@ -79,11 +56,24 @@ export class Checker extends AbstractGameObject {
   }
 
   public override delete() {
-    this._killSound?.play()
-    this._dead = true
+    // Завершающие действия
   }
 
   protected draw(): void {
-    super.debugDraw('green')
+    this._ctx.shadowColor = 'red'
+    if (this._active) this._ctx.shadowBlur = 10
+    this._ctx.fillStyle = this._color
+    this._ctx.beginPath()
+    this._ctx.arc(this.x, this.y, this._radius, 0, Math.PI * 2)
+    this._ctx.fill()
+    this._ctx.shadowBlur = 0
+  }
+
+  /**
+   * Определяет, лежит ли поданная на вход
+   * точка на шашке в текущем положении
+   */
+  public pointFromHere(x: number, y: number) {
+    return dist(this.x, this.y, x, y) < this._radius
   }
 }
