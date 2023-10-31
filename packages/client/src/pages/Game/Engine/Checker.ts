@@ -16,8 +16,6 @@ type TCheckerOptions = TGameObjectOptions & {
 }
 
 export class Checker extends AbstractGameObject {
-  private _ctx: CanvasRenderingContext2D
-
   private _active = false
 
   private _radius = 30
@@ -25,11 +23,9 @@ export class Checker extends AbstractGameObject {
   private _color = 'gray'
 
   constructor(options: TCheckerOptions) {
-    const { ctx, radius, color } = options
+    const { radius, color } = options
     super(options)
-    this._ctx = ctx
     this._radius = radius
-    // this._counterClockwise = counterClockwise
     this._color = color
   }
 
@@ -48,25 +44,22 @@ export class Checker extends AbstractGameObject {
   }
 
   public update(dt: number): void {
-    // if (!this._idleSprite || !this._explosionSprite) {
-    //   throw new Error('Не задан спрайт для бездействия игрока')
-    // }
-
     this.draw()
   }
 
   public override delete() {
     // Завершающие действия
+    this.hasDelete
   }
 
   protected draw(): void {
-    this._ctx.shadowColor = 'red'
-    if (this._active) this._ctx.shadowBlur = 10
-    this._ctx.fillStyle = this._color
-    this._ctx.beginPath()
-    this._ctx.arc(this.x, this.y, this._radius, 0, Math.PI * 2)
-    this._ctx.fill()
-    this._ctx.shadowBlur = 0
+    this.ctx.shadowColor = 'red'
+    if (this._active) this.ctx.shadowBlur = 10
+    this.ctx.fillStyle = this._color
+    this.ctx.beginPath()
+    this.ctx.arc(this.x, this.y, this._radius, 0, Math.PI * 2)
+    this.ctx.fill()
+    this.ctx.shadowBlur = 0
   }
 
   /**
