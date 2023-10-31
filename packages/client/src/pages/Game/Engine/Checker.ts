@@ -4,6 +4,7 @@ import {
   FRICTION_COEFFICIENT,
   MAXSPEED,
   MAXSPEED_DISTANCE,
+  RADIUS_CHECKER,
 } from './const'
 
 /**
@@ -11,6 +12,13 @@ import {
  */
 function dist(x1: number, y1: number, x2: number, y2: number): number {
   return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+}
+
+/**
+ * Определяет длину вектора
+ */
+function vlength(x: number, y: number) {
+  return dist(0, 0, x, y)
 }
 
 type TCheckerOptions = TGameObjectOptions & {
@@ -105,7 +113,7 @@ export class Checker extends AbstractGameObject {
   public throw(x: number, y: number) {
     this.vx = x - this.x
     this.vy = y - this.y
-    const len = dist(0, 0, this.vx, this.vy)
+    const len = vlength(this.vx, this.vy)
 
     const distToThrowPoint = Math.min(
       MAXSPEED_DISTANCE,
@@ -116,5 +124,58 @@ export class Checker extends AbstractGameObject {
       ((this.vx / len) * MAXSPEED * distToThrowPoint) / MAXSPEED_DISTANCE
     this.vy =
       ((this.vy / len) * MAXSPEED * distToThrowPoint) / MAXSPEED_DISTANCE
+  }
+
+  public isCollision(other: Checker) {
+    // большое расстояние
+    if (dist(this.x, this.y, other.x, other.y) < 2 * RADIUS_CHECKER) {
+      return true
+    }
+    return false
+    // движутся в разных направлениях
+    if (this.x !== other.x) {
+      if (this.x > other.x) {
+        if (this.vx < 0) return true
+      } else {
+        if (this.vx > 0) return true
+      }
+    }
+    if (this.y !== other.y) {
+      if (this.y > other.y) {
+        if (this.vy < 0) return true
+      } else {
+        if (this.vy > 0) return true
+      }
+    }
+    console.log('dg')
+    console.log(this, other)
+    console.log(this.x !== other.x, this.x > other.x, this.vx < 0)
+    console.log(this.y !== other.y, this.y > other.y, this.vy < 0)
+    return false
+  }
+
+  public collide(other: Checker) {
+    // Переходим в систему координат относительно центра other
+    let curvx = this.vx - other.vx,
+      curvy = this.vy - other.vy
+
+    if ((!curvx && !curvy) || !this.isCollision(other)) return // соударение, только если this движется
+
+    const ex = other.x - this.x,
+      ey = other.y - this.y,
+      elen = vlength(ex, ey),
+      elen2 = elen * elen
+    const scalar = curvx * ex + curvy * ey
+    if (scalar < 0) return
+
+    const other_vx = (ex * scalar) / elen2
+    const other_vy = (ey * scalar) / elen2
+    curvx = curvx - other_vx
+    curvy = curvy - other_vy
+
+    this.vx = other.vx + curvx
+    this.vy = other.vy + curvy
+    other.vx += other_vx
+    other.vy += other_vy
   }
 }

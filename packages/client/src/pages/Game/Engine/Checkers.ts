@@ -117,6 +117,26 @@ export class Checkers extends AbstractGameObject {
     } else {
       for (const checker of this.checkersEnemy) checker.update(dt)
       for (const checker of this.checkersPlayer) checker.update(dt)
+
+      // Проверка на соударения
+      for (let i = 0; i < this.checkersPlayer.length; i++) {
+        for (let j = 0; j < this.checkersPlayer.length; j++) {
+          if (i == j) continue
+          this.checkersPlayer[i].collide(this.checkersPlayer[j])
+        }
+        for (let j = 0; j < this.checkersEnemy.length; j++) {
+          this.checkersPlayer[i].collide(this.checkersEnemy[j])
+        }
+      }
+      for (let i = 0; i < this.checkersEnemy.length; i++) {
+        for (let j = 0; j < this.checkersEnemy.length; j++) {
+          if (i == j) continue
+          this.checkersEnemy[i].collide(this.checkersEnemy[j])
+        }
+        for (let j = 0; j < this.checkersEnemy.length; j++) {
+          this.checkersEnemy[i].collide(this.checkersPlayer[j])
+        }
+      }
     }
 
     this.draw()
