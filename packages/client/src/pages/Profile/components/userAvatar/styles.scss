@@ -42,10 +42,9 @@ $circle: 40px;
 }
 
 .userAvatar {
-    margin: 20px 0;
+    position: absolute;
     display: flex;
     flex-direction: column;
-    align-items: center;
 
     &__picture {
         margin: 10px;
@@ -57,32 +56,33 @@ $circle: 40px;
 
     &__left,
     &__right {
-        display: block;
-        content: "XXXX";
+        content: "";
         position: absolute;
         height: 50px;
-        width: 150px;
-        border-bottom: 5px solid $mColor;
+        min-width: 150px;
+        border-radius: 50%;
+        border-bottom: 5px solid #000;
         animation-duration: 1.5s;
         animation-timing-function: ease-in-out;
         animation-delay: 1s;
         animation-iteration-count: infinite;
         animation-direction: alternate;
+
+        @media(max-width: 450px) {
+            max-width: 100px;
+        }
     }
 
     &__left {
-        top: 145px;
-        left: 195px;
-        border-radius: 0 0 0 1000%;
-        transform: rotate(1deg);
+        top: 80px;
+        left: -70px;
+        transform: rotate(5deg);
         animation-name: shakeL;
-
     }
 
     &__right {
-        top: 140px;
-        right: 195px;
-        border-radius: 0 0 1000% 0;
+        top: 80px;
+        right: -70px;
         transform: rotate(-5deg);
         animation-name: shakeR;
     }

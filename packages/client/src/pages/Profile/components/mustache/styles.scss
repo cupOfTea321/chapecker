@@ -7,8 +7,7 @@ $circle: 40px;
 
 .moustache {
     &__container {
-        display: flex;
-        margin: auto;
+        margin: auto auto;
         width: $circle;
         height: $circle * 2;
     }

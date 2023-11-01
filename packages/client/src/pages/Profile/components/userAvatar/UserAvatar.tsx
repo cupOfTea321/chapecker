@@ -2,7 +2,7 @@ import { ChangeEvent, memo, useCallback, useState } from 'react'
 import Mustache from '../mustache/Mustache'
 import { IUser } from '../../model'
 import { AvatarFormFileds } from './model'
-import { sourceEndpoint } from '../../../../API/endpoints'
+import { baseURL, sourceURL } from '../../../../API/endpoints'
 import { changeUserAvatar } from './actions'
 
 import bem from 'bem-ts'
@@ -12,12 +12,13 @@ const UserAvatar = ({ avatarSrc }: { avatarSrc: IUser['avatar'] }) => {
   const [avatrSource, setAvatarSource] = useState(avatarSrc)
   const deafultAvatar = !avatrSource && <Mustache />
   const cn = bem('userAvatar')
+
   const userAvatr = avatrSource && (
     <>
       <img
         className={cn('picture')}
         alt="User avatar"
-        src={sourceEndpoint.concat(avatrSource)}
+        src={baseURL.concat('/', sourceURL, '/', avatrSource)}
       />
       <span className={cn('left')}></span>
       <span className={cn('right')}></span>

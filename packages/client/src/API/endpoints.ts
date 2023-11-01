@@ -1,5 +1,5 @@
-const baseEndpoint = 'ya-praktikum.tech/api/v2'
-export const sourceEndpoint = baseEndpoint.concat('/resources/')
-export const changeAvatarEndpoint = baseEndpoint.concat('/user/profile/avatar')
-export const changeProfileEndpoint = baseEndpoint.concat('/user/profile')
-export const changePasswordEndpoint = baseEndpoint.concat('/user/password')
+export const baseURL = 'https://ya-praktikum.tech/api/v2'
+export const sourceURL = 'resources'
+export const changeAvatarURL = 'user/profile/avatar'
+export const changeProfileURL = 'user/profile'
+export const changePasswordURL = 'user/password'

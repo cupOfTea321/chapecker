@@ -52,6 +52,10 @@ $content-selector: "~ .content > section";
 }
 
 .profile {
+    &__header {
+        text-align: center;
+    }
+
     &--chesBackgrounded {
         background-image:
             linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh),
@@ -61,6 +65,22 @@ $content-selector: "~ .content > section";
         background-repeat: repeat-x;
         background-size: $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh;
         height: $chess-square-witdh * 3;
+    }
+
+    &__avatarContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto auto;
+        width: 200px;
+        height: 200px;
+    }
+
+    &__navigationList {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
     }
 
     &__container {
@@ -125,15 +145,6 @@ $content-selector: "~ .content > section";
         }
 
         @media (max-width: map-get($breakpoints, small)) {
-            ul li label {
-                padding: 5px;
-                border-radius: 5px;
-
-                span {
-                    display: none;
-                }
-            }
-
             .slider {
                 display: none;
             }
@@ -143,119 +154,9 @@ $content-selector: "~ .content > section";
 
                 section h2 {
                     display: block;
+                    margin: 10px;
                 }
             }
-        }
-    }
-
-    &__header {
-        text-align: center;
-    }
-
-    &__navigationList {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    &__navigationItemLabel {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    &__tabPicture {
-        width: 32px;
-        height: 32px;
-    }
-
-    &__dataForm {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    &__fieldset {
-        width: 100%;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        border: 1px solid black;
-        padding: 5px;
-        border-radius: 5px;
-
-        @media (min-width: 1080px) {
-            width: 40%;
-        }
-    }
-
-    &__legend {
-        padding: 0 10px;
-        text-transform: capitalize;
-        color: lighten($dark-theme-background-lighter, 25%);
-    }
-
-    &__input {
-        padding: 5px;
-        width: 95%;
-        background-color: transparent;
-        color: $dark-theme-text-main;
-        border: 0;
-
-        &:focus {
-            outline: none;
-        }
-
-        &--active {
-            align-self: center;
-            background-color: $dark-theme-background-lighter;
-        }
-    }
-
-    &__control {
-        margin: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        gap: 5px;
-
-        @media (min-width: 640px) {
-            width: 40%;
-        }
-    }
-
-    &__controlAbolution {
-        cursor: pointer;
-        border: none;
-        border-radius: 10px;
-        padding: 5px 20px;
-        font: inherit;
-        background-color: $secondary-main;
-        box-shadow: 0 3px $dark-theme-text-shadow;
-        color: $dark-theme-text-main;
-        text-shadow: 1px 1px $dark-theme-text-shadow;
-
-        &:active {
-            background-color: $primary-darker;
-        }
-    }
-
-    &__controlCofirm {
-        cursor: pointer;
-        border: none;
-        border-radius: 10px;
-        padding: 5px 20px;
-        font: inherit;
-        background-color: $primary-main;
-        box-shadow: 0 3px $dark-theme-text-shadow;
-        color: $dark-theme-text-main;
-        text-shadow: 1px 1px $dark-theme-text-shadow;
-
-        &:active {
-            background-color: $primary-darker;
         }
     }
 }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { changeAvatarEndpoint } from '../../../../API/endpoints'
+import { baseURL, changeAvatarURL } from '../../../../API/endpoints'
 import { IUser } from '../../model'
 
 export const changeUserAvatar = async (file: File): Promise<IUser> => {
@@ -8,7 +8,7 @@ export const changeUserAvatar = async (file: File): Promise<IUser> => {
 
   return axios({
     method: 'PUT',
-    url: changeAvatarEndpoint,
+    url: baseURL.concat('/', changeAvatarURL),
     timeout: 10000,
     headers: {
       'Access-Control-Allow-Origin': origin,
