@@ -181,6 +181,10 @@ export class Checkers extends AbstractGameObject {
           this.setGameState(GameState.playerTurn)
         }
       }
+
+      if (this.isGameOver()) {
+        this.setGameState(GameState.gameOver)
+      }
     }
 
     this.draw()
@@ -244,5 +248,9 @@ export class Checkers extends AbstractGameObject {
         this.checkersEnemy = this.checkersEnemy.filter(obj => obj !== checker)
       }
     }
+  }
+
+  public isGameOver() {
+    return this.checkersEnemy.length === 0 || this.checkersPlayer.length === 0
   }
 }

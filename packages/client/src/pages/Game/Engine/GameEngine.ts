@@ -97,6 +97,7 @@ export class GameEngine {
     this._bgObjects.forEach(obj => {
       obj.delete()
     })
+
     // window.removeEventListener('keydown', this._keyDownHandlerWithContext)
     // window.removeEventListener('keyup', this._keyUpHandlerWithContext)
     // Устраняет залипание клавиш, если были нажаты в момент остановки
@@ -255,24 +256,17 @@ export class GameEngine {
     this._clear()
     this._garbageCollector()
 
-    // const isGameOver = true
-    // const hasPlayers = true
-
     for (let i = 0; i < this._bgObjects.length; i += 1) {
       this._bgObjects[i].update(dt)
     }
 
-    // const isGameStateRun = this._gameState === GameState.run
+    const isGameOver = this._gameState === GameState.gameOver
 
-    // if (hasPlayers && hasSwarm && isGameStateRun) {
-    requestAnimationFrame(this._gameLoop.bind(this))
-    // } else {
-    //   this._gameState = GameState.gameOver
-    //   this._onGameOver(this._score)
-    // }
-    // if (isGameOver) {
-    //   this.stop()
-    // }
+    if (!isGameOver) requestAnimationFrame(this._gameLoop.bind(this))
+    else {
+      this._onGameOver(this._score)
+      this.stop()
+    }
   }
 
   /**
