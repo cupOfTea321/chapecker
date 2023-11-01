@@ -32,6 +32,8 @@ export class Checkers extends AbstractGameObject {
   public async init(): Promise<boolean> {
     this.ctx.canvas.onclick = this._userClickHandler.bind(this)
     this.ctx.canvas.oncontextmenu = this._userRightClickHandler.bind(this)
+    document.body.onscroll = this._recalculateBoundries.bind(this)
+    document.body.onresize = this._recalculateBoundries.bind(this)
 
     return true
   }
@@ -67,6 +69,16 @@ export class Checkers extends AbstractGameObject {
     e.preventDefault()
     this.selectedChecker?.makeInactive()
     this.selectedChecker = null
+  }
+
+  private _userScrollAndResizeHandler(): void {
+    this._recalculateBoundries()
+  }
+
+  private _recalculateBoundries(): void {
+    const { x: canvX, y: canvY } = this.ctx.canvas.getBoundingClientRect()
+    this.x = canvX
+    this.y = canvY
   }
 
   private _userClickHandler(e: MouseEvent): void {
