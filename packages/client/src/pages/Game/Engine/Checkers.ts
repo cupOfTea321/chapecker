@@ -166,6 +166,8 @@ export class Checkers extends AbstractGameObject {
       console.log('Creating checkers!')
       this._createAndDrawAllCheckers()
     } else {
+      this.garbageCollector()
+
       for (const checker of this.checkersEnemy) checker.update(dt)
       for (const checker of this.checkersPlayer) checker.update(dt)
 
@@ -209,7 +211,7 @@ export class Checkers extends AbstractGameObject {
         if (i == j) continue
         this.checkersEnemy[i].collide(this.checkersEnemy[j])
       }
-      for (let j = 0; j < this.checkersEnemy.length; j++) {
+      for (let j = 0; j < this.checkersPlayer.length; j++) {
         this.checkersEnemy[i].collide(this.checkersPlayer[j])
       }
     }
@@ -228,5 +230,19 @@ export class Checkers extends AbstractGameObject {
 
   protected draw(): void {
     this.ctx.strokeText(this.getGameState().toString(), 0, 50)
+  }
+
+  public garbageCollector() {
+    console.log(1)
+    for (const checker of this.checkersPlayer) {
+      if (checker.isOutOfBoundaries()) {
+        this.checkersPlayer = this.checkersPlayer.filter(obj => obj !== checker)
+      }
+    }
+    for (const checker of this.checkersEnemy) {
+      if (checker.isOutOfBoundaries()) {
+        this.checkersEnemy = this.checkersEnemy.filter(obj => obj !== checker)
+      }
+    }
   }
 }

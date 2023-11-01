@@ -1,6 +1,10 @@
 import { AbstractGameObject, TGameObjectOptions } from './AbstractGameObject'
 import {
+  BEGIN_COORD_X,
+  BEGIN_COORD_Y,
   CHECKER_SHADOW_COLOR,
+  CHESSBOARD_HEIGHT,
+  CHESSBOARD_WIDTH,
   FRICTION_COEFFICIENT,
   MAXSPEED,
   MAXSPEED_DISTANCE,
@@ -181,5 +185,22 @@ export class Checker extends AbstractGameObject {
 
   public isStill(): boolean {
     return this.vx === 0 && this.vy === 0
+  }
+
+  public isOutOfBoundaries() {
+    // Центр пешки вне доски
+    return (
+      this.x < BEGIN_COORD_X ||
+      this.x > BEGIN_COORD_X + CHESSBOARD_WIDTH ||
+      this.y < BEGIN_COORD_Y ||
+      this.y > BEGIN_COORD_Y + CHESSBOARD_HEIGHT
+    )
+
+    /* Пешка коснулась края доски
+    return (this.x - RADIUS_CHECKER < BEGIN_COORD_X 
+         || this.x + RADIUS_CHECKER > BEGIN_COORD_X + CHESSBOARD_WIDTH
+         || this.y - RADIUS_CHECKER < BEGIN_COORD_Y
+         || this.y + RADIUS_CHECKER > BEGIN_COORD_Y + CHESSBOARD_HEIGHT)
+    */
   }
 }
