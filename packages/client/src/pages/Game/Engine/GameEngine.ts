@@ -6,6 +6,7 @@ import {
   BEGIN_COORD_Y,
   CHESSBOARD_WIDTH,
   CHESSBOARD_HEIGHT,
+  GameState,
 } from './const'
 
 export type TGameEngineOptions = {
@@ -18,13 +19,6 @@ export type TGameEngineOptions = {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {}
-
-enum GameState {
-  init,
-  ready,
-  run,
-  gameOver,
-}
 
 export class GameEngine {
   static gameAreaWidth = 800
@@ -53,10 +47,6 @@ export class GameEngine {
 
   private _debug: boolean
 
-  // private _keyDownHandlerWithContext: (e: KeyboardEvent) => void
-
-  // private _keyUpHandlerWithContext: (e: KeyboardEvent) => void
-
   constructor({
     ctx,
     ref,
@@ -73,9 +63,6 @@ export class GameEngine {
 
     this._onScoreUpdate = onScoreUpdate ?? noop
     this._onGameOver = onGameOver ?? noop
-
-    // this._keyDownHandlerWithContext = this._keyDownHandler.bind(this)
-    // this._keyUpHandlerWithContext = this._keyUpHandler.bind(this)
   }
 
   /**
@@ -83,7 +70,7 @@ export class GameEngine {
    */
   public start() {
     const run = () => {
-      this._gameState = GameState.run
+      this._gameState = GameState.playerTurn
 
       // Запускаем основной цикл игры
       this._lastTime = performance.now()
@@ -101,18 +88,15 @@ export class GameEngine {
       this._score = 0
       this.init().then(run)
     }
-    // Пусть при повторном старте происходит перезапуск, а не ошибка
-    // else {
-    //   throw new Error(
-    //     `Ошибка старта игры, неверное состояние ${this._gameState}`
-    //   )
-    // }
   }
 
   /**
    * Остановка игры
    */
   public stop() {
+    this._bgObjects.forEach(obj => {
+      obj.delete()
+    })
     // window.removeEventListener('keydown', this._keyDownHandlerWithContext)
     // window.removeEventListener('keyup', this._keyUpHandlerWithContext)
     // Устраняет залипание клавиш, если были нажаты в момент остановки
@@ -187,6 +171,12 @@ export class GameEngine {
         vy: 0,
         width: 0,
         height: 0,
+        getGameState: () => {
+          return this._gameState
+        },
+        setGameState: (state: GameState) => {
+          this._gameState = state
+        },
       })
     )
 

@@ -178,4 +178,8 @@ export class Checker extends AbstractGameObject {
     other.vx += other_vx
     other.vy += other_vy
   }
+
+  public isStill(): boolean {
+    return this.vx === 0 && this.vy === 0
+  }
 }

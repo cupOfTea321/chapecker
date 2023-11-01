@@ -13,5 +13,15 @@ export const CHESSBOARD_HEIGHT = 600
 export const MAXSPEED = 1000
 export const MAXSPEED_DISTANCE = MAXSPEED * 0.3
 
+export enum GameState {
+  init,
+  ready,
+  playerTurn,
+  playerTurnAnimation,
+  enemyTurn,
+  enemyTurnAnimation,
+  gameOver,
+}
+
 // Physics
 export const FRICTION_COEFFICIENT = 1.4

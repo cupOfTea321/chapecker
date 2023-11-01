@@ -8,7 +8,6 @@ const enum Status {
   start = 'start',
   gameOver = 'game-over',
   run = 'run',
-  animation = 'animation', // user can't interact with the app
 }
 
 const Game = () => {
