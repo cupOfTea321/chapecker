@@ -1,7 +1,6 @@
 export * from './AbstractGameObject'
 export * from './const'
 export * from './GameEngine'
-export * from './Table'
 export * from './ChessBoard'
 export * from './Checkers'
 export * from './Checker'

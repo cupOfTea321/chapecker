@@ -12,7 +12,6 @@ import {
   LIGHT_CHECKER_COLOR,
   RADIUS_CHECKER,
 } from './const'
-// import { Vector } from './Vector'
 import { Checker } from './Checker'
 
 type TPlayerOptions = TGameObjectOptions & {
@@ -59,6 +58,9 @@ export class Checkers extends AbstractGameObject {
     return true
   }
 
+  /**
+   * Создает все пешки
+   */
   private _createAndDrawAllCheckers() {
     const step = CHESSBOARD_WIDTH / 8
     this._createAndDrawColoredCheckers(
@@ -79,6 +81,9 @@ export class Checkers extends AbstractGameObject {
     )
   }
 
+  /**
+   * Создает пешки одной из сторон
+   */
   private _createAndDrawColoredCheckers(
     ctx: CanvasRenderingContext2D,
     x: number,
@@ -96,7 +101,6 @@ export class Checkers extends AbstractGameObject {
         vy: 0,
         radius: RADIUS_CHECKER,
         color: color,
-
         width: 0,
         height: 0,
       })
@@ -237,7 +241,6 @@ export class Checkers extends AbstractGameObject {
   }
 
   public garbageCollector() {
-    console.log(1)
     for (const checker of this.checkersPlayer) {
       if (checker.isOutOfBoundaries()) {
         this.checkersPlayer = this.checkersPlayer.filter(obj => obj !== checker)

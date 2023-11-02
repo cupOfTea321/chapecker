@@ -84,39 +84,4 @@ export abstract class AbstractGameObject implements IGameObject {
    * Отрисовка объекта
    */
   protected abstract draw(): void
-
-  /**
-   * Рисует отладочную рамку объекта.
-   * Должен вызывать в методе update объекта.
-   *
-   * @param color Цвет отладочной рамки объекта
-   */
-  protected debugDraw(color: string) {
-    if (this.debug) {
-      this.ctx.strokeStyle = color
-      this.ctx.strokeRect(this.x, this.y, this.width, this.height)
-    }
-  }
 }
-
-// /**
-//  * Проверяет на пересечение два объекта
-//  *
-//  * @param obj1 - Первый проверяемый объект
-//  * @param obj2 - Второй проверяемый объект
-//  * @returns Результат проверки true - есть пересечение иначе false
-//  */
-// export function isRectCollide(
-//   obj1: AbstractGameObject,
-//   obj2: AbstractGameObject
-// ): boolean {
-//   if (
-//     obj1.x + obj1.width >= obj2.x &&
-//     obj1.x <= obj2.x + obj2.width &&
-//     obj1.y + obj1.height >= obj2.y &&
-//     obj1.y <= obj2.y + obj2.width
-//   ) {
-//     return true
-//   }
-//   return false
-// }

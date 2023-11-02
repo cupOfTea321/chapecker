@@ -44,11 +44,8 @@ const Game = () => {
       onGameOver(newScore) {
         setGameStatus(Status.gameOver)
         setScore(newScore)
-        // leaderboardService.setCSRFToken(token)
-        // leaderboardService.addToLeaderboard({ score: newScore })
       },
     })
-    console.log('context', ctx)
     gameEngine.init()
   }, [canvasRef, gameRef])
 

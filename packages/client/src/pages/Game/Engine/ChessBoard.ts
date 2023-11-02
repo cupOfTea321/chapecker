@@ -11,8 +11,6 @@ type TPlayerOptions = TGameObjectOptions
 export class ChessBoard extends AbstractGameObject {
   static type = GameObjectType.Table
 
-  // private _ctx: CanvasRenderingContext2D
-
   private symbolsArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
   private delta = CHESSBOARD_WIDTH / 8
@@ -22,17 +20,14 @@ export class ChessBoard extends AbstractGameObject {
   }
 
   public async init(): Promise<boolean> {
-    // await soundMap.init()  инициализатор звуков на будущее (если понадобится)
-    // await spriteMap.init() инициализатор спрайтов
-
     return true
   }
 
-  public update(/*dt: number*/): void {
-    // if (!this._idleSprite || !this._explosionSprite) {
-    //   throw new Error('Не задан спрайт для бездействия игрока')
-    // }
+  public update(): void {
+    this.draw()
+  }
 
+  protected draw(): void {
     for (let i = 1; i <= 8; i++) {
       for (let j = 1; j <= 8; j++) {
         this.ctx.fillStyle =
@@ -55,15 +50,5 @@ export class ChessBoard extends AbstractGameObject {
         this.y + this.delta * index + 45
       )
     })
-
-    this.draw()
-  }
-
-  public override delete() {
-    // завершающие действия (например, звук)
-  }
-
-  protected draw(): void {
-    super.debugDraw('green')
   }
 }

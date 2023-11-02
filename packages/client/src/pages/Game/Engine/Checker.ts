@@ -41,17 +41,12 @@ export class Checker extends AbstractGameObject {
     const { radius, color } = options
     super(options)
     this._radius = radius
-    // this._counterClockwise = counterClockwise
     this._color = color
   }
 
   public async init(): Promise<boolean> {
     this.draw()
 
-    // this._idleSprite = await spriteMap.getSpriteByName(SpriteType.player)
-    // this._explosionSprite = await spriteMap.getSpriteByName(
-    //   SpriteType.playerExplosion
-    // )
     return true
   }
 
@@ -73,23 +68,10 @@ export class Checker extends AbstractGameObject {
       if (Math.abs(this.vy) < 5) this.vy = 0
     }
 
-    // if (!this._idleSprite || !this._explosionSprite) {
-    //   throw new Error('Не задан спрайт для бездействия игрока')
-    // }
-    // this.ctx.beginPath()
-    // this.ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2)
-    // this.ctx.fill()
-
     this.draw()
   }
 
-  public override delete() {
-    // Завершающие действия
-  }
-
   protected draw(): void {
-    // super.debugDraw('green')
-
     this.ctx.shadowColor = CHECKER_SHADOW_COLOR
     if (this._active) {
       this.ctx.lineWidth = 5
@@ -114,6 +96,10 @@ export class Checker extends AbstractGameObject {
     return dist(this.x, this.y, x, y) < this._radius
   }
 
+  /**
+   * Кидает эту пешку в направлении точки (x, y) с силой,
+   * пропорциональной расстоянию до этой точки
+   */
   public throw(x: number, y: number) {
     this.vx = x - this.x
     this.vy = y - this.y
@@ -196,7 +182,8 @@ export class Checker extends AbstractGameObject {
       this.y > BEGIN_COORD_Y + CHESSBOARD_HEIGHT
     )
 
-    /* Пешка коснулась края доски
+    /* 
+    // Пешка коснулась края доски
     return (this.x - RADIUS_CHECKER < BEGIN_COORD_X 
          || this.x + RADIUS_CHECKER > BEGIN_COORD_X + CHESSBOARD_WIDTH
          || this.y - RADIUS_CHECKER < BEGIN_COORD_Y

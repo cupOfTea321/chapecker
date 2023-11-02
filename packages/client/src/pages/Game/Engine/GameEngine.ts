@@ -80,7 +80,7 @@ export class GameEngine {
     if (this._gameState === GameState.ready) {
       // Первый запуск
       run()
-    } /*if (this._gameState === GameState.gameOver)*/ else {
+    } else {
       // Перезапуск
       this.emergencyStop()
       this._objects = []
@@ -97,13 +97,6 @@ export class GameEngine {
     this._bgObjects.forEach(obj => {
       obj.delete()
     })
-
-    // window.removeEventListener('keydown', this._keyDownHandlerWithContext)
-    // window.removeEventListener('keyup', this._keyUpHandlerWithContext)
-    // Устраняет залипание клавиш, если были нажаты в момент остановки
-    // this._playerAction.fire = false
-    // this._playerAction.left = false
-    // this._playerAction.right = false
   }
 
   /**
@@ -198,52 +191,6 @@ export class GameEngine {
     return true
   }
 
-  // /**
-  //  * Обработчики нажатия клавиши
-  //  *
-  //  * @param param0 - Событие клавиатуры
-  //  */
-  // private _keyDownHandler({ code }: KeyboardEvent) {
-  //   switch (code) {
-  //     case 'ArrowLeft':
-  //     case 'KeyA':
-  //       this._playerAction.left = true
-  //       break
-  //     case 'ArrowRight':
-  //     case 'KeyD':
-  //       this._playerAction.right = true
-  //       break
-  //     case 'Space':
-  //       this._playerAction.fire = true
-  //       break
-  //     default:
-  //       break
-  //   }
-  // }
-
-  // /**
-  //  * Обработчики отпускания клавиши
-  //  *
-  //  * @param param0 - Событие клавиатуры
-  //  */
-  // private _keyUpHandler({ code }: KeyboardEvent) {
-  //   switch (code) {
-  //     case 'ArrowLeft':
-  //     case 'KeyA':
-  //       this._playerAction.left = false
-  //       break
-  //     case 'ArrowRight':
-  //     case 'KeyD':
-  //       this._playerAction.right = false
-  //       break
-  //     case 'Space':
-  //       this._playerAction.fire = false
-  //       break
-  //     default:
-  //       break
-  //   }
-  // }
-
   /**
    * Главный игровой цикл.
    *
@@ -254,7 +201,6 @@ export class GameEngine {
     this._lastTime = nowTime
 
     this._clear()
-    this._garbageCollector()
 
     for (let i = 0; i < this._bgObjects.length; i += 1) {
       this._bgObjects[i].update(dt)
@@ -268,45 +214,6 @@ export class GameEngine {
       this.stop()
     }
   }
-
-  /**
-   * Удаляет игровые объекта помеченные на удаление
-   */
-  private _garbageCollector() {
-    // let objectCount = this._objects.length
-    // let deleteObjectCount = 0
-    // for (let i = 0; i < objectCount; i += 1) {
-    //   const object = this._objects[i]
-    //   if (object instanceof Swarm) {
-    //     // Если объект рой, запускаем внутренний garbageCollector
-    //     object.garbageCollector()
-    //   }
-    //   if (object.hasDelete) {
-    //     this._objects.push(...this._objects.splice(i, 1))
-    //     objectCount -= 1
-    //     deleteObjectCount += 1
-    //   }
-    // }
-    // this._objects.splice(objectCount, deleteObjectCount)
-  }
-
-  // /**
-  //  * Проверяет объект на нахождение в границах игрового поля
-  //  *
-  //  * @param position - Позиция проверяемого объекта
-  //  * @param width - Ширина проверяемого объекта
-  //  * @param height - Высота проверяемого объекта
-  //  * @returns Возражает true если объект находится за границами игрового поля
-  //  */
-  // private _outOfBoundary(position: Vector, width: number, height: number) {
-  //   if (position.y + height <= 0 || position.y >= GameEngine.gameAreaHeight) {
-  //     return true
-  //   }
-  //   if (position.x + width <= 0 || position.x >= GameEngine.gameAreaWidth) {
-  //     return true
-  //   }
-  //   return false
-  // }
 
   /**
    * Очистка игрового поля
