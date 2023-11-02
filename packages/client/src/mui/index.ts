@@ -1,18 +1,4 @@
 import { createTheme } from '@mui/material'
-interface ThemeOptions {
-  palette?: {
-    primary?: {
-      main: string
-    }
-    secondary?: {
-      main: string
-    }
-  }
-  typography?: {
-    fontFamily?: string
-    fontSize?: number
-  }
-}
 
 export const theme = createTheme({
   typography: {
@@ -24,24 +10,7 @@ export const theme = createTheme({
     // h5: {fontSize: {lg: '24px', md: '20px', sm: '15px', xs: '10px'}},
     // h6: {fontSize: {lg: '20px', md: '16px', sm: '12px', xs: '8px'}},
   },
-  palette: {
-    mainWhite: {
-      main: '#FEFDFD',
-    },
-    mainBlue: {
-      main: '#3278FF',
-    },
-    mainBlack: {
-      main: '#353535',
-    },
-    lightGrey: {
-      main: '#F0F0F0',
-    },
-    darkGrey: {
-      main: '#8A8A8A',
-    },
-  },
-} as ThemeOptions)
+})
 
 theme.typography.h1 = {
   fontSize: '96px',
