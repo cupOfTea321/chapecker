@@ -167,7 +167,6 @@ export class Checkers extends AbstractGameObject {
 
   public update(dt: number): void {
     if (this.checkersEnemy.length === 0) {
-      console.log('Creating checkers!')
       this._createAndDrawAllCheckers()
     } else {
       this.garbageCollector()

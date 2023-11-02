@@ -117,30 +117,9 @@ export class Checker extends AbstractGameObject {
   }
 
   public isCollision(other: Checker) {
-    // большое расстояние
     if (dist(this.x, this.y, other.x, other.y) < 2 * RADIUS_CHECKER) {
       return true
     }
-    return false
-    // движутся в разных направлениях
-    if (this.x !== other.x) {
-      if (this.x > other.x) {
-        if (this.vx < 0) return true
-      } else {
-        if (this.vx > 0) return true
-      }
-    }
-    if (this.y !== other.y) {
-      if (this.y > other.y) {
-        if (this.vy < 0) return true
-      } else {
-        if (this.vy > 0) return true
-      }
-    }
-    console.log('dg')
-    console.log(this, other)
-    console.log(this.x !== other.x, this.x > other.x, this.vx < 0)
-    console.log(this.y !== other.y, this.y > other.y, this.vy < 0)
     return false
   }
 
