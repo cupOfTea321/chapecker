@@ -3,9 +3,15 @@ import { FormEvent, memo } from 'react'
 import bem from 'bem-ts'
 import './styles.scss'
 
-type TAddMessageFrameProps = { inputName: string, onAddMessage: (e: FormEvent) => void }
+type TAddMessageFrameProps = {
+  inputName: string
+  onAddMessage: (e: FormEvent) => void
+}
 
-const AddMessageFrame = ({ inputName, onAddMessage }: TAddMessageFrameProps) => {
+const AddMessageFrame = ({
+  inputName,
+  onAddMessage,
+}: TAddMessageFrameProps) => {
   const cn = bem('addMessageFrame')
 
   return (

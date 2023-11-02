@@ -21,7 +21,8 @@ const ForumDashboard = () => {
       <h1 hidden>Форум игры Шашки Чапаева</h1>
       <div className={cn('container')}>
         {tabsArr.map((tab, i) => (
-          <input key={tab.split(' ').join('')}
+          <input
+            key={tab.split(' ').join('')}
             hidden
             type="radio"
             id={tab.split(' ').join('')}
