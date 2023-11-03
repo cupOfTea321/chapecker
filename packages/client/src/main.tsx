@@ -4,6 +4,7 @@ import App from './App'
 import './styles/index.css'
 import { ThemeProvider } from '@mui/material'
 import { theme } from './mui'
+import './index.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

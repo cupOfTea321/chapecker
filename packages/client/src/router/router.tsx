@@ -30,5 +30,5 @@ export const routes = [
   { path: '/game', element: <GamePage />, nodeRef: createRef() },
   { path: '/500', element: <Error500 />, nodeRef: createRef() },
   { path: '/404', element: <Error404 />, nodeRef: createRef() },
-  { path: '/*', element: <Navigate to="/404" replace />, nodeRef: createRef() },
+  { path: '*', element: <Navigate to="/404" replace />, nodeRef: createRef() },
 ]

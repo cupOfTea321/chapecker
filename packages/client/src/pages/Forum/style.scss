@@ -1,0 +1,222 @@
+@import '../../App.scss';
+
+$chess-square-witdh: 30px;
+$tab-count: 2;
+
+$accent: $main-background-color;
+$accent-inactive: desaturate($accent, 85%);
+$secondary: $accent-inactive;
+
+$tab-count: 2;
+$indicator-width: 50px;
+$indicator-height: 4px;
+
+$breakpoints: (
+    medium: 840px,
+    small: 450px
+);
+
+$label-selector: "~ ul > li";
+$slider-selector: "~ .slider";
+$content-selector: "~ .content > section";
+
+@keyframes content {
+    from {
+        opacity: 0;
+        transform: translateY(5%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+@mixin tabs() {
+    @for $i from 1 through $tab-count {
+        &:nth-of-type(#{$i}):checked {
+            #{$label-selector}:nth-child(#{$i}) {
+                @content;
+            }
+
+            #{$slider-selector} {
+                transform: translateX(calc($chess-square-witdh * 3 * ($i - 1)));
+            }
+
+            #{$content-selector}:nth-child(#{$i}) {
+                display: block;
+            }
+        }
+    }
+}
+
+.forumDashboard {
+    background: $main-background-color;
+
+    &--chesBackgrounded {
+        background-image:
+            linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh),
+            linear-gradient(90deg, $brigth-chess-square $chess-square-witdh, $dark-chess-square $chess-square-witdh),
+            linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh);
+        background-position: 0 0, 0 $chess-square-witdh, 0 $chess-square-witdh * 2;
+        background-repeat: repeat-x;
+        background-size: $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh;
+        height: $chess-square-witdh * 3;
+    }
+
+    &__container {
+        padding: 25px;
+        top: $chess-square-witdh;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        background: $secondary-background-color;
+        width: 80%;
+        min-height: 80vh;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        border-radius: 5px;
+        min-width: calc($tab-count * 60px);
+
+        .slider {
+            position: relative;
+            width: calc($tab-count * 2);
+            transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
+
+            .indicator {
+                margin-left: $chess-square-witdh;
+                position: relative;
+                width: $indicator-width;
+                max-width: 100%;
+                height: $indicator-height;
+                background: $dark-chess-square;
+                border-radius: 1px;
+            }
+
+        }
+
+        .content {
+            margin-top: 30px;
+
+            section {
+                display: none;
+
+                animation: {
+                    name: content;
+                    direction: normal;
+                    duration: 0.3s;
+                    timing-function: ease-in-out;
+                    iteration-count: 1;
+                }
+
+                line-height: 1.4;
+
+                h2 {
+                    color: $accent;
+                    display: none;
+
+                    &::after {
+                        content: "";
+                        position: relative;
+                        display: block;
+                        width: 30px;
+                        height: 3px;
+                        background: $accent;
+                        margin-top: 5px;
+                        left: 1px;
+                    }
+                }
+            }
+        }
+
+        input[name="tab-control"] {
+            @include tabs {
+                >label {
+                    cursor: default;
+                    color: $accent;
+
+                    img {
+                        fill: $accent;
+                    }
+
+                    @media (max-width: map-get($breakpoints, small)) {
+                        background: rgba(0, 0, 0, 0.08);
+                    }
+                }
+            }
+
+        }
+
+
+
+        @media (max-width: map-get($breakpoints, medium)) {
+            ul li label {
+                white-space: initial;
+
+                img {
+                    height: 1.5em;
+                }
+            }
+        }
+
+        @media (max-width: map-get($breakpoints, small)) {
+            ul li label {
+                padding: 5px;
+                border-radius: 5px;
+
+                span {
+                    display: none;
+                }
+            }
+
+            .slider {
+                display: none;
+            }
+
+            .content {
+                margin-top: 20px;
+
+                section h2 {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    &__forumNavigationList {
+        display: flex;
+        margin-left: $chess-square-witdh;
+        margin-bottom: 10px;
+        gap: $chess-square-witdh;
+    }
+
+    &__forumNavigationItemLabel {
+        transition: all 0.3s ease-in-out;
+        color: $secondary;
+        padding: 5px auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        white-space: nowrap;
+
+        img {
+            fill: $secondary;
+            height: 1.2em;
+            vertical-align: bottom;
+            margin-right: 0.2em;
+            transition: all 0.2s ease-in-out;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            outline: 0;
+            color: lighten($secondary, 15%);
+
+            img {
+                fill: lighten($secondary, 15%);
+            }
+        }
+    }
+}
