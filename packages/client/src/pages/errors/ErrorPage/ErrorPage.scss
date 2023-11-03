@@ -1,0 +1,36 @@
+@use '../../../colors.scss';
+
+
+.error-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    min-width: calc(min(500px, 80vw));
+    min-height: calc(min(300px, 80vh));
+    color: colors.$dark-theme-text-main;
+    text-align: center;
+
+    &__recomendation {
+        flex: 1;
+        margin: 0;
+    }
+
+    &__error-code {
+        font-size: 3em;
+        color: colors.$primary-main;
+        flex: 1;
+        & > img {
+            margin: 5px 10px 0 0;
+        }
+    }
+
+    &__link {
+        justify-self: flex-end;
+        flex: 10;
+
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+}
