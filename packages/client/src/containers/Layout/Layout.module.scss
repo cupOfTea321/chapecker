@@ -1,0 +1,21 @@
+.layout {
+  width: 100%;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  &:after {
+    background: url(../../assets/chessboard-background.png) repeat-x bottom;
+    background-size: contain;
+    bottom: 0;
+    content: '';
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: -1;
+  }
+}
