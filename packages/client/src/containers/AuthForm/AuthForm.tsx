@@ -90,12 +90,7 @@ AuthForm.SubmitButton = function SubmitButton({ title }: SubmitButtonProps) {
       variant="contained"
       size="large"
       type="submit"
-      style={{
-        marginTop: '3rem',
-        height: '3.5rem',
-        backgroundColor: '#81b64c',
-        color: 'hsla(0, 0%, 100%, 0.72)',
-      }}>
+      className={styles.submitButton}>
       {title}
     </Button>
   )
