@@ -18,11 +18,11 @@ const MainButton = ({ to, text }: mainBtn) => {
         background: '#769656',
         border: '1px solid #f8f8f8',
         borderRadius: '20px',
-        fontSize: '32px',
+        fontSize: { sm: '32px', xs: '20px' },
         padding: '5px 10px',
         marginTop: '20px',
         cursor: 'pointer',
-        width: '400px',
+        width: { sm: '400px', xs: '80%' },
       }}
       onClick={handleClick}>
       {text}

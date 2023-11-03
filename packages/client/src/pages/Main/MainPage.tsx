@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Typography } from '@mui/material'
 import './main.scss'
 import MainButton from '../../components/main/MainButton'
-
+import back from '../../assets/chessboard-background.png'
 const MainPage = () => {
   return (
     <Box
@@ -10,6 +10,10 @@ const MainPage = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        background: `url(${back})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
       }}
       className={'container'}>
       <Typography
@@ -31,7 +35,7 @@ const MainPage = () => {
         sx={{
           fontSize: '42px',
           textAlign: 'center',
-          marginTop: '40px',
+          marginTop: { sm: '40px', xs: '20px' },
         }}>
         Игровой процесс
       </Typography>
@@ -41,8 +45,9 @@ const MainPage = () => {
         sx={{
           fontSize: '18px',
           textAlign: 'center',
-          marginTop: '20px',
-          width: '60%',
+          marginTop: { sm: '20px', xs: '10px' },
+          width: { sm: '60%', xs: '90%' },
+          marginBottom: { sm: '20px', xs: '40px' },
         }}>
         Играет 2 игрока — один за "белых", второй за "черных". В начале партии
         на шахмтной доске 8x8 в первом ряду располагается 8 белых фишек, в
