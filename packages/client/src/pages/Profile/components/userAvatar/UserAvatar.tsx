@@ -36,23 +36,22 @@ const UserAvatar = ({ avatarSrc }: { avatarSrc: IUser['avatar'] }) => {
   }, [])
 
   return (
-    <label
-      htmlFor={AvatarFormFileds.name}
-      className={cn()}
-      title="Установить аватар">
+    <div className={cn()}>
       {deafultAvatar}
       {userAvatr}
-      <input
-        onChange={handleFileInput}
-        id={AvatarFormFileds.name}
-        className={cn('input')}
-        type="file"
-      />
-      <span className={cn('inputButton')}>
-        {userAvatr && 'Сменить аватар'}
-        {deafultAvatar && 'Установить аватар'}
-      </span>
-    </label>
+      <label htmlFor={AvatarFormFileds.name} title="Установить аватар">
+        <input
+          onChange={handleFileInput}
+          id={AvatarFormFileds.name}
+          className={cn('input')}
+          type="file"
+        />
+        <span className={cn('inputButton')}>
+          {userAvatr && 'Сменить аватар'}
+          {deafultAvatar && 'Установить аватар'}
+        </span>
+      </label>
+    </div>
   )
 }
 
