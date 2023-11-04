@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { GameEngine } from './Engine'
 import styles from './GamePage.module.css'
 
-let gameEngine: GameEngine | null = null
-
 const enum Status {
   start = 'start',
   gameOver = 'game-over',
@@ -14,15 +12,19 @@ const Game = () => {
   const [gameStatus, setGameStatus] = useState(Status.start)
   const [score, setScore] = useState(999)
 
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement & { gameEngine?: GameEngine }>(
+    null
+  )
   const gameRef = useRef<HTMLDivElement>(null)
 
   const gameStart = () => {
-    setScore(0)
-    setGameStatus(Status.run)
+    const gameEngine = canvasRef.current?.gameEngine
     if (!gameEngine) {
       throw new Error('Игра еще не инициализирована')
     }
+    setScore(0)
+    setGameStatus(Status.run)
+
     gameEngine.start()
   }
 
@@ -36,7 +38,7 @@ const Game = () => {
     if (ctx == null) {
       throw new Error('Could not get 2d context')
     }
-    gameEngine = new GameEngine({
+    const gameEngine = new GameEngine({
       ctx,
       ref: canvasNode,
       debug: false,
@@ -46,8 +48,10 @@ const Game = () => {
         setScore(newScore)
       },
     })
+    canvasNode.gameEngine = gameEngine
     gameEngine.init()
-  }, [canvasRef, gameRef])
+    console.log('init')
+  }, [])
 
   const className = (...args: string[]) => {
     return args.join(' ')

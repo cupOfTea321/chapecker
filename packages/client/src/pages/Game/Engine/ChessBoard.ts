@@ -19,7 +19,7 @@ export class ChessBoard extends AbstractGameObject {
     super(options)
   }
 
-  public async init(): Promise<boolean> {
+  public async init() {
     return true
   }
 

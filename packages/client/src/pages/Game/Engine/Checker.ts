@@ -44,7 +44,7 @@ export class Checker extends AbstractGameObject {
     this._color = color
   }
 
-  public async init(): Promise<boolean> {
+  public async init() {
     this.draw()
 
     return true

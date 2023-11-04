@@ -42,7 +42,7 @@ export class Checkers extends AbstractGameObject {
       this._userScrollAndResizeHandler.bind(this)
   }
 
-  public async init(): Promise<boolean> {
+  public async init() {
     this.ctx.canvas.onclick = this._userClickHandler.bind(this)
     this.ctx.canvas.oncontextmenu = this._userRightClickHandler.bind(this)
 
