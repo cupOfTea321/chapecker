@@ -4,6 +4,7 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { routes } from './router/router'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
+//import '../sw'
 
 function App() {
   useEffect(() => {
