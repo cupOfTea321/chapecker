@@ -12,13 +12,12 @@ const Game = () => {
   const [gameStatus, setGameStatus] = useState(Status.start)
   const [score, setScore] = useState(999)
 
-  const canvasRef = useRef<HTMLCanvasElement & { gameEngine?: GameEngine }>(
-    null
-  )
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const gameRef = useRef<HTMLDivElement>(null)
+  const engineRef = useRef<GameEngine>(null)
 
   const gameStart = () => {
-    const gameEngine = canvasRef.current?.gameEngine
+    const gameEngine = engineRef.current
     if (!gameEngine) {
       throw new Error('Игра еще не инициализирована')
     }
@@ -48,9 +47,8 @@ const Game = () => {
         setScore(newScore)
       },
     })
-    canvasNode.gameEngine = gameEngine
+    ;(engineRef.current as GameEngine) = gameEngine
     gameEngine.init()
-    console.log('init')
   }, [])
 
   const className = (...args: string[]) => {
