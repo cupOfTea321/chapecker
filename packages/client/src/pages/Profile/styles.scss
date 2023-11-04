@@ -1,14 +1,15 @@
-@import '../../App.scss';
+@import '../../colors.scss';
 
 $chess-square-witdh: 30px;
-$tab-count: 2;
+$dark-chess-square: $primary-darker;
+$brigth-chess-square: $primary-lighter;
 
-$accent: $main-background-color;
-$accent-inactive: desaturate($accent, 85%);
+$accent: $dark-theme-text-main;
+$accent-inactive: desaturate($accent, 50%);
 $secondary: $accent-inactive;
 
 $tab-count: 2;
-$indicator-width: 50px;
+$indicator-width: 100px;
 $indicator-height: 4px;
 
 $breakpoints: (
@@ -23,7 +24,7 @@ $content-selector: "~ .content > section";
 @keyframes content {
     from {
         opacity: 0;
-        transform: translateY(5%);
+        transform: translateY(55%);
     }
 
     to {
@@ -40,7 +41,7 @@ $content-selector: "~ .content > section";
             }
 
             #{$slider-selector} {
-                transform: translateX(calc($chess-square-witdh * 3 * ($i - 1)));
+                transform: translateX(calc($chess-square-witdh * 7 * ($i - 1)));
             }
 
             #{$content-selector}:nth-child(#{$i}) {
@@ -50,8 +51,10 @@ $content-selector: "~ .content > section";
     }
 }
 
-.forumDashboard {
-    background: $main-background-color;
+.profile {
+    &__header {
+        text-align: center;
+    }
 
     &--chesBackgrounded {
         background-image:
@@ -64,26 +67,44 @@ $content-selector: "~ .content > section";
         height: $chess-square-witdh * 3;
     }
 
+    &__avatarContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto auto;
+        width: 200px;
+        height: 200px;
+    }
+
+    &__navigationList {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
     &__container {
         padding: 25px;
         top: $chess-square-witdh;
         left: 50%;
         transform: translateX(-50%);
         position: relative;
-        background: $secondary-background-color;
+        background: $dark-theme-background;
         width: 80%;
-        min-height: 80vh;
+        min-height: 90vh;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
         border-radius: 5px;
-        min-width: calc($tab-count * 60px);
+        color: $dark-theme-text-main;
 
         .slider {
-            position: relative;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
             width: calc($tab-count * 2);
 
+
             .indicator {
-                margin-left: $chess-square-witdh;
-                position: relative;
+                margin-right: $chess-square-witdh * 8;
                 width: $indicator-width;
                 max-width: $indicator-width;
                 height: $indicator-height;
@@ -91,7 +112,6 @@ $content-selector: "~ .content > section";
                 border-radius: 1px;
                 transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
             }
-
         }
 
         .content {
@@ -107,24 +127,6 @@ $content-selector: "~ .content > section";
                     timing-function: ease-in-out;
                     iteration-count: 1;
                 }
-
-                line-height: 1.4;
-
-                h2 {
-                    color: $accent;
-                    display: none;
-
-                    &::after {
-                        content: "";
-                        position: relative;
-                        display: block;
-                        width: 30px;
-                        height: 3px;
-                        background: $accent;
-                        margin-top: 5px;
-                        left: 1px;
-                    }
-                }
             }
         }
 
@@ -134,40 +136,15 @@ $content-selector: "~ .content > section";
                     cursor: default;
                     color: $accent;
 
-                    img {
-                        fill: $accent;
-                    }
-
                     @media (max-width: map-get($breakpoints, small)) {
-                        background: rgba(0, 0, 0, 0.08);
+                        background: invert($color: $dark-theme-text-main);
                     }
                 }
             }
 
-        }
-
-
-
-        @media (max-width: map-get($breakpoints, medium)) {
-            ul li label {
-                white-space: initial;
-
-                img {
-                    height: 1.5em;
-                }
-            }
         }
 
         @media (max-width: map-get($breakpoints, small)) {
-            ul li label {
-                padding: 5px;
-                border-radius: 5px;
-
-                span {
-                    display: none;
-                }
-            }
-
             .slider {
                 display: none;
             }
@@ -177,45 +154,8 @@ $content-selector: "~ .content > section";
 
                 section h2 {
                     display: block;
+                    margin: 10px;
                 }
-            }
-        }
-    }
-
-    &__forumNavigationList {
-        display: flex;
-        margin-left: $chess-square-witdh;
-        margin-bottom: 10px;
-        gap: $chess-square-witdh;
-    }
-
-    &__forumNavigationItemLabel {
-        transition: all 0.3s ease-in-out;
-        color: $secondary;
-        padding: 5px auto;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-        white-space: nowrap;
-
-        img {
-            fill: $secondary;
-            height: 1.2em;
-            vertical-align: bottom;
-            margin-right: 0.2em;
-            transition: all 0.2s ease-in-out;
-        }
-
-        &:hover,
-        &:focus,
-        &:active {
-            outline: 0;
-            color: lighten($secondary, 15%);
-
-            img {
-                fill: lighten($secondary, 15%);
             }
         }
     }
