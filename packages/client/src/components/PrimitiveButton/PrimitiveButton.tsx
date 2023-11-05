@@ -1,7 +1,11 @@
 import { PropsWithChildren } from 'react'
 import './PrimitiveButton.scss'
 
-const PrimitiveButton = (props: PropsWithChildren) => {
+type TPrimitiveButton = {
+  disabled?: boolean
+}
+
+const PrimitiveButton = (props: PropsWithChildren<TPrimitiveButton>) => {
   return (
     <button {...props} children={props.children} className="contained-button" />
   )

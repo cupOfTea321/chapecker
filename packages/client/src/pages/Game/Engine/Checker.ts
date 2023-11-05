@@ -5,6 +5,7 @@ import {
   CHECKER_SHADOW_COLOR,
   CHESSBOARD_HEIGHT,
   CHESSBOARD_WIDTH,
+  DARK_CHECKER_COLOR,
   FRICTION_COEFFICIENT,
   MAXSPEED,
   MAXSPEED_DISTANCE,
@@ -79,13 +80,23 @@ export class Checker extends AbstractGameObject {
       this.ctx.arc(this.x, this.y, MAXSPEED_DISTANCE, 0, Math.PI * 2)
       this.ctx.stroke()
       this.ctx.lineWidth = 1
-      this.ctx.shadowBlur = 10
+      this.ctx.shadowBlur = 8
     }
     this.ctx.fillStyle = this._color
     this.ctx.beginPath()
     this.ctx.arc(this.x, this.y, this._radius, 0, Math.PI * 2)
     this.ctx.fill()
+
+    this.ctx.strokeStyle = '#888'
+    this.ctx.shadowColor =
+      this._color === DARK_CHECKER_COLOR ? 'white' : 'black'
+    this.ctx.shadowBlur = 3
+    this.ctx.beginPath()
+    this.ctx.arc(this.x, this.y, (this._radius * 8) / 9, 0, Math.PI * 2)
+    this.ctx.stroke()
     this.ctx.shadowBlur = 0
+
+    this.ctx.strokeStyle = 'black'
   }
 
   /**
