@@ -8,43 +8,36 @@ const CACHE_NAME = import.meta.env.PROD
   ? `${import.meta.env.BASE_URL}sw.js`
   : 'sw.js'
 
-self.addEventListener('load', () => {
-  navigator.serviceWorker
-    .register('sw.js', { scope: '/' })
-    .then(registration => {
-      console.log(
-        'ServiceWorker registration successful with scope: ',
-        registration.scope
-      )
+self.addEventListener('load', async () => {
+  try {
+    const { scope } = await navigator.serviceWorker.register('sw.js', {
+      scope: './',
     })
-    .catch(error => {
-      console.log('ServiceWorker registration failed: ', error)
-    })
+    console.log('ServiceWorker registration successful with scope: ', scope)
+  } catch (err) {
+    console.log('ServiceWorker registration failed: ', err)
+  }
 })
 
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache')
-        return cache.addAll(URLS)
-      })
-      .catch(err => {
-        console.log(err)
-        throw err
-      })
-  )
+self.addEventListener('install', async ({ waitUntil }) => {
+  try {
+    const cache = await waitUntil(caches.open(CACHE_NAME))
+    console.log('Opened cache')
+    return (cache as unknown as Cache).addAll(URLS)
+  } catch (err) {
+    console.log(err)
+    throw err
+  }
 })
 
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
+self.addEventListener('fetch', async ({ respondWith, request }) =>
+  respondWith(
+    caches.match(request).then(response => {
       if (response) {
         return response
       }
 
-      const fetchRequest = event.request.clone()
+      const fetchRequest = request.clone()
 
       return fetch(fetchRequest).then(response => {
         if (!response || response.status !== 200 || response.type !== 'basic') {
@@ -54,24 +47,21 @@ self.addEventListener('fetch', event => {
         const responseToCache = response.clone()
         caches
           .open(CACHE_NAME)
-          .then(cache => cache.put(event.request, responseToCache))
+          .then(cache => cache.put(request, responseToCache))
 
         return response
       })
     })
   )
-})
+)
 
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames
-          .filter(_name => {
-            /* Нужно вернуть true, если хотите удалить этот файл из кеша совсем */
-          })
-          .map(name => caches.delete(name))
-      )
-    })
+self.addEventListener('activate', async ({ waitUntil }) => {
+  const cacheNames = await waitUntil(caches.keys())
+  return Promise.all(
+    (cacheNames as unknown as string[])
+      .filter(_name => {
+        /* Нужно вернуть true, если хотите удалить этот файл из кеша совсем */
+      })
+      .map(name => caches.delete(name))
   )
 })
