@@ -3011,6 +3011,23 @@ cli-width@^3.0.0:
   resolved "https://registry.npmjs.org/cli-width/-/cli-width-3.0.0.tgz"
   integrity sha512-FxqpkPPwu1HjuN93Omfm4h8uIanXofW0RxVEW3k5RKx+mJJYSthzNhp32Kzxxy3YAEZ/Dc/EWN1vZRY0+kOhbw==
 
+"client@file:C:\\Users\\Максим\\Downloads\\Practicum\\chapecker\\packages\\client":
+  version "0.0.0"
+  resolved "file:packages/client"
+  dependencies:
+    "@emotion/react" "^11.11.1"
+    "@emotion/styled" "^11.11.0"
+    "@mui/material" "^5.14.14"
+    "@reduxjs/toolkit" "^1.9.7"
+    dotenv "^16.0.2"
+    eslint-config-prettier "^8.5.0"
+    prettier "^2.7.1"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-hook-form "^7.47.0"
+    react-redux "^8.1.3"
+    react-router-dom "^6.17.0"
+    sass "^1.69.4"
 cliui@^7.0.2:
   version "7.0.4"
   resolved "https://registry.npmjs.org/cliui/-/cliui-7.0.4.tgz"
@@ -7263,6 +7280,17 @@ serve-static@1.15.0:
     parseurl "~1.3.3"
     send "0.18.0"
 
+"server@file:C:\\Users\\Максим\\Downloads\\Practicum\\chapecker\\packages\\server":
+  version "1.0.0"
+  resolved "file:packages/server"
+  dependencies:
+    cors "^2.8.5"
+    cross-env "^7.0.3"
+    dotenv "^16.0.2"
+    eslint-config-prettier "^8.5.0"
+    express "^4.18.1"
+    pg "^8.8.0"
+    prettier "^2.7.1"
 set-blocking@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz"
