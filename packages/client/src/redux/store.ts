@@ -4,7 +4,7 @@ import { yandexCoreApi } from './services/yandexCore.js'
 import user from '../redux/features/userSlice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-export const createStore = (
+const createStore = (
   options?: ConfigureStoreOptions['preloadedState'] | undefined
 ) =>
   configureStore({
