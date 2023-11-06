@@ -10,17 +10,22 @@ export interface User {
   avatar: string
   email: string
 }
-const initialState = {
+interface IState {
+  data: null | User
+  isLoading: boolean | null
+  error: string | null
+}
+const initialState: IState = {
   data: null,
   isLoading: false,
   error: null,
-} as { data: null | User; isLoading: boolean | null; error: string | null }
+}
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getUser: () => {
-      return initialState
+    getUser: state => {
+      return state.data
     },
   },
 })
