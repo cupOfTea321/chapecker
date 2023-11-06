@@ -3,7 +3,7 @@ import { Layout } from '../../containers/Layout'
 
 const Login = () => {
   const defaultFormValues = {
-    email: '',
+    login: '',
     password: '',
   }
 

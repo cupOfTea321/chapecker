@@ -52,6 +52,7 @@ $circle: 40px;
         height: 124px;
         border-radius: 50%;
         border: 1px solid $primary-main;
+        object-fit: cover;
     }
 
     &__left,

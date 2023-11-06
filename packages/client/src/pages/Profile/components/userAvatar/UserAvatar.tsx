@@ -28,8 +28,8 @@ const UserAvatar = ({ avatarSrc }: { avatarSrc: IUser['avatar'] }) => {
   const handleFileInput = useCallback(async (e: ChangeEvent) => {
     const [file] = (e.target as HTMLInputElement).files as FileList
     try {
-      const { avatar } = await changeUserAvatar(file)
-      setAvatarSource(avatar)
+      const { data } = await changeUserAvatar(file)
+      setAvatarSource(data.avatar)
     } catch (err) {
       throw Error((err as Error).message as string)
     }

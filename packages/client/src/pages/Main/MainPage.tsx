@@ -3,10 +3,8 @@ import { Box, Typography } from '@mui/material'
 import './main.scss'
 import MainButton from '../../components/main/MainButton'
 import back from '../../assets/chessboard-background.png'
-import { getUser } from '../../redux/features/userSlice'
+
 const MainPage = () => {
-  const user = getUser()
-  console.log(user)
   return (
     <Box
       sx={{

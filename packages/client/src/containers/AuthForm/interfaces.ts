@@ -32,3 +32,13 @@ export type AuthContext = {
   control: Control
   errors: FieldErrors<PartialRecord<TFieldNames, string>>
 } | null
+
+export interface ISigin {
+  login: string
+  password: string
+}
+
+export interface ISingInResposponse {
+  data: string
+  status: number
+}

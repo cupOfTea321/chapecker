@@ -10,21 +10,30 @@ export interface User {
   avatar: string
   email: string
 }
-const initialState = {
+
+export interface IUserState {
+  data: null | User
+  load: boolean
+  error: 'none' | unknown
+}
+
+const initialState: IUserState = {
   data: null,
-  isLoading: false,
-  error: null,
-} as { data: null | User; isLoading: boolean | null; error: string | null }
+  load: false,
+  error: 'none',
+}
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getUser: () => {
-      return initialState
+    setUserData: (state, action) => {
+      const userInfo = action.payload
+      state.data = userInfo
     },
   },
 })
 
-export const { getUser } = userSlice.actions
+export const { setUserData } = userSlice.actions
 
 export default userSlice.reducer

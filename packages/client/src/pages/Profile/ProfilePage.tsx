@@ -6,17 +6,24 @@ import ChangePasswordForm from './components/changePasswordForm/ChangePasswordFo
 import UserInfoForm from './components/userInfoForm/UserInfoForm'
 
 import { ChangePasswordFormFields, IUser, ProfileTabs } from './model'
-import { userInfo } from './mock'
 import { changePassword, changeUserInfo } from './actions'
 
 import bem from 'bem-ts'
 import './styles.scss'
+import { useTypedSelector } from '../../redux/store'
+import { getUserData } from '../../redux/selectors'
+import { publilRoutes } from '../../router/router'
+import { Navigate } from 'react-router-dom'
+import { User } from '../../redux/features/userSlice'
 
 const ProfilePage = () => {
   const cn = bem('profile')
-
-  const user: IUser = useMemo(() => userInfo, [userInfo])
-
+  const userinfoFromStore = useTypedSelector(getUserData)
+  const user: User | null = useMemo(
+    () => userinfoFromStore,
+    [userinfoFromStore]
+  )
+  if (!user) return <Navigate to={publilRoutes.login.path} />
   const firstNameRef = useRef<HTMLInputElement>(null)
 
   const [isFormActive, setFormStatus] = useState(false)
