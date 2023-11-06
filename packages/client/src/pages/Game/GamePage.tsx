@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { GameEngine } from './Engine'
 import styles from './GamePage.module.css'
+import { useFullscreen } from '../../utils/fullscreenHook'
 
 const enum Status {
   start = 'start',
@@ -15,6 +16,7 @@ const Game = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const gameRef = useRef<HTMLDivElement>(null)
   const engineRef = useRef<GameEngine>(null)
+  const { isFullscreen, toggleFullscreen } = useFullscreen()
 
   const gameStart = () => {
     const gameEngine = engineRef.current
@@ -68,6 +70,9 @@ const Game = () => {
           </div>
           <div style={{ display: 'flex' }}>
             <button onClick={gameStart}>начать</button>
+            <button onClick={() => toggleFullscreen()}>
+              {isFullscreen ? 'В окне' : 'Полноэкранный режим'}
+            </button>
           </div>
 
           <canvas ref={canvasRef} />
