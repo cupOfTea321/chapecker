@@ -1,0 +1,5 @@
+export const baseURL = 'https://ya-praktikum.tech/api/v2'
+export const sourceURL = 'resources'
+export const changeAvatarURL = 'user/profile/avatar'
+export const changeProfileURL = 'user/profile'
+export const changePasswordURL = 'user/password'

@@ -1,0 +1,90 @@
+@import '../../../../colors.scss';
+
+.userInfoForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    &__fieldset {
+        width: 100%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border: 1px solid black;
+        padding: 5px;
+        border-radius: 5px;
+
+        @media (min-width: 1080px) {
+            width: 40%;
+        }
+    }
+
+    &__legend {
+        padding: 0 10px;
+        text-transform: capitalize;
+        color: lighten($dark-theme-background-lighter, 25%);
+    }
+
+    &__input {
+        padding: 5px;
+        width: 95%;
+        background-color: transparent;
+        color: $dark-theme-text-main;
+        border: 0;
+
+        &:focus {
+            outline: none;
+        }
+
+        &--active {
+            align-self: center;
+            background-color: $dark-theme-background-lighter;
+        }
+    }
+
+    &__control {
+        margin: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 5px;
+
+        @media (min-width: 640px) {
+            width: 40%;
+        }
+    }
+
+    &__controlAbolution {
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        padding: 5px 20px;
+        font: inherit;
+        background-color: $secondary-main;
+        box-shadow: 0 3px $dark-theme-text-shadow;
+        color: $dark-theme-text-main;
+        text-shadow: 1px 1px $dark-theme-text-shadow;
+
+        &:active {
+            background-color: $primary-darker;
+        }
+    }
+
+    &__controlCofirm {
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        padding: 5px 20px;
+        font: inherit;
+        background-color: $primary-main;
+        box-shadow: 0 3px $dark-theme-text-shadow;
+        color: $dark-theme-text-main;
+        text-shadow: 1px 1px $dark-theme-text-shadow;
+
+        &:active {
+            background-color: $primary-darker;
+        }
+    }
+}

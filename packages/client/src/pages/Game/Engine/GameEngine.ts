@@ -6,6 +6,7 @@ import {
   BEGIN_COORD_Y,
   CHESSBOARD_WIDTH,
   CHESSBOARD_HEIGHT,
+  GameState,
 } from './const'
 
 export type TGameEngineOptions = {
@@ -18,13 +19,6 @@ export type TGameEngineOptions = {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {}
-
-enum GameState {
-  init,
-  ready,
-  run,
-  gameOver,
-}
 
 export class GameEngine {
   static gameAreaWidth = 800
@@ -76,7 +70,7 @@ export class GameEngine {
    */
   public start() {
     const run = () => {
-      this._gameState = GameState.run
+      this._gameState = GameState.playerTurn
 
       // Запускаем основной цикл игры
       this._lastTime = performance.now()
@@ -88,6 +82,7 @@ export class GameEngine {
       run()
     } else {
       // Перезапуск
+      this.emergencyStop()
       this._objects = []
       this._bgObjects = []
       this._score = 0
@@ -99,7 +94,9 @@ export class GameEngine {
    * Остановка игры
    */
   public stop() {
-    // код остановки игры
+    this._bgObjects.forEach(obj => {
+      obj.delete()
+    })
   }
 
   /**
@@ -142,7 +139,6 @@ export class GameEngine {
    */
   public async init() {
     this._clear()
-
     this.registerObject([ChessBoard, Checkers])
     const { x: canvX, y: canvY } = this._ref.getBoundingClientRect()
     this._bgObjects.push(
@@ -169,6 +165,12 @@ export class GameEngine {
         vy: 0,
         width: 0,
         height: 0,
+        getGameState: () => {
+          return this._gameState
+        },
+        setGameState: (state: GameState) => {
+          this._gameState = state
+        },
       })
     )
 
@@ -199,18 +201,18 @@ export class GameEngine {
     this._lastTime = nowTime
 
     this._clear()
-    this._garbageCollector()
 
     for (let i = 0; i < this._bgObjects.length; i += 1) {
       this._bgObjects[i].update(dt)
     }
-  }
 
-  /**
-   * Удаляет игровые объекта помеченные на удаление
-   */
-  private _garbageCollector() {
-    // сборщик мусора
+    const isGameOver = this._gameState === GameState.gameOver
+
+    if (!isGameOver) requestAnimationFrame(this._gameLoop.bind(this))
+    else {
+      this._onGameOver(this._score)
+      this.stop()
+    }
   }
 
   /**

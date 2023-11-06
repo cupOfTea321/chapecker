@@ -84,17 +84,4 @@ export abstract class AbstractGameObject implements IGameObject {
    * Отрисовка объекта
    */
   protected abstract draw(): void
-
-  /**
-   * Рисует отладочную рамку объекта.
-   * Должен вызывать в методе update объекта.
-   *
-   * @param color Цвет отладочной рамки объекта
-   */
-  protected debugDraw(color: string) {
-    if (this.debug) {
-      this.ctx.strokeStyle = color
-      this.ctx.strokeRect(this.x, this.y, this.width, this.height)
-    }
-  }
 }
