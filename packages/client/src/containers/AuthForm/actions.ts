@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { baseURL, siginURL, userInfoURL } from '../../API/endpoints'
+import { baseURL, siginURL } from '../../API/endpoints'
 import { ISigin, ISingInResposponse } from './interfaces'
-import { User } from '../../redux/features/userSlice'
 
 axios.defaults.baseURL = baseURL
 
@@ -17,14 +16,5 @@ export const signIn = async (data: ISigin): Promise<ISingInResposponse> =>
       url: siginURL,
       withCredentials: true,
       data: JSON.stringify(data),
-    })
-  )
-
-export const getUserInfo = async (): Promise<{ data: User }> =>
-  axios(
-    Object.assign(config, {
-      method: 'GET',
-      withCredentials: true,
-      url: userInfoURL,
     })
   )

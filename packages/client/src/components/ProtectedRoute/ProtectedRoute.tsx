@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../redux/store'
 import { getUserData } from '../../redux/selectors'
 import { setUserData } from '../../redux/features/userSlice'
-import { getUserInfo } from '../../containers/AuthForm/actions'
+import { getUserInfo } from './actions'
 
 const ProtectedRoute = () => {
   const [user, setUser] = useState(useTypedSelector(getUserData))
@@ -32,7 +32,7 @@ const ProtectedRoute = () => {
   const redirect = !user && <Navigate to="/login" />
 
   return isLoad ? (
-    <>Loading</>
+    <>Loading...</>
   ) : (
     <>
       {content}

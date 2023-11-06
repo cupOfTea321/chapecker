@@ -16,9 +16,10 @@ import {
 } from './interfaces'
 import { INPUT_TYPES, LABELS } from '../../constants/fields'
 import { FIELD_REGEX, FIELD_ERROR_MESSAGES } from '../../constants/validations'
-import { getUserInfo, signIn } from './actions'
+import { signIn } from './actions'
 import { privateRoutes } from '../../router/router'
 import { setUserData } from '../../redux/features/userSlice'
+import { getUserInfo } from '../../components/ProtectedRoute/actions'
 
 const AuthForm = ({
   theme = 'light',
