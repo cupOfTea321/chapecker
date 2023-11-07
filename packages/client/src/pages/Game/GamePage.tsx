@@ -3,6 +3,7 @@ import { GameEngine } from './Engine'
 import styles from './GamePage.module.scss'
 import PrimitivePaper from '../../components/PrimitivePaper/PrimitivePaper'
 import { Navigate } from 'react-router-dom'
+import { useFullscreen } from '../../utils/fullscreenHook'
 
 const enum Status {
   start = 'start',
@@ -16,6 +17,7 @@ const Game = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const engineRef = useRef<GameEngine>(null)
+  const { isFullscreen, toggleFullscreen } = useFullscreen()
 
   const gameStart = () => {
     const gameEngine = engineRef.current
@@ -63,10 +65,19 @@ const Game = () => {
       <h1>THE CHAPECKER</h1>
       <div className={styles.game_area}>
         <div className={className(styles.game_score, styles['score-text'])}>
-          {`Score: ${score}`}
-        </div>
-        <div className={className(styles.game_score, styles['score-text'])}>
           {`Status: ${gameStatus}`}
+        </div>
+        <div className={styles.game_area}>
+          <div className={className(styles.game_score, styles['score-text'])}>
+            {`Score: ${score}`}
+          </div>
+          <div style={{ display: 'flex' }}>
+            <button onClick={() => toggleFullscreen()}>
+              {isFullscreen ? 'В окне' : 'Полноэкранный режим'}
+            </button>
+          </div>
+
+          <canvas ref={canvasRef} />
         </div>
         <canvas ref={canvasRef} />
       </div>
