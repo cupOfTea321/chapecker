@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material'
 import './main.scss'
 import MainButton from '../../components/main/MainButton'
 import back from '../../assets/chessboard-background.png'
+
 const MainPage = () => {
   return (
     <Box
