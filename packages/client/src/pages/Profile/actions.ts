@@ -15,15 +15,13 @@ const userFormAxiosConfig = {
   timeout: 10000,
 }
 
-export const changeUserInfo = async (newUserInfo: IUser): Promise<IUser> => {
-  console.log(JSON.stringify(newUserInfo))
-  return axios(
+export const changeUserInfo = async (newUserInfo: IUser): Promise<IUser> =>
+  axios(
     Object.assign(userFormAxiosConfig, {
       url: changeProfileURL,
       data: JSON.stringify(newUserInfo),
     })
   )
-}
 
 export const changePassword = async (newUserInfo: IUser): Promise<IUser> =>
   axios(

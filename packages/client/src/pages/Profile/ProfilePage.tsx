@@ -36,9 +36,14 @@ const ProfilePage = () => {
   const onUserDataChange = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      const formData = new FormData(e.target as HTMLFormElement)
+      const data: { [x: string]: unknown } = {}
+      for (const [key, value] of new FormData(
+        e.target as HTMLFormElement
+      ).entries()) {
+        data[key] = value
+      }
       try {
-        await changeUserInfo(formData as unknown as IUser)
+        await changeUserInfo(data as unknown as IUser)
       } catch (err) {
         throw Error((err as Error).message as string)
       }
@@ -49,13 +54,20 @@ const ProfilePage = () => {
   const onPasswordChange = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      const formData = new FormData(e.target as HTMLFormElement)
-      const [__, newPassword, confirm] = Object.keys(ChangePasswordFormFields)
-      if (formData.get(confirm) !== formData.get(newPassword)) {
+      const data: { [x: string]: unknown } = {}
+      for (const [key, value] of new FormData(
+        e.target as HTMLFormElement
+      ).entries()) {
+        data[key] = value
+      }
+      if (
+        data[ChangePasswordFormFields.confirm] !==
+        data[ChangePasswordFormFields.newPassword]
+      ) {
         alert('Новый пароль не совпадает с подтвреждением')
       }
       try {
-        await changePassword(formData as unknown as IUser)
+        await changePassword(data as unknown as IUser)
       } catch (err) {
         throw Error((err as Error).message as string)
       }

@@ -36,6 +36,15 @@ export interface IProfileFormInputProps {
   ref: React.Ref<HTMLInputElement> | undefined
 }
 
+export interface IChangePasswordFormProps {
+  key: string
+  filedKey: string
+  fieldText: string
+  user: IUser
+  cn: (arg1: string, arg2?: { [x: string]: boolean }) => string
+  ref: React.Ref<HTMLInputElement> | undefined
+}
+
 export const getFieldType = (key: string) => {
   switch (key) {
     case 'email':
