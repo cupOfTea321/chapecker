@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { GameEngine } from './Engine'
 import styles from './GamePage.module.css'
-
-let gameEngine: GameEngine | null = null
+import { useFullscreen } from '../../utils/fullscreenHook'
 
 const enum Status {
   start = 'start',
   gameOver = 'game-over',
   run = 'run',
-  animation = 'animation',
 }
 
 const Game = () => {
@@ -17,13 +15,17 @@ const Game = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const gameRef = useRef<HTMLDivElement>(null)
+  const engineRef = useRef<GameEngine>(null)
+  const { isFullscreen, toggleFullscreen } = useFullscreen()
 
   const gameStart = () => {
-    setScore(0)
-    setGameStatus(Status.run)
+    const gameEngine = engineRef.current
     if (!gameEngine) {
       throw new Error('Игра еще не инициализирована')
     }
+    setScore(0)
+    setGameStatus(Status.run)
+
     gameEngine.start()
   }
 
@@ -37,7 +39,7 @@ const Game = () => {
     if (ctx == null) {
       throw new Error('Could not get 2d context')
     }
-    gameEngine = new GameEngine({
+    const gameEngine = new GameEngine({
       ctx,
       ref: canvasNode,
       debug: false,
@@ -47,9 +49,9 @@ const Game = () => {
         setScore(newScore)
       },
     })
-    console.log('context', ctx)
+    ;(engineRef.current as GameEngine) = gameEngine
     gameEngine.init()
-  }, [canvasRef, gameRef])
+  }, [])
 
   const className = (...args: string[]) => {
     return args.join(' ')
@@ -68,6 +70,9 @@ const Game = () => {
           </div>
           <div style={{ display: 'flex' }}>
             <button onClick={gameStart}>начать</button>
+            <button onClick={() => toggleFullscreen()}>
+              {isFullscreen ? 'В окне' : 'Полноэкранный режим'}
+            </button>
           </div>
 
           <canvas ref={canvasRef} />

@@ -17,7 +17,7 @@ $breakpoints: (
 );
 
 $label-selector: "~ ul > li";
-$slider-selector: "~ .slider";
+$slider-selector: "~ .slider .indicator";
 $content-selector: "~ .content > section";
 
 @keyframes content {
@@ -80,16 +80,16 @@ $content-selector: "~ .content > section";
         .slider {
             position: relative;
             width: calc($tab-count * 2);
-            transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
 
             .indicator {
                 margin-left: $chess-square-witdh;
                 position: relative;
                 width: $indicator-width;
-                max-width: 100%;
+                max-width: $indicator-width;
                 height: $indicator-height;
                 background: $dark-chess-square;
                 border-radius: 1px;
+                transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
             }
 
         }

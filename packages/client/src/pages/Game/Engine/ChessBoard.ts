@@ -3,6 +3,7 @@ import {
   GameObjectType,
   TGameObjectOptions,
 } from './AbstractGameObject'
+
 import { DARK_CELL_COLOR, LIGHT_CELL_COLOR, CHESSBOARD_WIDTH } from './const'
 
 type TPlayerOptions = TGameObjectOptions
@@ -18,14 +19,15 @@ export class ChessBoard extends AbstractGameObject {
     super(options)
   }
 
-  public async init(): Promise<boolean> {
-    // await soundMap.init()  инициализатор звуков на будущее (если понадобится)
-    // await spriteMap.init() инициализатор спрайтов
-
+  public async init() {
     return true
   }
 
-  public update(dt: number): void {
+  public update(): void {
+    this.draw()
+  }
+
+  protected draw(): void {
     for (let i = 1; i <= 8; i++) {
       for (let j = 1; j <= 8; j++) {
         this.ctx.fillStyle =
@@ -48,15 +50,5 @@ export class ChessBoard extends AbstractGameObject {
         this.y + this.delta * index + 45
       )
     })
-
-    this.draw()
-  }
-
-  public override delete() {
-    // завершающие действия
-  }
-
-  protected draw(): void {
-    super.debugDraw('green')
   }
 }
