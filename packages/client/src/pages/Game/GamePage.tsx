@@ -4,6 +4,7 @@ import styles from './GamePage.module.scss'
 import PrimitivePaper from '../../components/PrimitivePaper/PrimitivePaper'
 import { Navigate } from 'react-router-dom'
 import { useFullscreen } from '../../utils/fullscreenHook'
+import PrimitiveButton from '../../components/PrimitiveButton/PrimitiveButton'
 
 const enum Status {
   start = 'start',
@@ -71,13 +72,9 @@ const Game = () => {
           <div className={className(styles.game_score, styles['score-text'])}>
             {`Score: ${score}`}
           </div>
-          <div style={{ display: 'flex' }}>
-            <button onClick={() => toggleFullscreen()}>
-              {isFullscreen ? 'В окне' : 'Полноэкранный режим'}
-            </button>
-          </div>
-
-          <canvas ref={canvasRef} />
+          <PrimitiveButton onClick={() => toggleFullscreen()}>
+            {isFullscreen ? 'В окне' : 'Полноэкранный режим'}
+          </PrimitiveButton>
         </div>
         <canvas ref={canvasRef} />
       </div>

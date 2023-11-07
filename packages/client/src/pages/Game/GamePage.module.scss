@@ -18,6 +18,9 @@
 
   &_area {
     @apply relative w-auto h-auto max-w-full max-h-full m-auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     & canvas {
       @apply w-full h-full rounded-lg;
