@@ -1,7 +1,20 @@
 import { useCallback, useRef, useState, useEffect } from 'react'
 
+interface IDocument extends Document {
+  mozFullScreenElement?: Element
+  msFullscreenElement?: Element
+  webkitFullscreenElement?: Element
+}
+
+interface IHTMLElement extends HTMLElement {
+  msRequestFullscreen?: () => Promise<void>
+  mozRequestFullscreen?: () => Promise<void>
+  webkitEnterFullscreen?: () => Promise<void>
+  webkitRequestFullscreen?: () => Promise<void>
+}
+
 function getFullscreenElement() {
-  const _document = window.document as any
+  const _document: IDocument = window.document
 
   const fullscreenElement =
     _document.fullscreenElement ||
@@ -28,7 +41,7 @@ function exitFullscreen() {
 }
 
 function enterFullScreen(element: HTMLElement) {
-  const _element = element as any
+  const _element = element as IHTMLElement
 
   return (
     _element.requestFullscreen?.() ||
@@ -61,10 +74,10 @@ function addEvents(
   }
 }
 
-export function useFullscreen() {
+export function useFullscreen<T extends HTMLElement = HTMLElement>() {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
 
-  const _ref = useRef()
+  const _ref = useRef<T>()
 
   const handleFullscreenChange = useCallback(
     (event: Event) => {
@@ -90,9 +103,9 @@ export function useFullscreen() {
     }
   }, [])
 
-  const ref = useCallback((element: null | undefined) => {
+  const ref = useCallback((element: T | null) => {
     if (element === null) {
-      _ref.current = window.document.documentElement
+      _ref.current = window.document.documentElement as T
     } else {
       _ref.current = element
     }
@@ -100,7 +113,7 @@ export function useFullscreen() {
 
   useEffect(() => {
     if (!_ref.current && window.document) {
-      _ref.current = window.document.documentElement
+      _ref.current = window.document.documentElement as T
       return addEvents(_ref.current, {
         onFullScreen: handleFullscreenChange,
         onError: handleFullscreenError,
