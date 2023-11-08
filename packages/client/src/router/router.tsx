@@ -20,7 +20,7 @@ export const publilRoutes = {
   signUp: { path: '/signup', element: <SignUpPage />, nodeRef: createRef() },
   login: { path: '/login', element: <LoginPage />, nodeRef: createRef() },
   error404: { path: '/404', element: <Error404 />, nodeRef: createRef() },
-  error505: { path: '/505', element: <Error500 />, nodeRef: createRef() },
+  error500: { path: '/500', element: <Error500 />, nodeRef: createRef() },
   noMatch: {
     path: '*',
     element: <Navigate to="/404" replace />,

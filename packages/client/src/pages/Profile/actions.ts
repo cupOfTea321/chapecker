@@ -4,6 +4,7 @@ import {
   baseURL,
   changePasswordURL,
   changeProfileURL,
+  logoutURL,
 } from '../../API/endpoints'
 
 axios.defaults.baseURL = baseURL
@@ -28,5 +29,12 @@ export const changePassword = async (newUserInfo: IUser): Promise<IUser> =>
     Object.assign(userFormAxiosConfig, {
       url: changePasswordURL,
       data: JSON.stringify(newUserInfo),
+    })
+  )
+
+export const logOut = async () =>
+  axios(
+    Object.assign(userFormAxiosConfig, {
+      url: logoutURL,
     })
   )

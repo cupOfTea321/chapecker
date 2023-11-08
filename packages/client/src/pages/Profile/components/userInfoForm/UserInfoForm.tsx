@@ -47,7 +47,7 @@ const UserInfoForm = ({
             hidden={isFormActive}
             className={cn('controlAbolution')}
             type="button"
-            title="Cancel change"
+            title="Нажми, чтобы измененить данные"
             value="Нажми, чтобы внести изменения"
           />
           <input

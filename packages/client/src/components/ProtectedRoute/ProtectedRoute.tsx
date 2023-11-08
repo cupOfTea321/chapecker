@@ -4,6 +4,8 @@ import { useAppDispatch, useTypedSelector } from '../../redux/store'
 import { getUserData } from '../../redux/selectors'
 import { setUserData } from '../../redux/features/userSlice'
 import { getUserInfo } from './actions'
+import { publilRoutes } from '../../router/router'
+import Spinner from '../spinner/Spinner'
 
 const ProtectedRoute = () => {
   const [user, setUser] = useState(useTypedSelector(getUserData))
@@ -29,10 +31,10 @@ const ProtectedRoute = () => {
   authStatus !== 'checked' && chechAuth()
 
   const content = user && <Outlet />
-  const redirect = !user && <Navigate to="/login" />
+  const redirect = !user && <Navigate to={publilRoutes.login.path} />
 
   return isLoad ? (
-    <>Loading...</>
+    <Spinner />
   ) : (
     <>
       {content}

@@ -5,25 +5,21 @@ import { Button } from '../../components/Button'
 import styles from './AuthForm.module.scss'
 import Divider from '@mui/material/Divider'
 import { AuthFormContext, useAuthFormContext } from './AuthContext'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import {
   AuthFormProps,
   FieldProps,
-  ISigin,
   RedirectButtonProps,
   SubmitButtonProps,
 } from './interfaces'
 import { INPUT_TYPES, LABELS } from '../../constants/fields'
 import { FIELD_REGEX, FIELD_ERROR_MESSAGES } from '../../constants/validations'
-import { signIn } from './actions'
-import { privateRoutes } from '../../router/router'
-import { setUserData } from '../../redux/features/userSlice'
-import { getUserInfo } from '../../components/ProtectedRoute/actions'
 
 const AuthForm = ({
   theme = 'light',
   defaultFormValues,
+  onSubmit,
   children,
 }: PropsWithChildren<AuthFormProps>) => {
   const {
@@ -39,17 +35,6 @@ const AuthForm = ({
     theme,
     control,
     errors,
-  }
-
-  const onSubmit = async (fieldData: ISigin) => {
-    try {
-      await signIn(fieldData)
-      const { data } = await getUserInfo()
-      await setUserData(data)
-      return <Navigate to={privateRoutes.mainPage.path} />
-    } catch (err) {
-      console.log(err)
-    }
   }
 
   return (
