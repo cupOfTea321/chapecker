@@ -1,0 +1,162 @@
+@import '../../colors.scss';
+
+$chess-square-witdh: 30px;
+$dark-chess-square: $primary-darker;
+$brigth-chess-square: $primary-lighter;
+
+$accent: $dark-theme-text-main;
+$accent-inactive: desaturate($accent, 50%);
+$secondary: $accent-inactive;
+
+$tab-count: 2;
+$indicator-width: 100px;
+$indicator-height: 4px;
+
+$breakpoints: (
+    medium: 840px,
+    small: 450px
+);
+
+$label-selector: "~ ul > li";
+$slider-selector: "~ .slider .indicator";
+$content-selector: "~ .content > section";
+
+@keyframes content {
+    from {
+        opacity: 0;
+        transform: translateY(55%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+@mixin tabs() {
+    @for $i from 1 through $tab-count {
+        &:nth-of-type(#{$i}):checked {
+            #{$label-selector}:nth-child(#{$i}) {
+                @content;
+            }
+
+            #{$slider-selector} {
+                transform: translateX(calc($chess-square-witdh * 7 * ($i - 1)));
+            }
+
+            #{$content-selector}:nth-child(#{$i}) {
+                display: block;
+            }
+        }
+    }
+}
+
+.profile {
+    &__header {
+        text-align: center;
+    }
+
+    &--chesBackgrounded {
+        background-image:
+            linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh),
+            linear-gradient(90deg, $brigth-chess-square $chess-square-witdh, $dark-chess-square $chess-square-witdh),
+            linear-gradient(90deg, $dark-chess-square $chess-square-witdh, $brigth-chess-square $chess-square-witdh);
+        background-position: 0 0, 0 $chess-square-witdh, 0 $chess-square-witdh * 2;
+        background-repeat: repeat-x;
+        background-size: $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh, $chess-square-witdh * 2 $chess-square-witdh;
+        height: $chess-square-witdh * 3;
+    }
+
+    &__avatarContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto auto;
+        width: 200px;
+        height: 200px;
+    }
+
+    &__navigationList {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    &__container {
+        padding: 25px;
+        top: $chess-square-witdh;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        background: $dark-theme-background;
+        width: 80%;
+        min-height: 90vh;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        border-radius: 5px;
+        color: $dark-theme-text-main;
+
+        .slider {
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            width: calc($tab-count * 2);
+
+
+            .indicator {
+                margin-right: $chess-square-witdh * 8;
+                width: $indicator-width;
+                max-width: $indicator-width;
+                height: $indicator-height;
+                background: $dark-chess-square;
+                border-radius: 1px;
+                transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
+            }
+        }
+
+        .content {
+            margin-top: 30px;
+
+            section {
+                display: none;
+
+                animation: {
+                    name: content;
+                    direction: normal;
+                    duration: 0.3s;
+                    timing-function: ease-in-out;
+                    iteration-count: 1;
+                }
+            }
+        }
+
+        input[name="tab-control"] {
+            @include tabs {
+                >label {
+                    cursor: default;
+                    color: $accent;
+
+                    @media (max-width: map-get($breakpoints, small)) {
+                        background: invert($color: $dark-theme-text-main);
+                    }
+                }
+            }
+
+        }
+
+        @media (max-width: map-get($breakpoints, small)) {
+            .slider {
+                display: none;
+            }
+
+            .content {
+                margin-top: 20px;
+
+                section h2 {
+                    display: block;
+                    margin: 10px;
+                }
+            }
+        }
+    }
+}

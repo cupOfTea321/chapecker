@@ -1,0 +1,48 @@
+@import 'https://fonts.googleapis.com/css2?family=VT323&display=swap';
+
+.game {
+  &__outer {
+    min-width: 850px;
+  }
+  
+  text-align: center;
+
+  @apply fixed inset-x-4 bottom-4;
+
+  top: calc(80px + 1rem);
+
+  &_overlay {
+    @apply absolute flex flex-col text-white
+      justify-center items-center inset-0;
+  }
+
+  &_area {
+    @apply relative w-auto h-auto max-w-full max-h-full m-auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & canvas {
+      @apply w-full h-full rounded-lg;
+      border-radius: 15px
+    }
+  }
+
+  &_score {
+    @apply absolute  top-1 left-2;
+  }
+
+  .score-text {
+    @apply font-bold text-white text-4xl;
+
+    font-family: 'VT323', monospace;
+
+    &__red {
+      @apply text-error;
+    }
+  }
+
+  &_text {
+    @apply pb-4 text-xl font-bold text-center;
+  }
+}
