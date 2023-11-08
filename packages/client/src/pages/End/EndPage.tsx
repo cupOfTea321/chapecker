@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import MainButton from '../../components/MainButton'
-
+import back from '../../assets/chessboard-background.png'
 const EndPage = () => {
   return (
     <Box
@@ -9,6 +9,10 @@ const EndPage = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        background: `url(${back})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
       }}
       className={'container'}>
       <Typography
