@@ -1,7 +1,12 @@
-import { PropsWithChildren } from 'react'
+import { MouseEventHandler, PropsWithChildren } from 'react'
 import './PrimitiveButton.scss'
 
-const PrimitiveButton = (props: PropsWithChildren) => {
+type TPrimitiveButton = {
+  disabled?: boolean
+  onClick?: MouseEventHandler
+}
+
+const PrimitiveButton = (props: PropsWithChildren<TPrimitiveButton>) => {
   return (
     <button {...props} children={props.children} className="contained-button" />
   )

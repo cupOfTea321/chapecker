@@ -1,6 +1,7 @@
 import PrimitivePaper from '../../components/PrimitivePaper/PrimitivePaper'
 import PrimitiveButton from '../../components/PrimitiveButton/PrimitiveButton'
 import './StartScreen.scss'
+import { Link } from 'react-router-dom'
 
 function StartScreen() {
   return (
@@ -23,8 +24,10 @@ function StartScreen() {
       </p>
       <br />
       <div className="start-screen__start-buttons">
-        <PrimitiveButton>Играть с ботом!</PrimitiveButton>
-        <PrimitiveButton>Играть вдвоем!</PrimitiveButton>
+        <PrimitiveButton disabled>Играть с ботом!</PrimitiveButton>
+        <Link to="/game">
+          <PrimitiveButton>Играть вдвоем!</PrimitiveButton>
+        </Link>
       </div>
     </PrimitivePaper>
   )

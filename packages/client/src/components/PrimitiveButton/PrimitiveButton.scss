@@ -11,6 +11,11 @@
     color: colors.$dark-theme-text-main;
     text-shadow: 1px 1px colors.$dark-theme-text-shadow;
 
+    &:disabled {
+        background-color: colors.$primary-darker;
+        cursor: default
+    }
+
     &:active {
         background-color: colors.$primary-darker;
     }

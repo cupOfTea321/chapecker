@@ -1,5 +1,4 @@
 import './App.scss'
-import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { publilRoutes, privateRoutes } from './router/router'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
