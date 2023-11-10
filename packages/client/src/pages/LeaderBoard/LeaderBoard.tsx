@@ -25,7 +25,7 @@ const LeaderBoard: React.FC = () => (
     <Box className={'table-leaderboards'}>
       {leadersMock.map((leader, index) => (
         <LeaderBox
-          key={`${leader.username}_${index}`}
+          key={`${leader.username}`}
           avatar={leader.avatar}
           username={leader.username}
           displayName={leader.displayName}
