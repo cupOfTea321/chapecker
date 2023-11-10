@@ -7,6 +7,8 @@ import { privateRoutes } from '../../router/router'
 import { PartialRecord } from '../../containers/AuthForm/interfaces'
 import { TFieldNames } from '../../constants/fields'
 import axios from 'axios'
+import { setUserData } from '../../redux/features/userSlice'
+import { getUserInfo } from '../../components/ProtectedRoute/actions'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -19,6 +21,8 @@ const Login = () => {
     async (fieldData: PartialRecord<TFieldNames, string>) => {
       try {
         await signIn(fieldData)
+        const data = await getUserInfo()
+        setUserData(data)
         navigate(privateRoutes.mainPage.path)
       } catch (err) {
         if (axios.isAxiosError(err)) {

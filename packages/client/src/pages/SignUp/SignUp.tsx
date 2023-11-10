@@ -7,6 +7,8 @@ import { signUp } from './actions'
 import { useNavigate } from 'react-router-dom'
 import { privateRoutes } from '../../router/router'
 import axios from 'axios'
+import { getUserInfo } from '../../components/ProtectedRoute/actions'
+import { setUserData } from '../../redux/features/userSlice'
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -23,6 +25,8 @@ const SignUp = () => {
     async (fieldData: PartialRecord<TFieldNames, string>) => {
       try {
         await signUp(fieldData)
+        const data = await getUserInfo()
+        setUserData(data)
         navigate(privateRoutes.mainPage.path)
       } catch (err) {
         if (axios.isAxiosError(err)) {
