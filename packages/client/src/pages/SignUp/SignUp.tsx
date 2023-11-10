@@ -9,6 +9,7 @@ import { privateRoutes } from '../../router/router'
 import axios from 'axios'
 
 const SignUp = () => {
+  const navigate = useNavigate()
   const defaultFormValues = {
     first_name: '',
     second_name: '',
@@ -20,7 +21,6 @@ const SignUp = () => {
 
   const onSubmit = useCallback(
     async (fieldData: PartialRecord<TFieldNames, string>) => {
-      const navigate = useNavigate()
       try {
         await signUp(fieldData)
         navigate(privateRoutes.mainPage.path)

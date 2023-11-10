@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { AuthForm } from '../../containers/AuthForm'
 import { Layout } from '../../containers/Layout'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { signIn } from './actions'
 import { privateRoutes } from '../../router/router'
 import { PartialRecord } from '../../containers/AuthForm/interfaces'
