@@ -19,6 +19,7 @@ import { FIELD_REGEX, FIELD_ERROR_MESSAGES } from '../../constants/validations'
 const AuthForm = ({
   theme = 'light',
   defaultFormValues,
+  onSubmit,
   children,
 }: PropsWithChildren<AuthFormProps>) => {
   const {
@@ -34,10 +35,6 @@ const AuthForm = ({
     theme,
     control,
     errors,
-  }
-
-  const onSubmit = (data: typeof defaultFormValues) => {
-    console.log('DATA', data)
   }
 
   return (

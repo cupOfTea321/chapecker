@@ -6,14 +6,16 @@ import './styles.scss'
 const TabItem = ({
   tabKey,
   tabValue,
+  onClick,
 }: {
   tabKey: string
   tabValue: string
+  onClick?: () => void | null
 }) => {
   const cn = bem('tabItem')
 
   return (
-    <li className={cn()} title={tabValue}>
+    <li className={cn()} title={tabValue} onClick={onClick}>
       <label className={cn('label')} htmlFor={tabKey} role="button">
         <img
           className={cn('tabPicture')}

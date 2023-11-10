@@ -2,7 +2,7 @@ import { Control } from 'react-hook-form/dist/types/form'
 import { FieldErrors } from 'react-hook-form/dist/types/errors'
 import { TFieldNames } from '../../constants/fields'
 
-type PartialRecord<K extends keyof any, T> = {
+export type PartialRecord<K extends keyof any, T> = {
   [P in K]?: T
 }
 
@@ -10,6 +10,9 @@ export interface AuthFormProps {
   // TODO: для темизации
   theme?: 'light' | 'dark'
   defaultFormValues: PartialRecord<TFieldNames, string>
+  onSubmit: (
+    args: PartialRecord<TFieldNames, string>
+  ) => Promise<void | undefined>
 }
 
 export type FieldProps = {

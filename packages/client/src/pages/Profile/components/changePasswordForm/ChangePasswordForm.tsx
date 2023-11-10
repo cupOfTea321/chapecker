@@ -1,6 +1,11 @@
 import { memo } from 'react'
 import LabeledInput from '../input/LabeledInput'
-import { ChangePasswordFormFields, IUser, ProfileTabs } from '../../model'
+import {
+  ChangePasswordFormFields,
+  IChangePasswordFormProps,
+  IUser,
+  ProfileTabs,
+} from '../../model'
 
 import bem from 'bem-ts'
 import './styles.scss'

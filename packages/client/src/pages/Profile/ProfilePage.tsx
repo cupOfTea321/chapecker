@@ -6,17 +6,24 @@ import ChangePasswordForm from './components/changePasswordForm/ChangePasswordFo
 import UserInfoForm from './components/userInfoForm/UserInfoForm'
 
 import { ChangePasswordFormFields, IUser, ProfileTabs } from './model'
-import { userInfo } from './mock'
-import { changePassword, changeUserInfo } from './actions'
+import { changePassword, changeUserInfo, logOut } from './actions'
 
 import bem from 'bem-ts'
 import './styles.scss'
+import { useTypedSelector } from '../../redux/store'
+import { getUserData } from '../../redux/selectors'
+import { publilRoutes } from '../../router/router'
+import { Navigate } from 'react-router-dom'
+import { User } from '../../redux/features/userSlice'
 
 const ProfilePage = () => {
   const cn = bem('profile')
-
-  const user: IUser = useMemo(() => userInfo, [userInfo])
-
+  const userinfoFromStore = useTypedSelector(getUserData)
+  const user: User | null = useMemo(
+    () => userinfoFromStore,
+    [userinfoFromStore]
+  )
+  if (!user) return <Navigate to={publilRoutes.login.path} />
   const firstNameRef = useRef<HTMLInputElement>(null)
 
   const [isFormActive, setFormStatus] = useState(false)
@@ -29,9 +36,14 @@ const ProfilePage = () => {
   const onUserDataChange = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      const formData = new FormData(e.target as HTMLFormElement)
+      const data: { [x: string]: unknown } = {}
+      for (const [key, value] of new FormData(
+        e.target as HTMLFormElement
+      ).entries()) {
+        data[key] = value
+      }
       try {
-        await changeUserInfo(formData as unknown as IUser)
+        await changeUserInfo(data as unknown as IUser)
       } catch (err) {
         throw Error((err as Error).message as string)
       }
@@ -42,13 +54,20 @@ const ProfilePage = () => {
   const onPasswordChange = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      const formData = new FormData(e.target as HTMLFormElement)
-      const [__, newPassword, confirm] = Object.keys(ChangePasswordFormFields)
-      if (formData.get(confirm) !== formData.get(newPassword)) {
+      const data: { [x: string]: unknown } = {}
+      for (const [key, value] of new FormData(
+        e.target as HTMLFormElement
+      ).entries()) {
+        data[key] = value
+      }
+      if (
+        data[ChangePasswordFormFields.confirm] !==
+        data[ChangePasswordFormFields.newPassword]
+      ) {
         alert('Новый пароль не совпадает с подтвреждением')
       }
       try {
-        await changePassword(formData as unknown as IUser)
+        await changePassword(data as unknown as IUser)
       } catch (err) {
         throw Error((err as Error).message as string)
       }

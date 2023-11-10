@@ -1,9 +1,11 @@
 /// <reference lib="WebWorker" />
 /// <reference types="vite/client" />
-import { routes } from './src/router/router'
+import { privateRoutes, publilRoutes } from './src/router/router'
 
 declare const self: ServiceWorkerGlobalScope & typeof globalThis
-const URLS = routes.map(el => el.path).filter(el => el === '*')
+const protectedRoutes = Object.values(privateRoutes).map(el => el.path)
+const publicRoutes = Object.values(publilRoutes).map(el => el.path)
+const URLS = protectedRoutes.concat(publicRoutes).filter(el => el === '*')
 const CACHE_NAME = import.meta.env.PROD
   ? `${import.meta.env.BASE_URL}sw.js`
   : 'sw.js'
