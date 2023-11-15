@@ -1,16 +1,21 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { AuthForm } from '../../containers/AuthForm'
 import { Layout } from '../../containers/Layout'
 import { useNavigate } from 'react-router-dom'
-import { signIn } from './actions'
+import { getYandexOAuthId, signIn } from './actions'
 import { privateRoutes } from '../../router/router'
 import { PartialRecord } from '../../containers/AuthForm/interfaces'
 import { TFieldNames } from '../../constants/fields'
 import axios from 'axios'
-import { setUserData } from '../../redux/features/userSlice'
-import { getUserInfo } from '../../components/ProtectedRoute/actions'
+import './login.scss'
+import { useAppDispatch, useTypedSelector } from '../../redux/store'
+import { getOAuthId } from '../../redux/selectors'
+import { setOAuthServiceId } from '../../redux/features/oauthSlice'
+import { appURL } from '../../API/endpoints'
 
 const Login = () => {
+  const dispatch = useAppDispatch()
+  const oauthID = useTypedSelector(getOAuthId)
   const navigate = useNavigate()
   const defaultFormValues = {
     login: '',
@@ -21,8 +26,6 @@ const Login = () => {
     async (fieldData: PartialRecord<TFieldNames, string>) => {
       try {
         await signIn(fieldData)
-        const data = await getUserInfo()
-        setUserData(data)
         navigate(privateRoutes.mainPage.path)
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -35,6 +38,17 @@ const Login = () => {
     []
   )
 
+  useEffect(() => {
+    // Need to find out the app's id in Yandex OAuth
+    getYandexOAuthId()
+      .then(a => a.data)
+      .then(data => {
+        if ('service_id' in data) {
+          dispatch(setOAuthServiceId(data.service_id))
+        }
+      })
+  }, [])
+
   return (
     <Layout>
       <AuthForm onSubmit={onSubmit} defaultFormValues={defaultFormValues}>
@@ -43,6 +57,11 @@ const Login = () => {
         <AuthForm.SubmitButton title="Login" />
         <AuthForm.Divider text="OR" />
         <AuthForm.RedirectButton title="Go to SIGN UP" redirectUrl="/signup" />
+        <AuthForm.RedirectButton
+          title="Yandex"
+          redirectUrl={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${oauthID}&redirect_uri=${appURL}`}
+          id="yandex-button"
+        />
       </AuthForm>
     </Layout>
   )

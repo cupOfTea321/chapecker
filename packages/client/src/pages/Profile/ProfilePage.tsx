@@ -6,7 +6,7 @@ import ChangePasswordForm from './components/changePasswordForm/ChangePasswordFo
 import UserInfoForm from './components/userInfoForm/UserInfoForm'
 
 import { ChangePasswordFormFields, IUser, ProfileTabs } from './model'
-import { changePassword, changeUserInfo, logOut } from './actions'
+import { changePassword, changeUserInfo } from './actions'
 
 import bem from 'bem-ts'
 import './styles.scss'
