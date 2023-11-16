@@ -22,7 +22,7 @@ export const getUserInfo = async (): Promise<{ data: User }> =>
       url: userInfoURL,
     })
   )
-export const postOAuthInfo = async (code: string): Promise<{ data: User }> =>
+export const postOAuthInfo = async (code: string): Promise<unknown> =>
   axios(
     Object.assign(config, {
       method: 'POST',

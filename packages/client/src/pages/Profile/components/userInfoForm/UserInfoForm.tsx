@@ -69,7 +69,9 @@ const UserInfoForm = ({
             value="Отправить изменения"
           />
           <Link to="/login">
-            <PrimitiveButton onClick={logOut}>Выйти</PrimitiveButton>
+            <PrimitiveButton onClick={logOut} id="logout-button">
+              Выйти
+            </PrimitiveButton>
           </Link>
         </div>
       </form>
