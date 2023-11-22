@@ -9,14 +9,6 @@ import { store } from './redux/store.js'
 import './index.scss'
 import './styles/index.css'
 
-// ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-//   <Provider store={store}>
-//     <ThemeProvider theme={theme}>
-//       <App />
-//     </ThemeProvider>
-//   </Provider>
-// )
-
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <React.StrictMode>
