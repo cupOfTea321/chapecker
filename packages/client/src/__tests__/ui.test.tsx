@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import ErrorPage from '../pages/errors/ErrorPage/ErrorPage'
 
 describe('Test Engine', () => {
@@ -6,6 +6,12 @@ describe('Test Engine', () => {
     await act(async () => {
       render(<ErrorPage error={{ errorCode: '419', comment: 'Test Error' }} />)
     })
-    expect(true).toBeTruthy()
+
+    const button = screen.getByText('На глвную')
+    fireEvent.click(button)
+
+    console.log(location.pathname)
+
+    expect(false).toBeTruthy()
   })
 })
