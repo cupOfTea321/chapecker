@@ -23,14 +23,13 @@ export const getUserInfo = async (): Promise<{ data: User }> =>
     })
   )
 export const postOAuthInfo = async (code: string): Promise<unknown> =>
-  axios(
-    Object.assign(config, {
-      method: 'POST',
-      withCredentials: true,
-      url: yandexOAuthURL,
-      data: JSON.stringify({
-        code,
-        redirect_uri: appURL,
-      }),
-    })
-  )
+  axios({
+    ...config,
+    method: 'POST',
+    withCredentials: true,
+    url: yandexOAuthURL,
+    data: JSON.stringify({
+      code,
+      redirect_uri: appURL,
+    }),
+  })
