@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
+export interface cred {
+  ratingFieldName: string
+  cursor: number
+  limit: number
+}
 export const yandexCoreApi = createApi({
   reducerPath: 'yandexCoreApi',
   baseQuery: fetchBaseQuery({
@@ -10,8 +15,15 @@ export const yandexCoreApi = createApi({
     getUser: builder.query({
       query: () => `auth/user`,
     }),
+    leaders: builder.mutation({
+      query: (credentials: cred) => ({
+        url: `leaderboard/all`,
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
   }),
 })
 
 // экспортируем заданные поинты как хуки
-export const { useGetUserQuery } = yandexCoreApi
+export const { useGetUserQuery, useLeadersMutation } = yandexCoreApi
