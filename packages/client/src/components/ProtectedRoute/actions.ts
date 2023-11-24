@@ -15,13 +15,13 @@ const config = {
 }
 
 export const getUserInfo = async (): Promise<{ data: User }> =>
-  axios(
-    Object.assign(config, {
-      method: 'GET',
-      withCredentials: true,
-      url: userInfoURL,
-    })
-  )
+  axios({
+    ...config,
+    method: 'GET',
+    withCredentials: true,
+    url: userInfoURL,
+  })
+
 export const postOAuthInfo = async (code: string): Promise<unknown> =>
   axios({
     ...config,

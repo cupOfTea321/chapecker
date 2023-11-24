@@ -40,13 +40,18 @@ const Login = () => {
 
   useEffect(() => {
     // Need to find out the app's id in Yandex OAuth
-    getYandexOAuthId()
-      .then(a => a.data)
-      .then(data => {
+    const effect = async () => {
+      try {
+        const { data } = await getYandexOAuthId()
         if ('service_id' in data) {
           dispatch(setOAuthServiceId(data.service_id))
         }
-      })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    effect()
   }, [])
 
   return (

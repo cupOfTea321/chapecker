@@ -14,20 +14,18 @@ const config = {
 export const signIn = async (
   data: PartialRecord<TFieldNames, string>
 ): Promise<void> =>
-  axios(
-    Object.assign(config, {
-      method: 'POST',
-      url: siginURL,
-      data: JSON.stringify(data),
-    })
-  )
+  axios({
+    ...config,
+    method: 'POST',
+    url: siginURL,
+    data: JSON.stringify(data),
+  })
 
 export const getYandexOAuthId = async (): Promise<{
   data: { service_id: string }
 }> =>
-  axios(
-    Object.assign(config, {
-      method: 'GET',
-      url: yandexOAuthIdURL,
-    })
-  )
+  axios({
+    ...config,
+    method: 'GET',
+    url: yandexOAuthIdURL,
+  })

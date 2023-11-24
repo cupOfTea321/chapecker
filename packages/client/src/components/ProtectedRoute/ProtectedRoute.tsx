@@ -16,36 +16,25 @@ const ProtectedRoute = () => {
   const dispatch = useAppDispatch()
 
   const chechAuth = async () => {
-    // if there is secret code in query parameters -- it is yandex oauth!
-    new Promise((resolve, reject) => {
+    try {
+      // if there is secret code in query parameters -- it is yandex oauth!
       if (document.location.search) {
         const params = new URLSearchParams(document.location.search)
         const code = params.get('code')
         if (code) {
-          postOAuthInfo(code)
-            .then(() => {
-              resolve('')
-            })
-            .catch(err => {
-              reject(err)
-            })
-        } else {
-          resolve('')
+          await postOAuthInfo(code)
         }
-      } else {
-        resolve('')
       }
-    })
-      .then(() => getUserInfo())
-      .then(({ data }) => {
-        setUser(data)
-        dispatch(setUserData(data))
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
-        setLoad(false)
-        setAuthStatus('checked')
-      })
+
+      const { data } = await getUserInfo()
+      setUser(data)
+      dispatch(setUserData(data))
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setLoad(false)
+      setAuthStatus('checked')
+    }
   }
 
   authStatus !== 'checked' && chechAuth()
