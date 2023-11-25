@@ -2,6 +2,7 @@ import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit'
 
 import { yandexCoreApi } from './services/yandexCore.js'
 import user from '../redux/features/userSlice'
+import oauthservice from '../redux/features/oauthSlice.js'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 const createStore = (
@@ -11,6 +12,7 @@ const createStore = (
     reducer: {
       [yandexCoreApi.reducerPath]: yandexCoreApi.reducer,
       user: user,
+      oauthservice,
     },
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware().concat(yandexCoreApi.middleware),

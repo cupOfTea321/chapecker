@@ -4,6 +4,7 @@ import './PrimitiveButton.scss'
 type TPrimitiveButton = {
   disabled?: boolean
   onClick?: MouseEventHandler
+  id?: string
 }
 
 const PrimitiveButton = (props: PropsWithChildren<TPrimitiveButton>) => {

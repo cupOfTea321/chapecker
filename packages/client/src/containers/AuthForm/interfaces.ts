@@ -21,6 +21,7 @@ export type FieldProps = {
 }
 
 export type ButtonProps = {
+  id?: string
   title: string
 }
 

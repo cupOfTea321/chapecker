@@ -9,6 +9,9 @@ import {
   ProfileTabs,
 } from '../../model'
 import LabeledInput from '../input/LabeledInput'
+import PrimitiveButton from '../../../../components/PrimitiveButton/PrimitiveButton'
+import { logOut } from '../../actions'
+import { Link } from 'react-router-dom'
 
 const UserInfoForm = ({
   user,
@@ -65,6 +68,11 @@ const UserInfoForm = ({
             title="Submit change"
             value="Отправить изменения"
           />
+          <Link to="/login">
+            <PrimitiveButton onClick={logOut} id="logout-button">
+              Выйти
+            </PrimitiveButton>
+          </Link>
         </div>
       </form>
     </>
