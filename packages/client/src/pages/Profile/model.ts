@@ -30,6 +30,7 @@ export interface IProfileFormInputProps {
   key: string
   filedKey: string
   fieldText: string
+  errorMsg: boolean
   user: IUser
   cn: (arg1: string, arg2?: { [x: string]: boolean }) => string
   isActive: boolean

@@ -102,6 +102,8 @@ const ProfilePage = () => {
               onEdit={onEdit}
               onAbolution={onAbolution}
               onSubmit={onUserDataChange}
+              // Remount on "reset" form )))
+              key={`${isFormActive}`}
             />
           </section>
           <section>

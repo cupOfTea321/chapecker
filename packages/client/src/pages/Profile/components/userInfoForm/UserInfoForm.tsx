@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 
 import bem from 'bem-ts'
 import './styles.scss'
@@ -10,7 +10,10 @@ import {
 } from '../../model'
 import LabeledInput from '../input/LabeledInput'
 
-import { REGEX, ERROR_MESSAGES } from '../../../../constants/validations'
+import {
+  FIELD_REGEX,
+  FIELD_ERROR_MESSAGES,
+} from '../../../../constants/validations'
 
 const UserInfoForm = ({
   user,
@@ -29,11 +32,13 @@ const UserInfoForm = ({
 }) => {
   const cn = bem('userInfoForm')
 
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
   function localOnSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
     let isValid = true
-    console.log(user)
+    const localErrors: Record<string, string> = {}
 
     for (const [key, value] of new FormData(
       e.target as HTMLFormElement
@@ -41,34 +46,17 @@ const UserInfoForm = ({
       let propValid = true
       if (!['id', 'avatar'].includes(key)) {
         if (key.endsWith('name')) {
-          // @ts-ignore
-          if (key === 'display_name' && value.length === 0) {
+          if (key === 'display_name' && (value as string).length === 0) {
             continue
           }
-          // @ts-ignore
-          propValid = REGEX.name.test(value)
 
-          if (!propValid) {
-            switch (key) {
-              case 'first_name':
-                alert(ERROR_MESSAGES.name)
-                break
-              case 'second_name':
-                alert(ERROR_MESSAGES.surname)
-                break
-              case 'display_name':
-                alert(ERROR_MESSAGES.displayName)
-                break
-            }
-          }
+          propValid = FIELD_REGEX.first_name.test(value as string)
         } else {
-          // @ts-ignore
-          propValid = REGEX[key].test(value)
+          propValid = FIELD_REGEX[key].test(value as string)
+        }
 
-          if (!propValid) {
-            // @ts-ignore
-            alert(ERROR_MESSAGES[key])
-          }
+        if (!propValid) {
+          localErrors[key] = FIELD_ERROR_MESSAGES[key]
         }
       }
 
@@ -77,6 +65,8 @@ const UserInfoForm = ({
 
     if (isValid) {
       onSubmit(e)
+    } else {
+      setErrors(localErrors)
     }
   }
 
@@ -96,6 +86,7 @@ const UserInfoForm = ({
             fieldText={text}
             user={user}
             isActive={isFormActive}
+            errorMsg={!!errors[key]}
           />
         ))}
         <div className={cn('control')}>
