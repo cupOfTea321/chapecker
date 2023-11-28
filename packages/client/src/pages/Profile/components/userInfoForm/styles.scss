@@ -72,6 +72,16 @@
         }
     }
 
+    &__errorMessage {
+        display: inline-block;
+        margin: -0.6rem 0.6rem 0;
+        width: 100%;
+        text-align: start;
+        color: red;
+        line-height: 1rem;
+        font-size: 0.8rem;
+    }
+
     &__controlCofirm {
         cursor: pointer;
         border: none;
@@ -86,15 +96,5 @@
         &:active {
             background-color: $primary-darker;
         }
-    }
-
-    &__errorMessage {
-        display: inline-block;
-        margin: -0.6rem 0.6rem 0;
-        width: 100%;
-        text-align: start;
-        color: red;
-        line-height: 1rem;
-        font-size: 0.8rem;
     }
 }
