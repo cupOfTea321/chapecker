@@ -31,6 +31,7 @@ const ChangePasswordForm = ({
             fieldText={text}
             user={user}
             isActive={true}
+            errorMsg={false}
           />
         ))}
         <div className={cn('control')}>

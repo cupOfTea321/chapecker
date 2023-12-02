@@ -1,4 +1,4 @@
-export const baseURL = 'https://ya-praktikum.tech/api/v2'
+export const baseURL = 'http://localhost:3001/api/v2'
 export const sourceURL = 'resources'
 export const changeAvatarURL = 'user/profile/avatar'
 export const changeProfileURL = 'user/profile'
