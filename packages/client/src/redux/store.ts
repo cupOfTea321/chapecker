@@ -4,8 +4,9 @@ import { yandexCoreApi } from './services/yandexCore.js'
 import user from '../redux/features/userSlice'
 import oauthservice from '../redux/features/oauthSlice.js'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { store } from '../entry-client.js'
 
-const createStore = (
+export const createStore = (
   options?: ConfigureStoreOptions['preloadedState'] | undefined
 ) =>
   configureStore({
@@ -19,7 +20,6 @@ const createStore = (
     ...options,
   })
 
-export const store = createStore()
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch
 export type RootState = ReturnType<typeof store.getState>

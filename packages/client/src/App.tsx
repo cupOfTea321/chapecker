@@ -9,7 +9,6 @@ const { login, signUp, error404, noMatch } = publilRoutes
 function App() {
   return (
     <div className="App">
-      <h1>👋 Howdy from the server :)</h1>
       <ErrorBoundary>
         <Routes>
           <Route
