@@ -3,11 +3,11 @@ import { Box } from '@mui/material'
 import './leaderboard.scss'
 
 interface IBlockLeader {
-  avatar: string
-  username: string
-  displayName: string
-  score: number | undefined
-  place: number
+  avatar?: string
+  username?: string
+  displayName?: string
+  score?: number | undefined
+  place?: number
 }
 
 const LeaderBox: React.FC<IBlockLeader> = ({

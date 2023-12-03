@@ -10,7 +10,7 @@ const createStore = (
   configureStore({
     reducer: {
       [yandexCoreApi.reducerPath]: yandexCoreApi.reducer,
-      user: user,
+      user,
     },
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware().concat(yandexCoreApi.middleware),

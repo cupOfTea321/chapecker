@@ -7,8 +7,8 @@ import { privateRoutes } from '../../router/router'
 import { PartialRecord } from '../../containers/AuthForm/interfaces'
 import { TFieldNames } from '../../constants/fields'
 import axios from 'axios'
-import { setUserData } from '../../redux/features/userSlice'
 import { getUserInfo } from '../../components/ProtectedRoute/actions'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -16,13 +16,16 @@ const Login = () => {
     login: '',
     password: '',
   }
-
+  const dispatch = useDispatch()
   const onSubmit = useCallback(
     async (fieldData: PartialRecord<TFieldNames, string>) => {
       try {
         await signIn(fieldData)
         const data = await getUserInfo()
-        setUserData(data)
+
+        console.log(data.data)
+        // setUserData(data.data)
+        dispatch(data)
         navigate(privateRoutes.mainPage.path)
       } catch (err) {
         if (axios.isAxiosError(err)) {
