@@ -1,7 +1,6 @@
 import type { Express } from 'express'
-import connectToPG from './database'
+import postTopicAPI from './topics/post'
 
-//@ts-ignore
 export default function addForumAPI(app: Express) {
-  connectToPG()
+  postTopicAPI(app)
 }

@@ -1,6 +1,8 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import Topic from './Models/Topic'
 
+export { default as Topic } from './Models/Topic'
+
 export default function connectToPG() {
   const sequelizeOptions: SequelizeOptions = {
     host: 'localhost',

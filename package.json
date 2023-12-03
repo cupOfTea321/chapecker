@@ -27,9 +27,11 @@
     "sass": "^1.69.3"
   },
   "dependencies": {
+    "@types/cookie-parser": "^1.4.6",
     "@types/express": "^4.17.21",
     "axios": "^1.6.0",
     "bem-ts": "^0.13.5",
+    "cookie-parser": "^1.4.6",
     "http-proxy-middleware": "^2.0.6",
     "pg": "^8.11.3",
     "react-router-dom": "^6.17.0",

@@ -1,3 +1,4 @@
+import { setUserIDCookieOnGetUser } from './../cookies'
 import { proxyURL } from '../url'
 import type { Express } from 'express'
 import { createProxyMiddleware } from 'http-proxy-middleware'
@@ -11,6 +12,9 @@ export default function addProxyAPI(app: Express) {
         '*': '',
       },
       target: 'https://ya-praktikum.tech/',
+
+      selfHandleResponse: true,
+      onProxyRes: setUserIDCookieOnGetUser,
     })
   )
 }

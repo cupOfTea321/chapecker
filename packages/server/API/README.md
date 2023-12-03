@@ -1,26 +1,10 @@
-# Forum API documentation
+# API documentation
 
-### POST /api/auth/signin
-`Authorize`
-
-*This is a proxy that redirects requests to Practicum API*
-
-**Body**:
-```
-{
-  login: string,
-  password: string
-}
-```
-
-**Response**:
-```
-200: 'OK'
-400: *string*
-```
+### HTTP-METHOD /api/v2/*
+`This is proxy, all requests are redirected to Practicum API`
 
 
-### POST /api/topic
+### POST /api/forum/topic
 `Create a topic`
 
 **Body**: 
@@ -34,10 +18,11 @@
 ```
 201: 'OK'
 400: string
+401: ''
 ```
 
 
-### GET /api/topics
+### GET /api/forum/topics
 `Get json with all topics`
 
 **Response**:
@@ -56,7 +41,7 @@
 ```
 
 
-### POST /api/comment 
+### POST /api/forum/comment 
 `Send a comment`
 
 **Body**:
@@ -74,7 +59,7 @@
 ```
 
 
-### GET /api/comments/:topic_id
+### GET /api/forum/comments/:topic_id
 `Get json with all comments to the topic with topic_id`
 
 **Response**:
@@ -90,7 +75,7 @@
 400: string
 ```
 
-### POST /api/reply
+### POST /api/forum/reply
 `Send a reply`
 
 **Body**:
@@ -107,7 +92,7 @@
 400: string
 ```
 
-### GET /api/replies/:comment_id 
+### GET /api/forum/replies/:comment_id 
 `Get all replies to the comment with comment_id`
 
 *Response*:

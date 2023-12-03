@@ -1,27 +1,27 @@
 import dotenv from 'dotenv'
-import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 
 dotenv.config()
 
 import express from 'express'
+import cookieParser from 'cookie-parser'
 // import * as fs from 'fs'
 import * as path from 'path'
-
-import addForumAPI from './API/forum/addForumAPI'
-import addProxyAPI from './API/proxy/addProxyAPI'
+import addAPI from './API'
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
-  app.use(
-    cors({
-      origin: 'http://localhost:3000',
-      credentials: true,
-    })
-  )
+  app.use(express.json())
+  app.use(cookieParser())
+  app.use('*', (_, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.setHeader('Access-Control-Allow-Headers', 'content-type')
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
+    next()
+  })
   const port = Number(process.env.SERVER_PORT) || 3001
 
   let vite: ViteDevServer | undefined
@@ -35,8 +35,11 @@ async function startServer() {
       root: srcPath,
       appType: 'custom',
     })
+    //костыль от тс, чтобы не комментировать весь код выше
+    console.log(!vite || '')
 
-    app.use(vite.middlewares)
+    // Ставит дефолтные настройки cors, и поэтому все запросы не проходят
+    // app.use(vite.middlewares)
   }
 
   app.get('/api', (_, res) => {
@@ -86,8 +89,7 @@ async function startServer() {
   //   }
   // })
 
-  addForumAPI(app)
-  addProxyAPI(app)
+  addAPI(app)
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)

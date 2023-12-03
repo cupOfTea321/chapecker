@@ -12,7 +12,7 @@ import {
 import Topic from './Topic'
 
 @Table
-class Comment extends Model<Comment> {
+class Comment extends Model {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)

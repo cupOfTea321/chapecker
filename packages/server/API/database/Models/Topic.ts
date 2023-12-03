@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Model,
   Table,
@@ -10,7 +10,7 @@ import {
 } from 'sequelize-typescript'
 
 @Table
-class Topic extends Model<Topic> {
+class Topic extends Model {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
