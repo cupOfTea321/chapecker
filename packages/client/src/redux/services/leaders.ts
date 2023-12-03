@@ -1,4 +1,9 @@
-import { cred, yandexCoreApi } from './yandexCore'
+import { yandexCoreApi } from './yandexCore'
+export interface cred {
+  ratingFieldName: string
+  cursor: number
+  limit: number
+}
 
 export const leadersApi = yandexCoreApi.injectEndpoints({
   endpoints: builder => ({
@@ -9,12 +14,19 @@ export const leadersApi = yandexCoreApi.injectEndpoints({
         body: credentials,
       }),
     }),
+    addLeader: builder.mutation({
+      query: (credentials: cred) => ({
+        url: `leaderboard`,
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
   }),
 })
 
 // экспортируем заданные поинты как хуки
-export const { useLeadersMutation } = leadersApi
+export const { useLeadersMutation, useAddLeaderMutation } = leadersApi
 
 export const {
-  endpoints: { leaders },
+  endpoints: { leaders, addLeader },
 } = leadersApi

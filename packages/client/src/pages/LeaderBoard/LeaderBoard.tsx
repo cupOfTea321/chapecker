@@ -8,16 +8,17 @@ import { useLeadersMutation } from '../../redux/services/leaders'
 import { setUserData } from '../../redux/features/userSlice'
 
 const LeaderBoard: React.FC = () => {
-  const [leader, leaderResult] = useLeadersMutation()
+  const [leader, { data, isLoading }] = useLeadersMutation()
   const leaderList = async () => {
     try {
-      leaderResult.data = await leader({
-        ratingFieldName: 'otherField',
+      await leader({
+        ratingFieldName: 'chapecker',
         cursor: 0,
         limit: 10,
       }).unwrap()
-      setUserData(leaderResult.data)
-      console.log(leaderResult)
+      setUserData(data)
+
+      console.log(data)
     } catch (e) {
       console.log(e)
     }
@@ -43,7 +44,7 @@ const LeaderBoard: React.FC = () => {
         Лидеры
       </Typography>
       <Box className={'table-leaderboards'}>
-        {leaderResult?.data?.map((leader2, index) => {
+        {data?.map((leader2, index) => {
           const leader = leader2.data
           console.log(leader)
           return (

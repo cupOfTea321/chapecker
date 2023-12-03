@@ -9,6 +9,8 @@ import { TFieldNames } from '../../constants/fields'
 import axios from 'axios'
 import { getUserInfo } from '../../components/ProtectedRoute/actions'
 import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../redux/store'
+import { setUserData } from '../../redux/features/userSlice'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -16,16 +18,14 @@ const Login = () => {
     login: '',
     password: '',
   }
-  const dispatch = useDispatch()
   const onSubmit = useCallback(
     async (fieldData: PartialRecord<TFieldNames, string>) => {
       try {
         await signIn(fieldData)
-        const data = await getUserInfo()
-
-        console.log(data.data)
-        // setUserData(data.data)
-        dispatch(data)
+        // const data = await getUserInfo()
+        //
+        // console.log(data.data)
+        // setUserData(data)
         navigate(privateRoutes.mainPage.path)
       } catch (err) {
         if (axios.isAxiosError(err)) {

@@ -1,10 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
-export interface cred {
-  ratingFieldName: string
-  cursor: number
-  limit: number
-}
 export const yandexCoreApi = createApi({
   reducerPath: 'yandexCoreApi',
   baseQuery: fetchBaseQuery({
