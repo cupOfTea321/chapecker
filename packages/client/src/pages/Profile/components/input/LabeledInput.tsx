@@ -1,8 +1,9 @@
 import { FormEvent, forwardRef, memo, useCallback, useState } from 'react'
 import { IProfileFormInputProps, IUser, getFieldType } from '../../model'
+import { FIELD_ERROR_MESSAGES } from '../../../../constants/validations'
 
 const LabeledInput = forwardRef(function (
-  { filedKey, fieldText, user, cn, isActive }: IProfileFormInputProps,
+  { filedKey, fieldText, user, cn, isActive, errorMsg }: IProfileFormInputProps,
   ref: React.LegacyRef<HTMLInputElement>
 ) {
   const [value, setValue] = useState(user[filedKey as keyof IUser])
@@ -30,6 +31,12 @@ const LabeledInput = forwardRef(function (
           placeholder={fieldText}
         />
       </label>
+
+      {errorMsg && (
+        <div className={cn('errorMessage')}>
+          {FIELD_ERROR_MESSAGES[filedKey]}
+        </div>
+      )}
     </fieldset>
   )
 })

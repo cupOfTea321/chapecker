@@ -33,8 +33,8 @@ export const changePassword = async (newUserInfo: IUser): Promise<IUser> =>
   )
 
 export const logOut = async () =>
-  axios(
-    Object.assign(userFormAxiosConfig, {
-      url: logoutURL,
-    })
-  )
+  axios({
+    ...userFormAxiosConfig,
+    method: 'POST',
+    url: logoutURL,
+  })

@@ -1,6 +1,11 @@
 import axios from 'axios'
 import { User } from '../../redux/features/userSlice'
-import { baseURL, userInfoURL } from '../../API/endpoints'
+import {
+  appURL,
+  baseURL,
+  userInfoURL,
+  yandexOAuthURL,
+} from '../../API/endpoints'
 
 axios.defaults.baseURL = baseURL
 
@@ -10,10 +15,21 @@ const config = {
 }
 
 export const getUserInfo = async (): Promise<{ data: User }> =>
-  axios(
-    Object.assign(config, {
-      method: 'GET',
-      withCredentials: true,
-      url: userInfoURL,
-    })
-  )
+  axios({
+    ...config,
+    method: 'GET',
+    withCredentials: true,
+    url: userInfoURL,
+  })
+
+export const postOAuthInfo = async (code: string): Promise<unknown> =>
+  axios({
+    ...config,
+    method: 'POST',
+    withCredentials: true,
+    url: yandexOAuthURL,
+    data: JSON.stringify({
+      code,
+      redirect_uri: appURL,
+    }),
+  })

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { baseURL, siginURL } from '../../API/endpoints'
+import { baseURL, siginURL, yandexOAuthIdURL } from '../../API/endpoints'
 import { TFieldNames } from '../../constants/fields'
 import { PartialRecord } from '../../containers/AuthForm/interfaces'
 
@@ -14,10 +14,18 @@ const config = {
 export const signIn = async (
   data: PartialRecord<TFieldNames, string>
 ): Promise<void> =>
-  axios(
-    Object.assign(config, {
-      method: 'POST',
-      url: siginURL,
-      data: JSON.stringify(data),
-    })
-  )
+  axios({
+    ...config,
+    method: 'POST',
+    url: siginURL,
+    data: JSON.stringify(data),
+  })
+
+export const getYandexOAuthId = async (): Promise<{
+  data: { service_id: string }
+}> =>
+  axios({
+    ...config,
+    method: 'GET',
+    url: yandexOAuthIdURL,
+  })

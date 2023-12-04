@@ -96,6 +96,7 @@ AuthForm.SubmitButton = function SubmitButton({ title }: SubmitButtonProps) {
 AuthForm.RedirectButton = function RedirectButton({
   title,
   redirectUrl,
+  id,
 }: RedirectButtonProps) {
   return (
     <Link style={{ width: '100%' }} to={redirectUrl}>
@@ -104,6 +105,7 @@ AuthForm.RedirectButton = function RedirectButton({
         color="success"
         variant="outlined"
         size="medium"
+        id={id}
         type="button">
         {title}
       </Button>
