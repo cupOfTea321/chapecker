@@ -12,6 +12,7 @@ import { useAppDispatch, useTypedSelector } from '../../redux/store'
 import { getOAuthId } from '../../redux/selectors'
 import { setOAuthServiceId } from '../../redux/features/oauthSlice'
 import { appURL } from '../../API/endpoints'
+import { useTheme } from '../../utils/useTheme'
 
 const Login = () => {
   const dispatch = useAppDispatch()
@@ -54,6 +55,8 @@ const Login = () => {
     effect()
   }, [])
 
+  const { theme, toggleTheme } = useTheme()
+
   return (
     <Layout>
       <AuthForm onSubmit={onSubmit} defaultFormValues={defaultFormValues}>
@@ -67,6 +70,7 @@ const Login = () => {
           redirectUrl={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${oauthID}&redirect_uri=${appURL}`}
           id="yandex-button"
         />
+        <div onClick={toggleTheme}>{theme}</div>
       </AuthForm>
     </Layout>
   )
