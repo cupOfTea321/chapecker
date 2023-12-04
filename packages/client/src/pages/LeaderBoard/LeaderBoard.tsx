@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
 import { leadersMock } from './mock'
 import back from '../../assets/chessboard-background.png'
+import avatar from '../../assets/user.png'
 import './leaderboard.scss'
 import LeaderBox from './LeaderBox'
 import { useLeadersMutation } from '../../redux/services/leaders'
-import { setUserData } from '../../redux/features/userSlice'
 
 const LeaderBoard: React.FC = () => {
   const [leader, { data, isLoading }] = useLeadersMutation()
@@ -16,7 +16,6 @@ const LeaderBoard: React.FC = () => {
         cursor: 0,
         limit: 10,
       }).unwrap()
-      setUserData(data)
 
       console.log(data)
     } catch (e) {
@@ -51,7 +50,8 @@ const LeaderBoard: React.FC = () => {
             <LeaderBox
               key={`${leader.name}`}
               username={leader.name}
-              score={leader.otherField}
+              avatar={leader.avatar ? leader.avatar : avatar}
+              score={leader.chapecker}
               place={index + 1}
             />
           )
@@ -59,7 +59,7 @@ const LeaderBoard: React.FC = () => {
         {leadersMock.map((leader, index) => (
           <LeaderBox
             key={`${leader.username}`}
-            avatar={leader.avatar}
+            avatar={leader.avatar ? leader.avatar : avatar}
             username={leader.username}
             displayName={leader.displayName}
             score={leader.score}

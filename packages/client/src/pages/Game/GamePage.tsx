@@ -5,6 +5,9 @@ import PrimitivePaper from '../../components/PrimitivePaper/PrimitivePaper'
 import { Navigate } from 'react-router-dom'
 import { useFullscreen } from '../../utils/fullscreenHook'
 import PrimitiveButton from '../../components/PrimitiveButton/PrimitiveButton'
+import { useAddLeaderMutation } from '../../redux/services/leaders'
+import { getUser } from '../../redux/features/userSlice'
+import { useTypedSelector } from '../../redux/store'
 
 const enum Status {
   start = 'start',
@@ -30,6 +33,28 @@ const Game = () => {
 
     gameEngine.start()
   }
+  const [leader, { data, isLoading }] = useAddLeaderMutation()
+
+  const currentUser = useTypedSelector(getUser)
+  console.log(currentUser)
+  // функция записи результата на сервер
+  const leaderList = async () => {
+    try {
+      await leader({
+        ratingFieldName: 'chapecker',
+        data: {
+          name: currentUser.login,
+          chapecker: '110',
+        },
+        teamName: 'team',
+      }).unwrap()
+      // setUserData(data)
+
+      console.log(data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   useEffect(() => {
     const { current: canvasNode } = canvasRef
@@ -53,6 +78,11 @@ const Game = () => {
       ;(engineRef.current as null | GameEngine) = gameEngine
       gameEngine.init()
       gameStart()
+    }
+    console.log(engineRef.current)
+    return () => {
+      console.log('END')
+      leaderList()
     }
   }, [])
 

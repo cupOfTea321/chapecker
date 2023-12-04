@@ -5,6 +5,15 @@ export interface cred {
   limit: number
 }
 
+interface LeaderData {
+  name: string
+  chapecker: string
+}
+export interface AddLeader {
+  ratingFieldName: string
+  data: LeaderData | null
+  teamName: string
+}
 export const leadersApi = yandexCoreApi.injectEndpoints({
   endpoints: builder => ({
     leaders: builder.mutation({
@@ -15,7 +24,7 @@ export const leadersApi = yandexCoreApi.injectEndpoints({
       }),
     }),
     addLeader: builder.mutation({
-      query: (credentials: cred) => ({
+      query: (credentials: AddLeader) => ({
         url: `leaderboard`,
         method: 'POST',
         body: credentials,

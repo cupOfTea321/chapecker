@@ -20,7 +20,14 @@ const LeaderBox: React.FC<IBlockLeader> = ({
     <Box className={'container-leaderbox'}>
       <Box className={'container-leaderbox__left'}>
         <Box className={'container-leaderbox__avatar'}>
-          <img src={avatar} alt="avatar" />
+          <img
+            src={avatar}
+            alt="avatar"
+            style={{
+              width: '58px',
+              height: '64px',
+            }}
+          />
         </Box>
         <Box>
           <Box>{displayName}</Box>
