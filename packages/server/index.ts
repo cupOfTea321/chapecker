@@ -31,15 +31,15 @@ async function startServer() {
 
   if (isDev()) {
     vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        cors: false,
+      },
       root: srcPath,
       appType: 'custom',
     })
-    //костыль от тс, чтобы не комментировать весь код выше
-    console.log(!vite || '')
 
-    // Ставит дефолтные настройки cors, и поэтому все запросы не проходят
-    // app.use(vite.middlewares)
+    app.use(vite.middlewares)
   }
 
   app.get('/api', (_, res) => {
@@ -49,6 +49,10 @@ async function startServer() {
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
+
+  // Max:
+  // Понятия не имею, что с этим делать, но если это раскомментировать, то ручки сервера работать не будут
+  // В текущем состоянии не работает SSR
 
   // app.use('*', async (req, res, next) => {
   //   const url = req.originalUrl

@@ -22,17 +22,20 @@
 ```
 
 
-### GET /api/forum/topics
+### GET /api/forum/topics?limit=x&offset=y
 `Get json with all topics`
+
+*Pagination: limit and offset should come as query parameters, their default values are 10 and 0 respectively*
 
 **Response**:
 ```
 200:
 [
   {
-    id: integer,
+    topic_id: integer,
     title: string,
-    creator_id: integer
+    creator_id: integer,
+    createdAt: string //ISO timestamp
   }
   ...
 ]
@@ -56,19 +59,24 @@
 ```
 201: 'OK'
 400: string
+401: ''
 ```
 
 
-### GET /api/forum/comments/:topic_id
+### GET /api/forum/comments/:topic_id?limit=x&offset=y
 `Get json with all comments to the topic with topic_id`
+
+*Pagination: limit and offset should come as query parameters, their default values are 10 and 0 respectively*
 
 **Response**:
 ```
 200:
 [
   {
-    id: integer,
+    comment_id: integer,
     text: string
+    creator_id: integer,
+    createdAt: string //ISO timestamp
   }
   ...
 ]
@@ -90,10 +98,13 @@
 ```
 201: 'OK'
 400: string
+401: ''
 ```
 
-### GET /api/forum/replies/:comment_id 
+### GET /api/forum/replies/:comment_id?limit=x&offset=y
 `Get all replies to the comment with comment_id`
+
+*Pagination: limit and offset should come as query parameters, their default values are 10 and 0 respectively*
 
 *Response*:
 ```

@@ -5,7 +5,6 @@ import { Topic } from './../../database/'
 
 export default function postTopicAPI(app: Express) {
   app.post(forumTopicURL, async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
     const creator_id = await getUserId(req)
     if (!creator_id) {
       res.status(401).send('')

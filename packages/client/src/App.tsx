@@ -6,22 +6,9 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 const { login, signUp, error404, noMatch } = publilRoutes
 
-// function debugClick() {
-//   axios({
-//     url: 'http://localhost:3001/api/forum/topic',
-//     method: 'POST',
-//     withCredentials: true,
-//     headers: { 'Content-type': 'application/json; charset=UTF-8' },
-//     data: JSON.stringify({title: 'Создано с HTTP'})
-//   })
-// }
-
 function App() {
   return (
     <div className="App">
-      {/* <button style={{position: 'fixed', top: '200px', left: '100px', right: '100px', bottom: '200px', zIndex: '8000'}}
-        onClick={debugClick}>CLICK</button> */}
-      <h1>👋 Howdy from the server :)</h1>
       <ErrorBoundary>
         <Routes>
           <Route
