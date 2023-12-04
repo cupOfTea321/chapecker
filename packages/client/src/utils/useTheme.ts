@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useLocalStorage } from './useLocalStorage'
+import { useLocalStorage } from '@uidotdev/usehooks'
 
 type Theme = 'light' | 'dark'
 
