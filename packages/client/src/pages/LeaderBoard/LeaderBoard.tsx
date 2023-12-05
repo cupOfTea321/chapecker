@@ -8,7 +8,7 @@ import LeaderBox from './LeaderBox'
 import { useLeadersMutation } from '../../redux/services/leaders'
 
 const LeaderBoard: React.FC = () => {
-  const [leader, { data, isLoading }] = useLeadersMutation()
+  const [leader, { data }] = useLeadersMutation()
   const leaderList = async () => {
     try {
       await leader({
@@ -16,8 +16,6 @@ const LeaderBoard: React.FC = () => {
         cursor: 0,
         limit: 10,
       }).unwrap()
-
-      console.log(data)
     } catch (e) {
       console.log(e)
     }
@@ -45,7 +43,6 @@ const LeaderBoard: React.FC = () => {
       <Box className={'table-leaderboards'}>
         {data?.map((leader2, index) => {
           const leader = leader2.data
-          console.log(leader)
           return (
             <LeaderBox
               key={`${leader.name}`}

@@ -33,10 +33,9 @@ const Game = () => {
 
     gameEngine.start()
   }
-  const [leader, { data, isLoading }] = useAddLeaderMutation()
+  const [leader] = useAddLeaderMutation()
 
   const currentUser = useTypedSelector(getUser)
-  console.log(currentUser)
   // функция записи результата на сервер
   const leaderList = async () => {
     try {
@@ -48,9 +47,6 @@ const Game = () => {
         },
         teamName: 'team',
       }).unwrap()
-      // setUserData(data)
-
-      console.log(data)
     } catch (e) {
       console.log(e)
     }
@@ -79,9 +75,7 @@ const Game = () => {
       gameEngine.init()
       gameStart()
     }
-    console.log(engineRef.current)
     return () => {
-      console.log('END')
       leaderList()
     }
   }, [])
