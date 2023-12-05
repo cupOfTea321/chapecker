@@ -8,7 +8,7 @@ import LeaderBox from './LeaderBox'
 import { useLeadersMutation } from '../../redux/services/leaders'
 
 const LeaderBoard: React.FC = () => {
-  const [leader, { data, isLoading }] = useLeadersMutation()
+  const [leader, { data }] = useLeadersMutation()
   const leaderList = async () => {
     try {
       await leader({

@@ -33,7 +33,7 @@ const Game = () => {
 
     gameEngine.start()
   }
-  const [leader, { data, isLoading }] = useAddLeaderMutation()
+  const [leader] = useAddLeaderMutation()
 
   const currentUser = useTypedSelector(getUser)
   // функция записи результата на сервер
