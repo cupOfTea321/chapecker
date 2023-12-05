@@ -255,4 +255,11 @@ export class Checkers extends AbstractGameObject {
   public isGameOver() {
     return this.checkersEnemy.length === 0 || this.checkersPlayer.length === 0
   }
+
+  public getScore() {
+    return (
+      (8 - this.checkersEnemy.length) * 100 -
+      (8 - this.checkersPlayer.length) * 50
+    )
+  }
 }

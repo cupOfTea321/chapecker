@@ -17,7 +17,7 @@ const enum Status {
 
 const Game = () => {
   const [gameStatus, setGameStatus] = useState(Status.start)
-  const [score, setScore] = useState(0)
+  const score = useRef(0)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const engineRef = useRef<GameEngine>(null)
@@ -28,7 +28,7 @@ const Game = () => {
     if (!gameEngine) {
       throw new Error('Игра еще не инициализирована')
     }
-    setScore(0)
+    score.current = 0
     setGameStatus(Status.run)
 
     gameEngine.start()
@@ -44,7 +44,7 @@ const Game = () => {
         ratingFieldName: 'chapecker',
         data: {
           name: currentUser.login,
-          chapecker: '110',
+          chapecker: score.current.toString(),
         },
         teamName: 'team',
       }).unwrap()
@@ -69,10 +69,10 @@ const Game = () => {
       const gameEngine = new GameEngine({
         ctx,
         ref: canvasNode,
-        onScoreUpdate: setScore,
+        onScoreUpdate: newScore => (score.current = newScore),
         onGameOver(newScore) {
           setGameStatus(Status.gameOver)
-          setScore(newScore)
+          score.current = newScore
         },
       })
       ;(engineRef.current as null | GameEngine) = gameEngine
