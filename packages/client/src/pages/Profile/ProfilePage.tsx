@@ -85,7 +85,7 @@ const ProfilePage = () => {
           <span>Текущая тема:</span>
 
           <div onClick={toggleTheme} className={`themeBtn ${theme}`}>
-            {theme === 'dark' ? 'Светлая' : 'Тёмная'}
+            {theme !== 'dark' ? 'Светлая' : 'Тёмная'}
           </div>
         </div>
 
