@@ -55,8 +55,6 @@ const Login = () => {
     effect()
   }, [])
 
-  const { theme, toggleTheme } = useTheme()
-
   return (
     <Layout>
       <AuthForm onSubmit={onSubmit} defaultFormValues={defaultFormValues}>
@@ -70,7 +68,6 @@ const Login = () => {
           redirectUrl={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${oauthID}&redirect_uri=${appURL}`}
           id="yandex-button"
         />
-        <div onClick={toggleTheme}>{theme}</div>
       </AuthForm>
     </Layout>
   )

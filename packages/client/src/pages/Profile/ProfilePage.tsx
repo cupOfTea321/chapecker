@@ -15,6 +15,7 @@ import { getUserData } from '../../redux/selectors'
 import { publilRoutes } from '../../router/router'
 import { Navigate } from 'react-router-dom'
 import { User } from '../../redux/features/userSlice'
+import { useTheme } from '../../utils/useTheme'
 
 const ProfilePage = () => {
   const cn = bem('profile')
@@ -75,9 +76,19 @@ const ProfilePage = () => {
     []
   )
 
+  const { theme, toggleTheme } = useTheme()
+
   return (
-    <div className={cn({ chesBackgrounded: true })}>
-      <div className={cn('container')}>
+    <div className={`${cn({ chesBackgrounded: true })} ${theme}`}>
+      <div className={`${cn('container')} ${theme}`}>
+        <div className="themeContainer">
+          <span>Текущая тема:</span>
+
+          <div onClick={toggleTheme} className={`themeBtn ${theme}`}>
+            {theme === 'dark' ? 'Светлая' : 'Тёмная'}
+          </div>
+        </div>
+
         <h1 className={cn('header')}>Страница пользователя</h1>
         <div className={cn('avatarContainer')}>
           <UserAvatar avatarSrc={user.avatar} />

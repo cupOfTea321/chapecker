@@ -8,7 +8,7 @@ import { useTheme } from './utils/useTheme'
 const { login, signUp, error404, noMatch } = publilRoutes
 
 function App() {
-  const { theme, toggleTheme } = useTheme()
+  const { theme } = useTheme()
 
   return (
     <div className={`App ${theme}`}>
