@@ -37,6 +37,7 @@ const Game = () => {
 
   const currentUser = useTypedSelector(getUser)
   // функция записи результата на сервер
+
   const leaderList = async () => {
     try {
       await leader({
@@ -48,7 +49,7 @@ const Game = () => {
         teamName: 'team',
       }).unwrap()
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 
