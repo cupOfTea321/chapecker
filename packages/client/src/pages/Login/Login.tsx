@@ -21,7 +21,6 @@ const Login = () => {
     login: '',
     password: '',
   }
-
   const onSubmit = useCallback(
     async (fieldData: PartialRecord<TFieldNames, string>) => {
       try {
