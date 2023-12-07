@@ -3,12 +3,15 @@ import { Route, Routes } from 'react-router-dom'
 import { publilRoutes, privateRoutes } from './router/router'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import { useTheme } from './utils/useTheme'
 
 const { login, signUp, error404, noMatch } = publilRoutes
 
 function App() {
+  const { theme } = useTheme()
+
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <h1>👋 Howdy from the server :)</h1>
       <ErrorBoundary>
         <Routes>

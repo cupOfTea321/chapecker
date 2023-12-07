@@ -1,6 +1,7 @@
 import { FormEvent, forwardRef, memo, useCallback, useState } from 'react'
 import { IProfileFormInputProps, IUser, getFieldType } from '../../model'
 import { FIELD_ERROR_MESSAGES } from '../../../../constants/validations'
+import { useTheme } from '../../../../utils/useTheme'
 
 const LabeledInput = forwardRef(function (
   { filedKey, fieldText, user, cn, isActive, errorMsg }: IProfileFormInputProps,
@@ -16,13 +17,15 @@ const LabeledInput = forwardRef(function (
     [isActive]
   )
 
+  const { theme } = useTheme()
+
   return (
     <fieldset className={cn('fieldset')} title={fieldText}>
       <legend className={cn('legend')}>{fieldText}</legend>
       <label htmlFor={filedKey}>
         <input
           ref={ref}
-          className={cn('input', { active: isActive })}
+          className={`${cn('input', { active: isActive })} ${theme}`}
           onInput={handleInput}
           value={value || ''}
           type={getFieldType(filedKey)}
