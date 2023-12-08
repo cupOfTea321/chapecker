@@ -6,7 +6,7 @@ dotenv.config()
 
 import express from 'express'
 import cookieParser from 'cookie-parser'
-// import * as fs from 'fs'
+import * as fs from 'fs'
 import * as path from 'path'
 import addAPI from './API'
 
@@ -27,7 +27,7 @@ async function startServer() {
   let vite: ViteDevServer | undefined
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
-  // const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
+  const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
 
   if (isDev()) {
     vite = await createViteServer({
@@ -50,50 +50,46 @@ async function startServer() {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
 
-  // Max:
-  // Понятия не имею, что с этим делать, но если это раскомментировать, то ручки сервера работать не будут
-  // В текущем состоянии не работает SSR
-
-  // app.use('*', async (req, res, next) => {
-  //   const url = req.originalUrl
-
-  //   try {
-  //     let template: string
-
-  //     if (!isDev()) {
-  //       template = fs.readFileSync(
-  //         path.resolve(distPath, 'index.html'),
-  //         'utf-8'
-  //       )
-  //     } else {
-  //       template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
-
-  //       template = await vite!.transformIndexHtml(url, template)
-  //     }
-
-  //     let render: () => Promise<string>
-
-  //     if (!isDev()) {
-  //       render = (await import(ssrClientPath)).render
-  //     } else {
-  //       render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
-  //         .render
-  //     }
-
-  //     const appHtml = await render()
-
-  //     const html = template.replace(`<!--ssr-outlet-->`, appHtml)
-
-  //     res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-  //   } catch (e) {
-  //     if (isDev()) {
-  //       vite!.ssrFixStacktrace(e as Error)
-  //     }
-  //     next(e)
-  //   }
-  // })
-
   addAPI(app)
+
+  app.use('*', async (req, res, next) => {
+    const url = req.originalUrl
+
+    try {
+      let template: string
+
+      if (!isDev()) {
+        template = fs.readFileSync(
+          path.resolve(distPath, 'index.html'),
+          'utf-8'
+        )
+      } else {
+        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
+
+        template = await vite!.transformIndexHtml(url, template)
+      }
+
+      let render: () => Promise<string>
+
+      if (!isDev()) {
+        render = (await import(ssrClientPath)).render
+      } else {
+        render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
+          .render
+      }
+
+      const appHtml = await render()
+
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+    } catch (e) {
+      if (isDev()) {
+        vite!.ssrFixStacktrace(e as Error)
+      }
+      next(e)
+    }
+  })
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
