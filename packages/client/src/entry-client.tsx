@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
@@ -23,7 +23,8 @@ typeof window.__PRELOADED_SERVER_STATE__ === 'object'
 
 export const store = createStore({ preloadedState: loadServerState() })
 
-const Bundle = () => (
+hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
@@ -34,16 +35,6 @@ const Bundle = () => (
     </Provider>
   </React.StrictMode>
 )
-
-const root = document.getElementById('root') as HTMLElement
-
-if (import.meta.hot) {
-  console.log('create')
-  ReactDOM.createRoot(root as HTMLElement).render(<Bundle />)
-} else {
-  console.log('hydrate')
-  ReactDOM.hydrateRoot(root as HTMLElement, <Bundle />)
-}
 
 declare global {
   interface Window {
