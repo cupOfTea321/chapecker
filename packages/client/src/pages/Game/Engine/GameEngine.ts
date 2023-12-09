@@ -188,6 +188,14 @@ export class GameEngine {
     }
 
     this._gameState = GameState.ready
+
+    if (
+      'Notification' in window &&
+      Notification.permission !== 'denied' &&
+      Notification.permission !== 'granted'
+    ) {
+      Notification.requestPermission()
+    }
     return true
   }
 

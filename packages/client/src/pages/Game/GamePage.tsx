@@ -70,6 +70,12 @@ const Game = () => {
         onGameOver(newScore) {
           setGameStatus(Status.gameOver)
           score.current = newScore
+          if (
+            'Notification' in window &&
+            Notification.permission === 'granted'
+          ) {
+            new Notification('Игра окончена!')
+          }
         },
       })
       ;(engineRef.current as null | GameEngine) = gameEngine
