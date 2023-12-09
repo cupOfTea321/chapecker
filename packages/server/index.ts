@@ -1,5 +1,4 @@
 import express from 'express'
-import * as http from 'http'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
