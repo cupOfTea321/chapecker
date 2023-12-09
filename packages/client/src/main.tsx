@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
@@ -24,8 +24,9 @@ typeof window.__PRELOADED_SERVER_STATE__ === 'object'
 
 export const store = createStore({ preloadedState: loadServerState() })
 
-ReactDOM.hydrateRoot(
-  document.getElementById('root') as HTMLElement,
+const container = document.getElementById('root') as HTMLElement
+
+const Bundle = () => (
   <React.StrictMode>
     <Suspense fallback={<Spinner />}>
       <Provider store={store}>
@@ -37,8 +38,35 @@ ReactDOM.hydrateRoot(
   </React.StrictMode>
 )
 
+if (import.meta.hot) {
+  createRoot(container as HTMLElement).render(<Bundle />)
+} else {
+  console.log('hydrate')
+  hydrateRoot(container as HTMLElement, <Bundle />)
+}
 declare global {
   interface Window {
     __PRELOADED_SERVER_STATE__?: RootState
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  if (!import.meta.env.DEV) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/service-worker.js', { scope: '/' })
+        .then(() => {
+          console.log('Service worker registered')
+        })
+    })
+  } else {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const registration of registrations) {
+        registration.unregister().then(() => {
+          console.log('Service worker unregistered')
+        })
+      }
+    })
   }
 }
