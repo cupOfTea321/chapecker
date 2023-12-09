@@ -1,5 +1,4 @@
 import express from 'express'
-import { json, urlencoded } from 'body-parser'
 import * as http from 'http'
 import dotenv from 'dotenv'
 import cors from 'cors'
@@ -9,7 +8,6 @@ import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
-import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 
