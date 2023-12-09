@@ -1,5 +1,5 @@
-import React from 'react'
-import { hydrateRoot } from 'react-dom/client'
+import React, { Suspense } from 'react'
+import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
@@ -8,6 +8,7 @@ import App from './App'
 import { RootState, createStore } from './redux/store.js'
 import './index.scss'
 import './styles/index.css'
+import Spinner from './components/spinner/Spinner'
 
 const loadServerState = () => {
   if (typeof window.__PRELOADED_SERVER_STATE__ === 'object') {
@@ -23,16 +24,16 @@ typeof window.__PRELOADED_SERVER_STATE__ === 'object'
 
 export const store = createStore({ preloadedState: loadServerState() })
 
-hydrateRoot(
+ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
+    <Suspense fallback={<Spinner />}>
+      <Provider store={store}>
+        <BrowserRouter>
           <App />
-        </ThemeProvider>
-      </BrowserRouter>
-    </Provider>
+        </BrowserRouter>
+      </Provider>
+    </Suspense>
   </React.StrictMode>
 )
 
