@@ -14,7 +14,7 @@ const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
-  app.use(express.json())
+  app.use('/api/forum/*', express.json())
   app.use(cookieParser())
   app.use('*', (_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')

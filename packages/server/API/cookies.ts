@@ -11,7 +11,7 @@ export async function getUser(cookie: string | undefined) {
     body: null,
     method: 'GET',
   })
-  return await res.json()
+  return res.json()
 }
 
 export const setUserIDCookieOnGetUser = responseInterceptor(
@@ -22,8 +22,7 @@ export const setUserIDCookieOnGetUser = responseInterceptor(
     if (url !== proxyURL + '/auth/user') return response
 
     try {
-      const x = await getUser(req.headers.cookie)
-      const { id } = x
+      const { id } = await getUser(req.headers.cookie)
       res.setHeader('Set-Cookie', `userid=${id || ''}; HttpOnly; Path=/`)
     } catch (e) {
       res.setHeader('Set-Cookie', `userid=`)
@@ -34,7 +33,16 @@ export const setUserIDCookieOnGetUser = responseInterceptor(
   }
 )
 
-export async function getUserId(req: Request): Promise<number> {
+export async function getUserIdWithPracticumCookie(
+  req: Request
+): Promise<number> {
   const x = await getUser(req.headers.cookie)
   return x.id
+}
+
+export async function getUserId(req: Request): Promise<number> {
+  const { cookie } = req.headers
+  const res = cookie?.match(/userid=.*/)
+  if (res) return Number(res[0].split('=')[1])
+  return getUserIdWithPracticumCookie(req)
 }

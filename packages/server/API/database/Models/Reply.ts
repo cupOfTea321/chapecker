@@ -8,6 +8,7 @@ import {
   PrimaryKey,
   AllowNull,
   ForeignKey,
+  Index,
 } from 'sequelize-typescript'
 import Comment from './Comment'
 
@@ -29,6 +30,7 @@ class Reply extends Model {
   @AllowNull(false)
   @ForeignKey(() => Comment)
   @Column(DataType.INTEGER)
+  @Index
   comment_id: string | undefined
 }
 

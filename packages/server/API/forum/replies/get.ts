@@ -8,14 +8,15 @@ export default function getRepliesAPI(app: Express) {
     const { comment_id: comment_idP } = req.params
     try {
       const comment_id = Number(comment_idP)
-      if (isNaN(comment_id) || typeof comment_id !== 'number') {
+      if (isNaN(comment_id)) {
         res.status(400).send('Неверный comment_id')
         return
       }
-      let limit: number | undefined = Number(limitQ)
-      if (isNaN(limit) || typeof limit !== 'number') limit = 10
-      let offset: number | undefined = Number(offsetQ)
-      if (isNaN(offset) || typeof limit !== 'number') offset = 0
+      let limit = Number(limitQ)
+      if (isNaN(limit)) limit = 10
+
+      let offset = Number(offsetQ)
+      if (isNaN(offset)) offset = 0
 
       const replies = await Reply.findAll({
         attributes: ['creator_id', 'text', 'reply_id', 'createdAt'],

@@ -6,10 +6,10 @@ export default function getTopicsAPI(app: Express) {
   app.get(forumTopicsURL, async (req, res) => {
     const { limit: limitQ, offset: offsetQ } = req.query
     try {
-      let limit: number | undefined = Number(limitQ)
-      if (isNaN(limit) || typeof limit !== 'number') limit = 10
-      let offset: number | undefined = Number(offsetQ)
-      if (isNaN(offset) || typeof limit !== 'number') offset = 0
+      let limit = Number(limitQ)
+      if (isNaN(limit)) limit = 10
+      let offset = Number(offsetQ)
+      if (isNaN(offset)) offset = 0
       const topics = await Topic.findAll({
         attributes: ['topic_id', 'title', 'creator_id', 'createdAt'],
         limit,

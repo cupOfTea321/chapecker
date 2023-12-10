@@ -8,14 +8,14 @@ export default function getCommentsAPI(app: Express) {
     const { topic_id: topic_idP } = req.params
     try {
       const topic_id = Number(topic_idP)
-      if (isNaN(topic_id) || typeof topic_id !== 'number') {
+      if (isNaN(topic_id)) {
         res.status(400).send('Неверный topic_id')
         return
       }
-      let limit: number | undefined = Number(limitQ)
-      if (isNaN(limit) || typeof limit !== 'number') limit = 10
-      let offset: number | undefined = Number(offsetQ)
-      if (isNaN(offset) || typeof limit !== 'number') offset = 0
+      let limit = Number(limitQ)
+      if (isNaN(limit)) limit = 10
+      let offset = Number(offsetQ)
+      if (isNaN(offset)) offset = 0
 
       const comments = await Comment.findAll({
         attributes: ['creator_id', 'text', 'comment_id', 'createdAt'],
