@@ -11,7 +11,7 @@ export const createStore = (
   configureStore({
     reducer: {
       [yandexCoreApi.reducerPath]: yandexCoreApi.reducer,
-      user: user,
+      user,
       oauthservice,
     },
     middleware: getDefaultMiddleware =>

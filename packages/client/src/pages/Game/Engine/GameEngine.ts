@@ -210,7 +210,8 @@ export class GameEngine {
 
     if (!isGameOver) requestAnimationFrame(this._gameLoop.bind(this))
     else {
-      this._onGameOver(this._score)
+      const score = (this._bgObjects[1] as Checkers).getScore()
+      this._onGameOver(score)
       this.stop()
     }
   }
