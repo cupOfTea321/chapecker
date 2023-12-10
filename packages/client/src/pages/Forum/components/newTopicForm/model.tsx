@@ -4,7 +4,7 @@ export enum forumTabs {
 }
 
 export enum newTopicFileds {
-  label = 'Тема',
-  media = 'Картинки',
-  description = 'Описание',
+  label = 'title',
+  media = 'Images',
+  description = 'Description',
 }

@@ -3,6 +3,7 @@ import { newTopicFileds } from './model'
 
 import bem from 'bem-ts'
 import './style.scss'
+import { createTopic } from './actions'
 
 const NewTopicForm = () => {
   const cn = bem('newTopicForm')
@@ -27,9 +28,14 @@ const NewTopicForm = () => {
     }, []),
     handleStartNewTopic: useCallback((e: FormEvent) => {
       e.preventDefault()
-      const data = new FormData(e.target as HTMLFormElement)
+      const data: { [x: string]: unknown } = {}
+      for (const [key, value] of new FormData(
+        e.target as HTMLFormElement
+      ).entries()) {
+        data[key] = value
+      }
       console.log(data)
-      // logic of adding new topic
+      createTopic(data)
     }, []),
   }
 
