@@ -3,7 +3,6 @@ import { TMessage } from '../../model'
 
 import bem from 'bem-ts'
 import './styles.scss'
-import { forums } from '../../../Forum/components/forumPreviewTable/stubs'
 
 const emoji = ['😀', '🤑', '😭', '💩', '❤', '👍']
 const ForumMessagesList = ({ messages }: { messages: TMessage[] }) => {
@@ -41,7 +40,7 @@ const ForumMessagesList = ({ messages }: { messages: TMessage[] }) => {
             style={{
               display: 'flex',
             }}>
-            {emoji.map((item, index) => (
+            {emoji.map(item => (
               <div>
                 <button
                   key={item}
