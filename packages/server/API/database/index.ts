@@ -17,7 +17,7 @@ export default function connectToPG() {
 
   const sequelize = new Sequelize(sequelizeOptions)
   sequelize
-    .sync()
+    .sync({ force: true })
     .then(async () => {
       console.log('Connected to postgress')
     })

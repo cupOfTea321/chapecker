@@ -15,10 +15,13 @@ export default function postTopicAPI(app: Express) {
       res.status(400).send('Не указано название топика')
       return
     }
+    let { description } = req.body
+    if (!description) description = ''
     try {
       await Topic.create({
         creator_id,
         title,
+        description,
       })
       res.status(201).send('OK')
     } catch (e) {

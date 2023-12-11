@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../redux/store'
 import { getUserData, isUserLoad } from '../../redux/selectors'
 import { setUserData, setError, load } from '../../redux/features/userSlice'
-import { getUserInfo } from './actions'
+import { getUserInfo, postOAuthInfo } from './actions'
 import { publilRoutes } from '../../router/router'
 import Spinner from '../spinner/Spinner'
 
@@ -15,6 +15,15 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const [checkStatus, setChecked] = useState(false)
   const fetchUserData = useCallback(async () => {
     try {
+      // if there is secret code in query parameters -- it is yandex oauth!
+      if (document && document.location && document.location.search) {
+        const params = new URLSearchParams(document.location.search)
+        const code = params.get('code')
+        if (code) {
+          await postOAuthInfo(code)
+        }
+      }
+
       const { data } = await getUserInfo()
       dispatch(setUserData(data))
       setUser(data)

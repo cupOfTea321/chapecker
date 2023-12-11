@@ -3,6 +3,9 @@
 ### HTTP-METHOD /api/v2/*
 `This is proxy, all requests are redirected to Practicum API`
 
+**IMPORTANT!** In order to be authorized to this server, the user must authorize via
+`/api/v2/auth/signin` and then send GET-query to `/api/v2/auth/user`
+
 
 ### POST /api/forum/topic
 `Create a topic`

@@ -23,6 +23,10 @@ class Topic extends Model {
   @AllowNull(false)
   @Column(DataType.INTEGER)
   creator_id: number | undefined
+
+  @AllowNull(true)
+  @Column(DataType.STRING(50))
+  description: string | undefined
 }
 
 export default Topic
