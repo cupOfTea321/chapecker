@@ -14,7 +14,6 @@ import {
   Error500,
   Error404,
 } from '../pages'
-import { Navigate } from 'react-router-dom'
 
 export const publilRoutes = {
   signUp: { path: '/signup', element: <SignUpPage />, nodeRef: createRef() },
@@ -23,7 +22,7 @@ export const publilRoutes = {
   error500: { path: '/500', element: <Error500 />, nodeRef: createRef() },
   noMatch: {
     path: '*',
-    element: <Navigate to="/404" replace />,
+    element: <Error404 />,
     nodeRef: createRef(),
   },
 }
@@ -47,4 +46,10 @@ export const privateRoutes = {
   end: { path: '/end', element: <EndPage />, nodeRef: createRef() },
   game: { path: '/game', element: <GamePage />, nodeRef: createRef() },
   error505: { path: '/505', element: <Error500 />, nodeRef: createRef() },
+}
+
+export const getAllRoutes = () => {
+  const publicArray = Object.values(publilRoutes)
+  const protectedArray = Object.values(privateRoutes)
+  return publicArray.concat(protectedArray)
 }

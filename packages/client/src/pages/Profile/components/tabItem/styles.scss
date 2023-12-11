@@ -18,6 +18,13 @@
             display: block;
         }
 
+        &.dark {
+            color: #f8f8f8;
+        }
+        &.light {
+            color: #3d3d3d;
+        }
+
         &:hover {
             opacity: 0.7;
         }

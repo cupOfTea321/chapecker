@@ -5,13 +5,13 @@ import user from '../redux/features/userSlice'
 import oauthservice from '../redux/features/oauthSlice.js'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-const createStore = (
+export const createStore = (
   options?: ConfigureStoreOptions['preloadedState'] | undefined
 ) =>
   configureStore({
     reducer: {
       [yandexCoreApi.reducerPath]: yandexCoreApi.reducer,
-      user: user,
+      user,
       oauthservice,
     },
     middleware: getDefaultMiddleware =>

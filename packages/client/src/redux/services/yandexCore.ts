@@ -4,7 +4,12 @@ export const yandexCoreApi = createApi({
   reducerPath: 'yandexCoreApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ya-praktikum.tech/api/v2/',
+    prepareHeaders: headers => {
+      return headers
+    },
+    credentials: 'include',
   }),
+  refetchOnMountOrArgChange: true,
   // добавляем необходимый поинт
   endpoints: builder => ({
     getUser: builder.query({

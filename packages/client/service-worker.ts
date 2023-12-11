@@ -10,17 +10,6 @@ const CACHE_NAME = import.meta.env.PROD
   ? `${import.meta.env.BASE_URL}sw.js`
   : 'sw.js'
 
-self.addEventListener('load', async () => {
-  try {
-    const { scope } = await navigator.serviceWorker.register('sw.js', {
-      scope: './',
-    })
-    console.log('ServiceWorker registration successful with scope: ', scope)
-  } catch (err) {
-    console.log('ServiceWorker registration failed: ', err)
-  }
-})
-
 self.addEventListener('install', async ({ waitUntil }) => {
   try {
     const cache = await waitUntil(caches.open(CACHE_NAME))

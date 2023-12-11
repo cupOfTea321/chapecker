@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "composite": true,
     "target": "es2019",
     "module": "commonjs",
@@ -26,5 +27,6 @@
       "*": ["types/*"]
     },
     "outDir": "dist"
-  }
+  },
+  "include": ["../../client"]
 }

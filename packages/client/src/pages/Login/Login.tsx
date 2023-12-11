@@ -12,6 +12,7 @@ import { useAppDispatch, useTypedSelector } from '../../redux/store'
 import { getOAuthId } from '../../redux/selectors'
 import { setOAuthServiceId } from '../../redux/features/oauthSlice'
 import { appURL } from '../../API/endpoints'
+import { useTheme } from '../../utils/useTheme'
 
 const Login = () => {
   const dispatch = useAppDispatch()
@@ -21,7 +22,6 @@ const Login = () => {
     login: '',
     password: '',
   }
-
   const onSubmit = useCallback(
     async (fieldData: PartialRecord<TFieldNames, string>) => {
       try {
@@ -30,7 +30,7 @@ const Login = () => {
       } catch (err) {
         if (axios.isAxiosError(err)) {
           if (err.response?.data.reason === 'User already in system')
-            navigate(privateRoutes.mainPage.path)
+            return navigate(privateRoutes.mainPage.path)
         }
         console.log(err)
       }
