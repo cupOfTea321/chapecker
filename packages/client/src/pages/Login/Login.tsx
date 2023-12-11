@@ -30,7 +30,7 @@ const Login = () => {
       } catch (err) {
         if (axios.isAxiosError(err)) {
           if (err.response?.data.reason === 'User already in system')
-            navigate(privateRoutes.mainPage.path)
+            return navigate(privateRoutes.mainPage.path)
         }
         console.log(err)
       }

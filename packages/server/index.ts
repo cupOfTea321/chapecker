@@ -1,11 +1,12 @@
+import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
-import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -13,6 +14,7 @@ const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
+  app.use(cookieParser())
   app.use(cors())
   const port = Number(process.env.SERVER_PORT) || 3001
 
@@ -56,20 +58,21 @@ async function startServer() {
         template = await vite!.transformIndexHtml(url, template)
       }
 
-      let render: () => Promise<string>
+      let rende
 
       if (!isDev()) {
-        render = (await import(ssrClientPath)).render
+        rende = await import(ssrClientPath)
       } else {
-        render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
-          .render
+        rende = await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))
       }
+      const cookies = req.cookies
+      const { renderHTML, state } = rende
 
-      const appHtml = await render()
+      const page = template
+        .replace('<!--app-state-->', state)
+        .replace(`<!--app-html-->`, await renderHTML(url, cookies))
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
-
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+      res.status(200).end(page)
     } catch (e) {
       if (isDev()) {
         vite!.ssrFixStacktrace(e as Error)

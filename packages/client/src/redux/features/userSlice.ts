@@ -29,9 +29,15 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserData: (state, action) => {
-      const userInfo = action.payload
+    setUserData: (state, { payload }) => {
+      const userInfo = payload
       state.data = userInfo
+    },
+    load: (state, { payload }) => {
+      state.load = payload
+    },
+    setError: (state, { payload }) => {
+      state.error = payload
     },
   },
   extraReducers: builder => {
@@ -45,7 +51,7 @@ export const userSlice = createSlice({
   },
 })
 
-export const { setUserData } = userSlice.actions
+export const { load, setUserData, setError } = userSlice.actions
 
 export default userSlice.reducer
 
