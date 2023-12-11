@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../store'
+import { yandexCoreApi } from '../services/yandexCore'
 
 export interface User {
   id: number
@@ -27,13 +29,30 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserData: (state, action) => {
-      const userInfo = action.payload
+    setUserData: (state, { payload }) => {
+      const userInfo = payload
       state.data = userInfo
     },
+    load: (state, { payload }) => {
+      state.load = payload
+    },
+    setError: (state, { payload }) => {
+      state.error = payload
+    },
+  },
+  extraReducers: builder => {
+    builder.addMatcher(
+      yandexCoreApi.endpoints.getUser.matchFulfilled,
+      (state, action) => {
+        // state.user = action.payload
+        // state.isAuth = true;
+      }
+    )
   },
 })
 
-export const { setUserData } = userSlice.actions
+export const { load, setUserData, setError } = userSlice.actions
 
 export default userSlice.reducer
+
+export const getUser = (state: RootState) => state.user.data

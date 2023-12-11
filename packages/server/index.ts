@@ -1,27 +1,21 @@
+import express from 'express'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
-import express from 'express'
-import cookieParser from 'cookie-parser'
 import * as fs from 'fs'
 import * as path from 'path'
-import addAPI from './API'
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
-  app.use('/api/forum/*', express.json())
   app.use(cookieParser())
-  app.use('*', (_, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
-    res.setHeader('Access-Control-Allow-Headers', 'content-type')
-    res.setHeader('Access-Control-Allow-Credentials', 'true')
-    next()
-  })
+  app.use(cors())
   const port = Number(process.env.SERVER_PORT) || 3001
 
   let vite: ViteDevServer | undefined
@@ -31,10 +25,7 @@ async function startServer() {
 
   if (isDev()) {
     vite = await createViteServer({
-      server: {
-        middlewareMode: true,
-        cors: false,
-      },
+      server: { middlewareMode: true },
       root: srcPath,
       appType: 'custom',
     })
@@ -49,8 +40,6 @@ async function startServer() {
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
-
-  addAPI(app)
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
@@ -69,20 +58,21 @@ async function startServer() {
         template = await vite!.transformIndexHtml(url, template)
       }
 
-      let render: () => Promise<string>
+      let rende
 
       if (!isDev()) {
-        render = (await import(ssrClientPath)).render
+        rende = await import(ssrClientPath)
       } else {
-        render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
-          .render
+        rende = await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))
       }
+      const cookies = req.cookies
+      const { renderHTML, state } = rende
 
-      const appHtml = await render()
+      const page = template
+        .replace('<!--app-state-->', state)
+        .replace(`<!--app-html-->`, await renderHTML(url, cookies))
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
-
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+      res.status(200).end(page)
     } catch (e) {
       if (isDev()) {
         vite!.ssrFixStacktrace(e as Error)

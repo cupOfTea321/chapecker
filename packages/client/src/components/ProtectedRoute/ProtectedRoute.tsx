@@ -1,55 +1,41 @@
-import { useState } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../redux/store'
-import { getUserData } from '../../redux/selectors'
-import { setUserData } from '../../redux/features/userSlice'
-import { getUserInfo, postOAuthInfo } from './actions'
+import { getUserData, isUserLoad } from '../../redux/selectors'
+import { setUserData, setError, load } from '../../redux/features/userSlice'
+import { getUserInfo } from './actions'
 import { publilRoutes } from '../../router/router'
 import Spinner from '../spinner/Spinner'
 
-const ProtectedRoute = () => {
-  const [user, setUser] = useState(useTypedSelector(getUserData))
-  const [authStatus, setAuthStatus] = useState(
-    user !== null ? 'checked' : 'unchecked'
-  )
-  const [isLoad, setLoad] = useState(true)
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+  const [load, isLoad] = useState(true)
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
-  const chechAuth = async () => {
+  const [user, setUser] = useState(useTypedSelector(getUserData))
+  const [checkStatus, setChecked] = useState(false)
+  const fetchUserData = useCallback(async () => {
     try {
-      // if there is secret code in query parameters -- it is yandex oauth!
-      if (document.location.search) {
-        const params = new URLSearchParams(document.location.search)
-        const code = params.get('code')
-        if (code) {
-          await postOAuthInfo(code)
-        }
-      }
-
       const { data } = await getUserInfo()
-      setUser(data)
       dispatch(setUserData(data))
-    } catch (e) {
-      console.log(e)
+      setUser(data)
+    } catch (err) {
+      console.log(err)
     } finally {
-      setLoad(false)
-      setAuthStatus('checked')
+      isLoad(false)
+      setChecked(true)
     }
-  }
+  }, [user])
 
-  authStatus !== 'checked' && chechAuth()
+  useEffect(() => {
+    if (!user && !checkStatus) {
+      fetchUserData()
+    }
+    if (!user && checkStatus) {
+      navigate(publilRoutes.login.path)
+    }
+  }, [user, checkStatus])
 
-  const content = user && <Outlet />
-  const redirect = !user && <Navigate to={publilRoutes.login.path} />
-
-  return isLoad ? (
-    <Spinner />
-  ) : (
-    <>
-      {content}
-      {redirect}
-    </>
-  )
+  return load ? <Spinner /> : <>{children}</>
 }
 
 export default ProtectedRoute
