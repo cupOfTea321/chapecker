@@ -6,8 +6,6 @@ import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
-import express from 'express'
-import cookieParser from 'cookie-parser'
 import * as fs from 'fs'
 import * as path from 'path'
 import addAPI from './API'
