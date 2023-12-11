@@ -2,6 +2,7 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import Topic from './Models/Topic'
 import Reply from './Models/Reply'
 import Comment from './Models/Comment'
+import Emoji from './Models/Emoji'
 
 export default function connectToPG() {
   const sequelizeOptions: SequelizeOptions = {
@@ -11,7 +12,7 @@ export default function connectToPG() {
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
     dialect: 'postgres',
-    models: [Topic, Comment, Reply],
+    models: [Topic, Comment, Reply, Emoji],
   }
 
   const sequelize = new Sequelize(sequelizeOptions)
@@ -29,3 +30,4 @@ export default function connectToPG() {
 export { default as Topic } from './Models/Topic'
 export { default as Comment } from './Models/Comment'
 export { default as Reply } from './Models/Reply'
+export { default as Emoji } from './Models/Emoji'
