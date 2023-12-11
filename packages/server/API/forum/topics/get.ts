@@ -11,7 +11,13 @@ export default function getTopicsAPI(app: Express) {
       let offset = Number(offsetQ)
       if (isNaN(offset)) offset = 0
       const topics = await Topic.findAll({
-        attributes: ['topic_id', 'title', 'creator_id', 'createdAt'],
+        attributes: [
+          'topic_id',
+          'title',
+          'creator_id',
+          'createdAt',
+          'description',
+        ],
         limit,
         offset,
       })

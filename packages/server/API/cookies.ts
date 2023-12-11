@@ -43,6 +43,6 @@ export async function getUserIdWithPracticumCookie(
 export async function getUserId(req: Request): Promise<number> {
   const { cookie } = req.headers
   const res = cookie?.match(/userid=.*/)
-  if (res) return Number(res[0].split('=')[1])
+  if (res) return Number(res[0].split(';')[0].split('=')[1])
   return getUserIdWithPracticumCookie(req)
 }
