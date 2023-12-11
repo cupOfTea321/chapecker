@@ -1,0 +1,10 @@
+export const baseURL = '/api'
+export const proxyURL = baseURL + '/v2'
+
+export const forumBaseURL = baseURL + '/forum'
+export const forumTopicURL = baseURL + '/forum/topic'
+export const forumTopicsURL = baseURL + '/forum/topics'
+export const forumCommentURL = baseURL + '/forum/comment'
+export const forumCommentsURL = baseURL + '/forum/comments/:topic_id'
+export const forumReplyURL = baseURL + '/forum/reply'
+export const forumReplysURL = baseURL + '/forum/replies/:comment_id'
