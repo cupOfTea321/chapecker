@@ -21,7 +21,6 @@ const ForumPage = () => {
   const { theme, messages }: TForum = forum
   const [forumMessages, updateForum] = useState(messages)
   const user = useTypedSelector(getUserData)
-  console.log(user)
   const callbacks = {
     onAddMessage: useCallback(
       (e: FormEvent) => {
