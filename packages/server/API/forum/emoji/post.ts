@@ -25,7 +25,7 @@ export default function postEmojiAPI(app: Express) {
       res.status(201).send('OK')
     } catch (e) {
       console.log(e)
-      res.status(400).send('Не получилось создать запись в базе данных')
+      res.status(500).send('Не получилось создать запись в базе данных')
     }
   })
 }

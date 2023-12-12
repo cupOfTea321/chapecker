@@ -27,7 +27,7 @@ export default function getEmojiAPI(app: Express) {
       res.status(200).send(JSON.stringify(replies))
     } catch (e) {
       console.log(e)
-      res.status(400).send('Не получилось выбрать данные из базы данных')
+      res.status(500).send('Не получилось выбрать данные из базы данных')
     }
   })
 }
