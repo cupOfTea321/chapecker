@@ -1,22 +1,76 @@
-import { memo, useMemo } from 'react'
+import {
+  ChangeEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+  MouseEvent,
+} from 'react'
 import NewTopicForm from './components/newTopicForm/newTopicForm'
 import ForumPreviewTable from './components/forumPreviewTable/forumPreviewTable'
-
+import { forumTabs } from './model'
+import getImageUrl from '../../utils/getImageUrl'
+import { ToggleButtonGroup, ToggleButton, Pagination } from '@mui/material'
+import { getTopics } from './actions'
+import { useAppDispatch, useTypedSelector } from '../../redux/store'
+import { getForumData, isForumDataLoad } from '../../redux/selectors'
+import Spinner from '../../components/spinner/Spinner'
+import {
+  setTopics,
+  load,
+  setError,
+  reload,
+} from '../../redux/features/forumSlice'
 import bem from 'bem-ts'
 import './style.scss'
 
-import { forumTabs } from './model'
-import { forums, forumsFree } from './components/forumPreviewTable/stubs'
-import getImageUrl from '../../utils/getImageUrl'
-
 const ForumDashboard = () => {
   const cn = bem('forumDashboard')
+  const dispatch = useAppDispatch()
   const tabsArr = Object.values(forumTabs)
+  const limits = [10, 20, 30]
+  const [topicsLimit, setTopicLimit] = useState(limits[0])
+  const onPerpage = useCallback(
+    (_event: MouseEvent<HTMLElement>, value: number) => setTopicLimit(value),
+    []
+  )
+  const [topicsOffset, setOffset] = useState(0)
 
-  const mainForums = useMemo(() => forums, [forums])
-  const freeForums = useMemo(() => forumsFree, [forums])
+  const topics = useTypedSelector(getForumData)
+  const isLoad = useTypedSelector(isForumDataLoad)
+  const pages =
+    topics.length === topicsLimit
+      ? Math.ceil(topics.length / topicsLimit)
+      : null
+  const onPagination = useCallback(
+    (_e: ChangeEvent<unknown>, page: number) => {
+      setOffset(page)
+      dispatch(reload())
+    },
+    [topicsOffset, setOffset]
+  )
 
-  return (
+  useEffect(() => {
+    const loadTopics = async () => {
+      try {
+        dispatch(load(true))
+        const { data } = await getTopics({
+          limit: topicsLimit,
+          offset: topicsOffset,
+        })
+        dispatch(setTopics(data))
+      } catch (err) {
+        setError(err)
+      } finally {
+        dispatch(load(false))
+      }
+    }
+    if (topics === 'idle') {
+      loadTopics()
+    }
+  }, [topics, load, topicsOffset])
+
+  const Forum = () => (
     <div className={cn({ chesBackgrounded: true })}>
       <h1 hidden>Форум игры Шашки Чапаева</h1>
       <div className={cn('container')}>
@@ -61,8 +115,31 @@ const ForumDashboard = () => {
 
         <div className="content">
           <section>
-            <ForumPreviewTable forums={mainForums} header="Основные" />
-            <ForumPreviewTable forums={freeForums} header="Свободный клуб" />
+            <ForumPreviewTable
+              forums={topics}
+              perPage={
+                <ToggleButtonGroup
+                  value={topicsLimit}
+                  exclusive
+                  onChange={onPerpage}
+                  aria-label="Platform">
+                  {limits.map(value => (
+                    <ToggleButton color="warning" key={value} value={value}>
+                      {value}
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
+              }
+            />
+            {pages && (
+              <Pagination
+                onChange={onPagination}
+                count={pages + 1}
+                page={topicsOffset}
+                variant="outlined"
+                color="primary"
+              />
+            )}
           </section>
           <section>
             <h2>{forumTabs.newTopic}</h2>
@@ -71,6 +148,13 @@ const ForumDashboard = () => {
         </div>
       </div>
     </div>
+  )
+
+  return (
+    <>
+      {isLoad && <Spinner />}
+      {!isLoad && <Forum />}
+    </>
   )
 }
 

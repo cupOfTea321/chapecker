@@ -64,6 +64,14 @@ $content-selector: "~ .content > section";
         height: $chess-square-witdh * 3;
     }
 
+    &__perPage {
+        text-transform: lowercase;
+    }
+
+    &__perPageItem {
+        position: absolute;
+    }
+
     &__container {
         padding: 25px;
         top: $chess-square-witdh;
@@ -145,8 +153,6 @@ $content-selector: "~ .content > section";
             }
 
         }
-
-
 
         @media (max-width: map-get($breakpoints, medium)) {
             ul li label {

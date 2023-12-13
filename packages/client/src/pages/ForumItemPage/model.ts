@@ -1,14 +1,8 @@
-export type TForum = {
-  id: string
-  theme: string
-  messages: TMessage[]
-}
-
-export type TMessage = {
-  messageId: string
-  time: Date
-  author: string
-  message: string
+export type TComment = {
+  comment_id: number
+  text: string
+  creator_id: number
+  createdAt: string
 }
 
 export enum messageFormFileds {

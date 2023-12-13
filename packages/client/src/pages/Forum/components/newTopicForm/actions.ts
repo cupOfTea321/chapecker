@@ -1,7 +1,5 @@
 import axios from 'axios'
-import { baseURL, forumTopicURL } from '../../../../API/endpoints'
-
-axios.defaults.baseURL = baseURL
+import { forumTopicURL } from '../../../../API/endpoints'
 
 const config = {
   headers: { 'Content-type': 'application/json; charset=UTF-8' },
@@ -9,12 +7,20 @@ const config = {
   timeout: 10000,
 }
 
-export const createTopic = async (
-  data: Record<string, string>
-): Promise<void> =>
+export const createTopic = async ({
+  title,
+  description,
+}: {
+  [x: string]: unknown
+}): Promise<void> =>
   axios({
     ...config,
     method: 'POST',
-    url: 'http://localhost:3001/api' + '/forum/topic',
-    data: JSON.stringify(data),
+    url: forumTopicURL,
+    data: JSON.stringify({ title, description }),
   })
+
+export interface INewTopic {
+  title: string
+  description: string
+}
