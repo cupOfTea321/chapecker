@@ -7,12 +7,13 @@ WORKDIR /app
 FROM base as builder
 
 COPY package.json ./
-RUN npm install
+RUN yarn install
 
 COPY . .
 
 # RUN yarn lerna bootstrap
-RUN npm run build --scope=server
+RUN yarn build --scope=client
+RUN yarn build --scope=server
 
 
 FROM node:$NODE_VERSION-buster-slim as production
@@ -23,7 +24,7 @@ COPY --from=builder /app/packages/client/dist/ /app/client
 COPY --from=builder /app/packages/client/ssr-dist/ /app/client
 COPY --from=builder /app/packages/server/dist/ /app/
 COPY --from=builder /app/packages/server/package.json /app/package.json
-# RUN npm install --production=true
+RUN yarn install --production=true
 
 EXPOSE $SERVER_PORT
 CMD [ "node", "/app/index.js" ]
