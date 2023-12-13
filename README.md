@@ -72,7 +72,7 @@
 Перед первым запуском выполните `node init.js`
 
 
-`docker compose up` - запустит три сервиса
+`docker compose up -d` - запустит три сервиса
 1. nginx, раздающий клиентскую статику (client)
 2. node, ваш сервер (server)
 3. postgres, вашу базу данных (postgres)
