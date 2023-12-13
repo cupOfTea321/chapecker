@@ -35,7 +35,7 @@ const NewTopicForm = () => {
         data[key] = value
       }
       console.log(data)
-      createTopic(data)
+      createTopic(data as Record<string, string>)
     }, []),
   }
 

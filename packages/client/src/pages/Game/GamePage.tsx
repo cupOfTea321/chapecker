@@ -43,7 +43,7 @@ const Game = () => {
       await leader({
         ratingFieldName: 'chapecker',
         data: {
-          name: currentUser.login,
+          name: currentUser?.login ?? '',
           chapecker: score.current.toString(),
         },
         teamName: 'team',

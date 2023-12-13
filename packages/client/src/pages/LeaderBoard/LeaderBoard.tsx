@@ -41,7 +41,7 @@ const LeaderBoard: React.FC = () => {
         Лидеры
       </Typography>
       <Box className={'table-leaderboards'}>
-        {data?.map((leader2, index) => {
+        {data?.map((leader2: any, index: any) => {
           const leader = leader2.data
           return (
             <LeaderBox
