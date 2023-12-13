@@ -1,8 +1,8 @@
-# Командный зачет за 5-6 спринты
+# Командный зачет за 7-8 спринты
 
 ### Видео с презентацией игры
 
-Доступно по [ссылке](https://youtu.be/GqNfWZfd21Y)
+Доступно по [ссылке](https://youtu.be/AS4cfaf02Bs)
 
 ### Как запустить
 
@@ -11,12 +11,47 @@
 git clone https://github.com/cupOfTea321/chapecker.git
 npm install
 ```
-Затем нужно перейти в папку с клиентом и запустить проект
+Запустить сервер **НЕ ПОЛУЧИТСЯ**, если не запущена база данных. Чтобы её запустить:
+
+- Убедиться, что установлен Docker ([docker для windows](https://www.docker.com/products/docker-desktop/))
+- Запустить из корня проекта `docker-compose up postgres`
+- При запуске сервера в корне должен лежать файл `.env` такого содержания:
+
 ```
-cd packages/client
+CLIENT_PORT=3000
+SERVER_PORT=3001
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=postgres
+POSTGRES_PORT=5432
+```
+
+Запустить проект
+
+```
 npm run dev
 ```
-Проект будет доступен по адресу `http://localhost:3000/`
+Клиент будет доступен по адресу `http://localhost:3000/`, сервер — `http://localhost:3001/`
+
+### Сделано:
+- SSR с Redux и Router
+- Yandex OAuth
+- Memoryleaks
+- API форума и эмоджи
+- Оживлен лидерборд на клиента
+- Переключение тем на клиенте
+- Добавлено Web Api (Notification API)
+
+#### В процессе:
+- Эмоджи на клиенте
+- Сборка всего проекта в докере
+
+
+# Командный зачет за 5-6 спринты
+
+### Видео с презентацией игры
+
+Доступно по [ссылке](https://youtu.be/GqNfWZfd21Y)
 
 ### Сделано:
 - Создан [репозиторий с проектом](https://github.com/cupOfTea321/chapecker)
