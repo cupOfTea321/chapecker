@@ -1,24 +1,36 @@
-import { memo, useCallback, useEffect, MouseEvent, useState } from 'react'
+import {
+  memo,
+  useCallback,
+  useEffect,
+  MouseEvent,
+  useState,
+  FormEvent,
+  ChangeEvent,
+} from 'react'
 import { Navigate, useParams } from 'react-router-dom'
-
+import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
+import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
+import { messageFormFileds } from './model'
+import { useAppDispatch, useTypedSelector } from '../../redux/store'
+import {
+  load,
+  setCommets,
+  setError,
+  reload,
+} from '../../redux/features/topicSlice'
+import { getTopicData, isTopicDataLoad } from '../../redux/selectors'
+import { getComments, sendComment } from './actions'
+import { privateRoutes } from '../../router/router'
+import { Pagination, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import bem from 'bem-ts'
 import './styles.scss'
 
-import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
-import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
-import { ITopic } from '../../redux/features/forumSlice'
-import { messageFormFileds } from './model'
-import { useAppDispatch, useTypedSelector } from '../../redux/store'
-import { load, setCommets, setError } from '../../redux/features/topicSlice'
-import { getTopicData, isTopicDataLoad } from '../../redux/selectors'
-import { getComments } from './actions'
-import { privateRoutes } from '../../router/router'
-
 const ForumPage = () => {
-  const cn = bem('forumPage')
-  const dispatch = useAppDispatch()
   const { id } = useParams()
   if (!id) return <Navigate to={privateRoutes.forum.path} />
+  const cn = bem('forumPage')
+  const dispatch = useAppDispatch()
+
   const comments = useTypedSelector(getTopicData)
   const isLoad = useTypedSelector(isTopicDataLoad)
   const limits = [10, 20, 30]
@@ -28,6 +40,17 @@ const ForumPage = () => {
     []
   )
   const [commentsOffset, setOffset] = useState(0)
+  const pages =
+    comments.length === commentsLimit
+      ? Math.ceil(comments.length / commentsLimit)
+      : null
+  const onPagination = useCallback(
+    (_e: ChangeEvent<unknown>, page: number) => {
+      setOffset(page)
+      dispatch(reload())
+    },
+    [commentsOffset, setOffset]
+  )
 
   useEffect(() => {
     const loadTopics = async () => {
@@ -49,46 +72,59 @@ const ForumPage = () => {
       loadTopics()
     }
   }, [id, load, comments])
-  console.log(comments)
-  // const forum = useMemo(() => forums.find(el => el.id === id), [id])
 
-  // if (!forum) return <Navigate to="*" />
-  // const { theme, messages }: ITopic = forum
-  // const [forumMessages, updateForum] = useState(messages)
-
-  // const callbacks = {
-  //   onAddMessage: useCallback(
-  //     (e: FormEvent) => {
-  //       e.preventDefault()
-  //       // add logic of Logged user and server part
-  //       const message = (
-  //         (e.target as HTMLFormElement)[
-  //           messageFormFileds.message
-  //         ] as HTMLFormElement
-  //       ).value
-  //       const newMesage: TMessage = {
-  //         messageId: uuid(),
-  //         message,
-  //         author: 'Admin',
-  //         time: new Date(),
-  //       }
-  //       forum.messages.push(newMesage)
-  //       updateForum(prev => [...prev, newMesage])
-  //       const searchedForum = previeForums.find(el => el.id === id)
-  //       if (searchedForum) searchedForum.messages += 1
-  //     },
-  //     [id]
-  //   ),
-  // }
+  const onComment = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault()
+      dispatch(load(true))
+      const message: string = (
+        (e.target as HTMLFormElement)[
+          messageFormFileds.message
+        ] as HTMLFormElement
+      ).value
+      try {
+        await sendComment({ text: message, topic_id: id })
+        dispatch(reload)
+        ;(e.target as HTMLFormElement).reset()
+      } catch (err) {
+        setError(err)
+      } finally {
+        dispatch(load(false))
+      }
+    },
+    [id]
+  )
 
   return (
     <div className={cn({ chesBackgrounded: true })}>
       <div className={cn('container')}>
-        {/* <h1 className={cn('theme')}>{theme}</h1> */}
-        {/* <ForumMessagesList messages={forumMessages} /> */}
+        <ToggleButtonGroup
+          value={commentsLimit}
+          exclusive
+          onChange={onPerpage}
+          aria-label="Platform">
+          {limits.map(value => (
+            <ToggleButton color="warning" key={value} value={value}>
+              {value}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+        <ForumMessagesList
+          messages={comments}
+          pagination={
+            <Pagination
+              onChange={onPagination}
+              count={pages ? pages + 1 : 1}
+              page={commentsOffset}
+              variant="outlined"
+              color="primary"
+            />
+          }
+        />
         <AddMessageFrame
           inputName={messageFormFileds.message}
-          // onAddMessage={onAddMessage}
+          onAddMessage={onComment}
+          isDisabled={isLoad}
         />
       </div>
     </div>

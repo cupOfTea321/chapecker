@@ -8,7 +8,7 @@ const config = {
   timeout: 10000,
 }
 
-export const getAuthor = async (id: number): Promise<IUser> =>
+export const getAuthor = async (id: string): Promise<{ data: IUser }> =>
   axios({
     ...config,
     method: 'GET',

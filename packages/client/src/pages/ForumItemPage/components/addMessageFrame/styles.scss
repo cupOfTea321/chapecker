@@ -4,8 +4,7 @@
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
-    position: fixed;
-    bottom: 0;
+    position: relative;
     left: 50%;
     transform: translateX(-50%);
     border: 1px solid $main-background-color;
