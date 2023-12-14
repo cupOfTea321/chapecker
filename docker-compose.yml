@@ -1,5 +1,8 @@
 version: "3.9"
 
+networks:
+  chapecker-network:
+    driver: bridge
 services:
   client:
     container_name: prakticum-client
@@ -15,6 +18,8 @@ services:
     environment:
       - CLIENT_PORT=${CLIENT_PORT}
       - SERVER_PORT=${SERVER_PORT}
+    networks:
+      - chapecker-network
 
   server:
     container_name: prakticum-server
@@ -34,6 +39,8 @@ services:
     environment:
       SERVER_PORT: ${SERVER_PORT}
       NODE_ENV: ${NODE_ENV}
+    networks:
+      - chapecker-network
 
   postgres:
     container_name: prakticum-database
@@ -56,3 +63,5 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+    networks:
+      - chapecker-network
