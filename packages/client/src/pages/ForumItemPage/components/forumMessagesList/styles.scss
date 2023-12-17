@@ -13,4 +13,29 @@
         justify-content: space-between;
         background: $brigth-chess-square;
     }
+
+    &__replyContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: $dark-chess-square;
+    }
+
+    &__showReplies {
+        cursor: pointer;
+
+        &:hover,
+        &:active {
+            color: $main-background-color;
+        }
+    }
+
+    &__reply {
+        cursor: pointer;
+
+        &:hover,
+        &:active {
+            color: $main-background-color;
+        }
+    }
 }

@@ -4,15 +4,19 @@
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
     border: 1px solid $main-background-color;
-    background-color: $secondary-background-color;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     border-radius: 5px;
-    display: flex;
-    flex-direction: column;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        color: $main-background-color;
+    }
+
+    &__headerClose {
+        cursor: pointer;
+    }
 
     &__form {
         width: 100%;
@@ -22,6 +26,7 @@
 
     &__label {
         width: 100%;
+        padding: 10px 0px;
     }
 
     &__messageText {

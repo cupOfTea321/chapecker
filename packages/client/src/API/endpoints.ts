@@ -9,7 +9,7 @@ export const userInfoURL = 'auth/user'
 export const logoutURL = 'auth/logout'
 export const yandexOAuthURL = 'oauth/yandex'
 
-export const getUserById = (id: string) => baseURL + '/user/' + id
+export const getUserById = (id: number) => baseURL + '/user/' + id
 
 export const appURL = 'http://localhost:3000/'
 export const forumURL = appURL.concat('forum/')
@@ -26,4 +26,4 @@ export const forumTopicsURL = serverURL + '/forum/topics'
 export const forumCommentURL = serverURL + '/forum/comment'
 export const forumCommentsURL = serverURL + '/forum/comments/'
 export const forumReplyURL = serverURL + '/forum/reply'
-export const forumReplysURL = serverURL + '/forum/replies/:comment_id'
+export const forumReplysURL = serverURL + '/forum/replies'

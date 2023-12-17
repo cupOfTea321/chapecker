@@ -77,14 +77,13 @@ const ForumPage = () => {
     async (e: FormEvent) => {
       e.preventDefault()
       dispatch(load(true))
-      const message: string = (
-        (e.target as HTMLFormElement)[
-          messageFormFileds.message
-        ] as HTMLFormElement
-      ).value
+      const message: string = (e.target as HTMLFormElement)[
+        messageFormFileds.message
+      ].value
+
       try {
         await sendComment({ text: message, topic_id: id })
-        dispatch(reload)
+        dispatch(reload())
         ;(e.target as HTMLFormElement).reset()
       } catch (err) {
         setError(err)
@@ -109,23 +108,24 @@ const ForumPage = () => {
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
-        <ForumMessagesList
-          messages={comments}
-          pagination={
+        <ForumMessagesList messages={comments} />
+        <div className={cn('controls')}>
+          {pages && (
             <Pagination
               onChange={onPagination}
-              count={pages ? pages + 1 : 1}
+              count={pages ? pages + 1 : 0}
               page={commentsOffset}
               variant="outlined"
               color="primary"
             />
-          }
-        />
-        <AddMessageFrame
-          inputName={messageFormFileds.message}
-          onAddMessage={onComment}
-          isDisabled={isLoad}
-        />
+          )}
+          <AddMessageFrame
+            inputName={messageFormFileds.message}
+            label={'Оставить комментарий'}
+            onAddMessage={onComment}
+            isDisabled={isLoad}
+          />
+        </div>
       </div>
     </div>
   )

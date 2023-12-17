@@ -50,10 +50,12 @@ $breakpoints: (
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
         border-radius: 5px;
         min-width: calc($tab-count * 60px);
+        display: flex;
+        flex-direction: column;
     }
 
-    &__theme {
-        background-color: $dark-chess-square;
+    &__controls {
+        margin-top: auto;
     }
 }
 
