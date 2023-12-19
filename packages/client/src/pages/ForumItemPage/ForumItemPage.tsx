@@ -34,9 +34,13 @@ const ForumPage = () => {
   const comments = useTypedSelector(getTopicData)
   const isLoad = useTypedSelector(isTopicDataLoad)
   const limits = [10, 20, 30]
+  const [page, setPage] = useState(1)
   const [commentsLimit, setTopicLimit] = useState(limits[0])
   const onPerpage = useCallback(
-    (_event: MouseEvent<HTMLElement>, value: number) => setTopicLimit(value),
+    (_event: MouseEvent<HTMLElement>, value: number) => {
+      setTopicLimit(value)
+      dispatch(reload())
+    },
     []
   )
   const [commentsOffset, setOffset] = useState(0)
@@ -46,7 +50,10 @@ const ForumPage = () => {
       : null
   const onPagination = useCallback(
     (_e: ChangeEvent<unknown>, page: number) => {
-      setOffset(page)
+      const quatifier =
+        page < 1 ? page * commentsLimit : (page - 1) * commentsLimit
+      setOffset(quatifier)
+      setPage(page)
       dispatch(reload())
     },
     [commentsOffset, setOffset]
@@ -113,8 +120,8 @@ const ForumPage = () => {
           {pages && (
             <Pagination
               onChange={onPagination}
-              count={pages ? pages + 1 : 0}
-              page={commentsOffset}
+              count={pages}
+              page={page}
               variant="outlined"
               color="primary"
             />

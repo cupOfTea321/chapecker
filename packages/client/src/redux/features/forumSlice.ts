@@ -9,9 +9,19 @@ export interface ITopic {
 
 export type TTopics = ITopic[]
 
+export type TForumInitialState = {
+  topics: 'idle' | TTopics
+  load: boolean
+  error: unknown
+}
+
 export const forumSlice = createSlice({
   name: 'forum',
-  initialState: { topics: 'idle', load: false, error: null },
+  initialState: {
+    topics: 'idle',
+    load: false,
+    error: null,
+  } as TForumInitialState,
   reducers: {
     setTopics: (state, { payload }) => {
       state.topics = payload

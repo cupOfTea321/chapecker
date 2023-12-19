@@ -1,7 +1,7 @@
 import { memo, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ITopic } from '../../../../redux/features/forumSlice'
-import { forumSSRURL } from '../../../../API/endpoints'
+import { forumURL } from '../../../../API/endpoints'
 import bem from 'bem-ts'
 import './styles.scss'
 
@@ -31,7 +31,7 @@ const ForumPreviewTable = ({
               {
                 <Link
                   className={cn('itemDivision', { link: true })}
-                  to={forumSSRURL.concat(String(topic_id))}>
+                  to={window.location.href.concat('/', String(topic_id))}>
                   {title}
                 </Link>
               }

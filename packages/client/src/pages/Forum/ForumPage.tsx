@@ -29,9 +29,13 @@ const ForumDashboard = () => {
   const dispatch = useAppDispatch()
   const tabsArr = Object.values(forumTabs)
   const limits = [10, 20, 30]
+  const [page, setPage] = useState(1)
   const [topicsLimit, setTopicLimit] = useState(limits[0])
   const onPerpage = useCallback(
-    (_event: MouseEvent<HTMLElement>, value: number) => setTopicLimit(value),
+    (_event: MouseEvent<HTMLElement>, value: number) => {
+      setTopicLimit(value)
+      dispatch(reload())
+    },
     []
   )
   const [topicsOffset, setOffset] = useState(0)
@@ -44,7 +48,9 @@ const ForumDashboard = () => {
       : null
   const onPagination = useCallback(
     (_e: ChangeEvent<unknown>, page: number) => {
-      setOffset(page)
+      const quatifier = page < 1 ? page * topicsLimit : (page - 1) * topicsLimit
+      setOffset(quatifier)
+      setPage(page)
       dispatch(reload())
     },
     [topicsOffset, setOffset]
@@ -134,8 +140,8 @@ const ForumDashboard = () => {
             {pages && (
               <Pagination
                 onChange={onPagination}
-                count={pages + 1}
-                page={topicsOffset}
+                count={pages}
+                page={page}
                 variant="outlined"
                 color="primary"
               />
