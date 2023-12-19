@@ -3,11 +3,11 @@ import { Emoji } from '../../database'
 
 export default async function getEmoji(req: Request, res: Response) {
   const { limit: limitQ, offset: offsetQ } = req.query
-  const { emoji_id: emoji_idP } = req.params
+  const { topic_id: topic_idP } = req.params
   try {
-    const emoji_id = Number(emoji_idP)
-    if (isNaN(emoji_id)) {
-      res.status(400).send('Неверный comment_id')
+    const topic_id = Number(topic_idP)
+    if (isNaN(topic_id)) {
+      res.status(400).send('Неверный topic_id')
       return
     }
 
@@ -16,7 +16,7 @@ export default async function getEmoji(req: Request, res: Response) {
 
     const replies = await Emoji.findAll({
       attributes: ['creator_id', 'emoji', 'topic_id'],
-      where: { emoji_id },
+      where: { topic_id },
       limit,
       offset,
     })

@@ -10,6 +10,10 @@ import getEmoji from './emoji/get'
 import {
   commentURL,
   commentsURL,
+  countCommentsURL,
+  countEmojiURL,
+  countRepliesURL,
+  countTopicsURL,
   emojiAddURL,
   emojiURL,
   repliesURL,
@@ -17,6 +21,7 @@ import {
   topicURL,
   topicsURL,
 } from './url'
+import { countComments, countEmoji, countReplies, countTopics } from './count'
 
 const forumRouter = Router()
 
@@ -31,5 +36,10 @@ forumRouter.post(topicURL, postTopic)
 
 forumRouter.get(commentsURL, getComments)
 forumRouter.post(commentURL, postComment)
+
+forumRouter.get(countEmojiURL, countEmoji)
+forumRouter.get(countTopicsURL, countTopics)
+forumRouter.get(countRepliesURL, countReplies)
+forumRouter.get(countCommentsURL, countComments)
 
 export default forumRouter
