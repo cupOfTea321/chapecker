@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 export const yandexCoreApi = createApi({
   reducerPath: 'yandexCoreApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://ya-praktikum.tech/api/v2/',
+    baseUrl: 'http://localhost:3001/api/v2/',
     prepareHeaders: headers => {
       return headers
     },

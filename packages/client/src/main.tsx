@@ -27,15 +27,13 @@ export const store = createStore({ preloadedState: loadServerState() })
 const container = document.getElementById('root') as HTMLElement
 
 const Bundle = () => (
-  <React.StrictMode>
-    <Suspense fallback={<Spinner />}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
-    </Suspense>
-  </React.StrictMode>
+  <Suspense fallback={<Spinner />}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </Suspense>
 )
 
 if (import.meta.hot) {
