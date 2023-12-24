@@ -1,23 +1,45 @@
-import type { Express } from 'express'
-import postTopicAPI from './topics/post'
-import getTopicsAPI from './topics/get'
-import postCommentAPI from './comments/post'
-import getCommentsAPI from './comments/get'
-import postReplyAPI from './replies/post'
-import getRepliesAPI from './replies/get'
-import postEmojiAPI from './emoji/post'
-import getEmojiAPI from './emoji/get'
+import { Router } from 'express'
+import postTopic from './topics/post'
+import getTopics from './topics/get'
+import postComment from './comments/post'
+import getComments from './comments/get'
+import postReply from './replies/post'
+import getReplies from './replies/get'
+import postEmoji from './emoji/post'
+import getEmoji from './emoji/get'
+import {
+  commentURL,
+  commentsURL,
+  countCommentsURL,
+  countEmojiURL,
+  countRepliesURL,
+  countTopicsURL,
+  emojiAddURL,
+  emojiURL,
+  repliesURL,
+  replyURL,
+  topicURL,
+  topicsURL,
+} from './url'
+import { countComments, countEmoji, countReplies, countTopics } from './count'
 
-export default function addForumAPI(app: Express) {
-  postTopicAPI(app)
-  getTopicsAPI(app)
+const forumRouter = Router()
 
-  postCommentAPI(app)
-  getCommentsAPI(app)
+forumRouter.get(emojiURL, getEmoji)
+forumRouter.post(emojiAddURL, postEmoji)
 
-  postReplyAPI(app)
-  getRepliesAPI(app)
+forumRouter.get(repliesURL, getReplies)
+forumRouter.post(replyURL, postReply)
 
-  postEmojiAPI(app)
-  getEmojiAPI(app)
-}
+forumRouter.get(topicsURL, getTopics)
+forumRouter.post(topicURL, postTopic)
+
+forumRouter.get(commentsURL, getComments)
+forumRouter.post(commentURL, postComment)
+
+forumRouter.get(countEmojiURL, countEmoji)
+forumRouter.get(countTopicsURL, countTopics)
+forumRouter.get(countRepliesURL, countReplies)
+forumRouter.get(countCommentsURL, countComments)
+
+export default forumRouter
