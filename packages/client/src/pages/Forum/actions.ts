@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { forumTopicsURL } from '../../API/endpoints'
+import {
+  forumTopicsURL,
+  forumCountTopicsURL,
+  forumCountCommentsURL,
+} from '../../API/endpoints'
 import { ITopic } from '../../redux/features/forumSlice'
 
 const config = {
@@ -30,4 +34,20 @@ export const getTopics = async ({
     ...config,
     method: 'GET',
     url: forumTopicsURL + '?limit=' + limit + '&offset=' + offset,
+  })
+
+export const getTopicsCount = async (): Promise<{ data: { count: number } }> =>
+  axios({
+    ...config,
+    method: 'GET',
+    url: forumCountTopicsURL,
+  })
+
+export const getCommentsCount = async (
+  id: number
+): Promise<{ data: { count: number } }> =>
+  axios({
+    ...config,
+    method: 'GET',
+    url: forumCountCommentsURL + id,
   })

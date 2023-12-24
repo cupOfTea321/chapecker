@@ -18,11 +18,12 @@ export const yandexOAuthIdURL = `oauth/yandex/service-id?redirect_uri=${appURL}`
 
 export const serverURL = 'http://localhost:3001/api'
 export const proxyURL = baseURL
-export const forumSSRURL = 'http://localhost:3001/forum/'
 
 export const forumBaseURL = serverURL + '/forum'
 export const forumTopicURL = serverURL + '/forum/topic'
 export const forumTopicsURL = serverURL + '/forum/topics'
+export const forumCountTopicsURL = forumBaseURL + '/count/topics'
+export const forumCountCommentsURL = forumBaseURL + '/count/comments/'
 export const forumCommentURL = serverURL + '/forum/comment'
 export const forumCommentsURL = serverURL + '/forum/comments/'
 export const forumReplyURL = serverURL + '/forum/reply'

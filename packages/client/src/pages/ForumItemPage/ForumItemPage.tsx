@@ -7,7 +7,7 @@ import {
   FormEvent,
   ChangeEvent,
 } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
 import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
 import { messageFormFileds } from './model'
@@ -20,14 +20,12 @@ import {
 } from '../../redux/features/topicSlice'
 import { getTopicData, isTopicDataLoad } from '../../redux/selectors'
 import { getComments, sendComment } from './actions'
-import { privateRoutes } from '../../router/router'
 import { Pagination, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import bem from 'bem-ts'
 import './styles.scss'
 
 const ForumPage = () => {
-  const { id } = useParams()
-  if (!id) return <Navigate to={privateRoutes.forum.path} />
+  const { id } = useParams() as { id?: number }
   const cn = bem('forumPage')
   const dispatch = useAppDispatch()
 

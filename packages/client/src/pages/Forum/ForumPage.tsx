@@ -1,6 +1,5 @@
 import {
   ChangeEvent,
-  memo,
   useCallback,
   useEffect,
   useState,
@@ -11,9 +10,9 @@ import ForumPreviewTable from './components/forumPreviewTable/forumPreviewTable'
 import { forumTabs } from './model'
 import getImageUrl from '../../utils/getImageUrl'
 import { ToggleButtonGroup, ToggleButton, Pagination } from '@mui/material'
-import { getTopics } from './actions'
+import { getTopics, getTopicsCount } from './actions'
 import { useAppDispatch, useTypedSelector } from '../../redux/store'
-import { getForumData, isForumDataLoad } from '../../redux/selectors'
+import { getForumData, isForumDataLoad, getTopicsCounts } from '../../redux/selectors'
 import Spinner from '../../components/spinner/Spinner'
 import {
   setTopics,
@@ -33,19 +32,21 @@ const ForumDashboard = () => {
   const [topicsLimit, setTopicLimit] = useState(limits[0])
   const onPerpage = useCallback(
     (_event: MouseEvent<HTMLElement>, value: number) => {
-      setTopicLimit(value)
-      dispatch(reload())
+      if (value !== null) {
+        setTopicLimit(value)
+        setOffset(0)
+        setPage(1)
+        dispatch(reload())
+      }
     },
-    []
+    [topicsLimit]
   )
   const [topicsOffset, setOffset] = useState(0)
 
   const topics = useTypedSelector(getForumData)
+  const topicsCounts = useTypedSelector(getTopicsCounts)
   const isLoad = useTypedSelector(isForumDataLoad)
-  const pages =
-    topics.length === topicsLimit
-      ? Math.ceil(topics.length / topicsLimit)
-      : null
+  const pages = topicsCounts > 0 ? Math.ceil(topicsCounts / topicsLimit) : null
   const onPagination = useCallback(
     (_e: ChangeEvent<unknown>, page: number) => {
       const quatifier = page < 1 ? page * topicsLimit : (page - 1) * topicsLimit
@@ -64,7 +65,8 @@ const ForumDashboard = () => {
           limit: topicsLimit,
           offset: topicsOffset,
         })
-        dispatch(setTopics(data))
+        const { data: { count } } = await getTopicsCount()
+        dispatch(setTopics({topics: data, topicsCount: count }))
       } catch (err) {
         setError(err)
       } finally {
@@ -74,7 +76,7 @@ const ForumDashboard = () => {
     if (topics === 'idle') {
       loadTopics()
     }
-  }, [topics, load, topicsOffset])
+  }, [topics, topicsOffset, topicsLimit])
 
   const Forum = () => (
     <div className={cn({ chesBackgrounded: true })}>
@@ -123,6 +125,13 @@ const ForumDashboard = () => {
           <section>
             <ForumPreviewTable
               forums={topics}
+              paginator={pages && pages > 1 && (
+                <Pagination
+                  onChange={onPagination}
+                  count={pages}
+                  page={page}
+                  variant="outlined"
+                />)}
               perPage={
                 <ToggleButtonGroup
                   value={topicsLimit}
@@ -137,15 +146,6 @@ const ForumDashboard = () => {
                 </ToggleButtonGroup>
               }
             />
-            {pages && (
-              <Pagination
-                onChange={onPagination}
-                count={pages}
-                page={page}
-                variant="outlined"
-                color="primary"
-              />
-            )}
           </section>
           <section>
             <h2>{forumTabs.newTopic}</h2>
@@ -164,4 +164,4 @@ const ForumDashboard = () => {
   )
 }
 
-export default memo(ForumDashboard)
+export default ForumDashboard
