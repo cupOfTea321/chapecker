@@ -1,9 +1,5 @@
 import axios from 'axios'
-import {
-  forumTopicsURL,
-  forumCountTopicsURL,
-  forumCountCommentsURL,
-} from '../../API/endpoints'
+import { forumTopicsURL, forumCountTopicsURL } from '../../API/endpoints'
 import { ITopic } from '../../redux/features/forumSlice'
 
 const config = {

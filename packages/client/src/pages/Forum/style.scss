@@ -64,12 +64,10 @@ $content-selector: "~ .content > section";
         height: $chess-square-witdh * 3;
     }
 
-    &__perPage {
-        text-transform: lowercase;
-    }
-
-    &__perPageItem {
-        position: absolute;
+    &__controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: auto;
     }
 
     &__container {
@@ -80,7 +78,6 @@ $content-selector: "~ .content > section";
         position: relative;
         background: $secondary-background-color;
         width: 80%;
-        min-height: 80vh;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
         border-radius: 5px;
         min-width: calc($tab-count * 60px);
@@ -107,6 +104,7 @@ $content-selector: "~ .content > section";
 
             section {
                 display: none;
+                min-height: 80vh;
 
                 animation: {
                     name: content;

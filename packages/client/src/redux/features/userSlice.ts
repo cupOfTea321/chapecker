@@ -1,20 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { yandexCoreApi } from '../services/yandexCore'
-
-export interface User {
-  id: number
-  first_name: string
-  second_name: string
-  display_name: string
-  phone: string
-  login: string
-  avatar: string
-  email: string
-}
+import { IUser } from '../../pages/Profile/model'
 
 export interface IUserState {
-  data: null | User
+  data: null | IUser
   load: boolean
   error: 'none' | unknown
 }

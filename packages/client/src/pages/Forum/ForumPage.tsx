@@ -27,7 +27,7 @@ import {
 import bem from 'bem-ts'
 import './style.scss'
 import Loader from '../../components/loader/loader'
-import { itemsLimits } from '../../constants/forumConstants'
+import { IDLE, INIT_OFFSET, itemsLimits } from '../../constants/forumConstants'
 
 const ForumDashboard = () => {
   const cn = bem('forumDashboard')
@@ -36,7 +36,7 @@ const ForumDashboard = () => {
   const limits = useMemo(() => itemsLimits, [itemsLimits])
   const [page, setPage] = useState(1)
   const [topicsLimit, setTopicLimit] = useState<number>(limits[0])
-  const [topicsOffset, setOffset] = useState(0)
+  const [topicsOffset, setOffset] = useState(INIT_OFFSET)
   const topics = useTypedSelector(getForumData)
   const topicsCounts = useTypedSelector(getTopicsCounts)
   const isLoad = useTypedSelector(isForumDataLoad)
@@ -81,7 +81,7 @@ const ForumDashboard = () => {
         dispatch(load(false))
       }
     }
-    if (topics === 'idle') {
+    if (topics === IDLE) {
       loadTopics()
     }
   }, [topics, topicsOffset, topicsLimit])

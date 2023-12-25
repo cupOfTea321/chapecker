@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { IDLE } from '../../constants/forumConstants'
 
 export interface ITopic {
   topic_id: number
@@ -11,7 +12,7 @@ export interface ITopic {
 export type TTopics = ITopic[]
 
 export type TForumInitialState = {
-  topics: 'idle' | TTopics
+  topics: typeof IDLE | TTopics
   topicsCount: number
   load: boolean
   error: unknown
@@ -20,7 +21,7 @@ export type TForumInitialState = {
 export const forumSlice = createSlice({
   name: 'forum',
   initialState: {
-    topics: 'idle',
+    topics: IDLE,
     topicsCount: 0,
     load: false,
     error: null,
@@ -31,7 +32,7 @@ export const forumSlice = createSlice({
       state.topicsCount = payload.topicsCount
     },
     reload: state => {
-      state.topics = 'idle'
+      state.topics = IDLE
     },
     load: (state, { payload }) => {
       state.load = payload

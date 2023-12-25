@@ -1,23 +1,11 @@
 import axios from 'axios'
-import {
-  getUserById,
-  forumReplysURL,
-  forumReplyURL,
-} from '../../../../API/endpoints'
-import { IUser } from '../../../Profile/model'
+import { forumReplysURL, forumReplyURL } from '../../../../API/endpoints'
 
 const config = {
   headers: { 'Content-type': 'application/json; charset=UTF-8' },
   withCredentials: true,
   timeout: 10000,
 }
-
-export const getAuthor = async (id: number): Promise<{ data: IUser }> =>
-  axios({
-    ...config,
-    method: 'GET',
-    url: getUserById(id),
-  })
 
 export const getReplies = async ({
   id,
@@ -37,34 +25,29 @@ export const getReplies = async ({
 export const sendReply = async ({
   text,
   comment_id,
+  first_name,
+  second_name,
+  avatar,
 }: {
   text: string
   comment_id: number
+  first_name: string
+  second_name: string
+  avatar: null | string
 }) =>
   axios({
     ...config,
     method: 'POST',
     url: forumReplyURL,
-    data: JSON.stringify({ text, comment_id }),
+    data: JSON.stringify({ text, comment_id, first_name, second_name, avatar }),
   })
 
 export type TReply = {
   text: string
   creator_id: number
+  first_name: string
+  second_name: string
+  avatar: null | string
   createdAt: string
   reply_id: number
-}
-
-export const getTime = (time: Date) => {
-  return (
-    time.getFullYear() +
-    '-' +
-    Number(time.getMonth() + 1) +
-    '-' +
-    time.getDate() +
-    ' at ' +
-    time.getHours() +
-    ':' +
-    time.getMinutes()
-  )
 }

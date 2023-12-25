@@ -5,9 +5,13 @@
         padding: 10px 0;
         margin-bottom: 10px;
         border-bottom: 1px solid $dark-chess-square;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
     }
 
     &__messageHeader {
+        padding: 5px;
         margin-bottom: 10px;
         display: flex;
         justify-content: space-between;

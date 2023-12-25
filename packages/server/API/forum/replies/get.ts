@@ -15,7 +15,15 @@ export default async function getReplies(req: Request, res: Response) {
     const offset = isNaN(Number(offsetQ)) ? 0 : Number(offsetQ)
 
     const replies = await Reply.findAll({
-      attributes: ['creator_id', 'text', 'reply_id', 'createdAt'],
+      attributes: [
+        'first_name',
+        'second_name',
+        'avatar',
+        'creator_id',
+        'text',
+        'reply_id',
+        'createdAt',
+      ],
       where: { comment_id },
       limit,
       offset,

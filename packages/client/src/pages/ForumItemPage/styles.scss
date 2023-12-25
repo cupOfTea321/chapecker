@@ -54,9 +54,21 @@ $breakpoints: (
         flex-direction: column;
     }
 
+    &__header {
+        background-color: $dark-chess-square;
+        margin-top: 15px;
+        padding: 10px;
+        color: $brigth-chess-square;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__perPage {
+        display: flex;
+        justify-content: space-between;
+    }
+
     &__controls {
         margin-top: auto;
     }
 }
-
-@media (max-width: map-get($breakpoints, medium)) {}

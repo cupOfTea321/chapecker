@@ -1,10 +1,13 @@
-import { ReactNode } from 'react'
+import { ReactNode, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { ITopic } from '../../../../redux/features/forumSlice'
+import { setTitleAndDescription } from '../../../../redux/features/topicSlice'
+import { Box } from '@mui/material'
+import getToThisday from '../../../../utils/getToThisData'
+import { IDLE } from '../../../../constants/forumConstants'
 import bem from 'bem-ts'
 import './styles.scss'
-import { Box } from '@mui/material'
-import getToThisday from '../../utils/getToThisData'
+import { useAppDispatch } from '../../../../redux/store'
 
 const ForumPreviewTable = ({
   perPage,
@@ -13,10 +16,19 @@ const ForumPreviewTable = ({
 }: {
   perPage?: ReactNode
   paginator?: ReactNode
-  forums: 'idle' | ITopic[]
+  forums: typeof IDLE | ITopic[]
 }) => {
   const cn = bem('forumPreview')
-  if (forums === 'idle' || forums.length === 0) return <></>
+  if (forums === IDLE || forums.length === 0) {
+    return <></>
+  }
+
+  const dispatch = useAppDispatch()
+  const onItemClick = useCallback(
+    ({ title, description }: { title: string; description: string }) =>
+      dispatch(setTitleAndDescription({ title, description })),
+    []
+  )
 
   return (
     <div>
@@ -34,11 +46,14 @@ const ForumPreviewTable = ({
                 {
                   <Box>
                     <Link
+                      onClick={() => onItemClick({ title, description })}
                       className={cn('itemDivision', { link: true })}
                       to={window.location.href.concat('/', String(topic_id))}>
                       {title}
                     </Link>
-                    <div className={cn('itemDivision', { description: true })}>{description}</div>
+                    <div className={cn('itemDivision', { description: true })}>
+                      {description}
+                    </div>
                   </Box>
                 }
               </td>
@@ -50,8 +65,8 @@ const ForumPreviewTable = ({
         </tbody>
       </table>
       <div className={cn('controls')}>
-          <span className={cn('captionPaginator')}>{paginator}</span>
-          <span className={cn('captionPerpage')}>Тем на странице: {perPage}</span>
+        <span className={cn('captionPaginator')}>{paginator}</span>
+        <span className={cn('captionPerpage')}>Тем на странице: {perPage}</span>
       </div>
     </div>
   )

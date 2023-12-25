@@ -23,13 +23,22 @@ import {
   isTopicDataLoad,
   getCommentsCount,
   getUserData,
+  selectTopicTitle,
+  selectTopicDescription,
 } from '../../redux/selectors'
 import { getComments, loadCommentsCount, sendComment } from './actions'
-import { Pagination, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import {
+  Box,
+  Pagination,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material'
 import bem from 'bem-ts'
 import './styles.scss'
-import { itemsLimits } from '../../constants/forumConstants'
+import { IDLE, INIT_OFFSET, itemsLimits } from '../../constants/forumConstants'
 import { IUser } from '../Profile/model'
+import PrimitiveButton from '../../components/PrimitiveButton/PrimitiveButton'
 
 const ForumPage = () => {
   const { id } = useParams()
@@ -39,15 +48,19 @@ const ForumPage = () => {
     return navigate(window.location.href)
   }
   const cn = bem('forumPage')
-  const user = useTypedSelector(getUserData) as IUser
+  const { first_name, second_name, avatar } = useTypedSelector(
+    getUserData
+  ) as IUser
+  const title = useTypedSelector(selectTopicTitle)
+  const description = useTypedSelector(selectTopicDescription)
   const dispatch = useAppDispatch()
-
+  const goBack = useCallback(() => navigate(-1), [])
   const comments = useTypedSelector(getTopicData)
   const isLoad = useTypedSelector(isTopicDataLoad)
   const limits = useMemo(() => itemsLimits, [itemsLimits])
   const [page, setPage] = useState(1)
   const [commentsLimit, setTopicLimit] = useState(limits[0])
-  const [commentsOffset, setOffset] = useState(0)
+  const [commentsOffset, setOffset] = useState(INIT_OFFSET)
   const commentsCounts = useTypedSelector(getCommentsCount)
   const pages =
     commentsCounts > 0 ? Math.ceil(commentsCounts / commentsLimit) : null
@@ -93,7 +106,7 @@ const ForumPage = () => {
         dispatch(load(false))
       }
     }
-    if (comments === 'idle') {
+    if (comments === IDLE) {
       loadTopics()
     }
   }, [id, load, comments])
@@ -105,7 +118,7 @@ const ForumPage = () => {
       const message: string = (e.target as HTMLFormElement)[
         messageFormFileds.message
       ].value
-      const { first_name, second_name, avatar } = user
+
       try {
         await sendComment({
           text: message,
@@ -128,20 +141,30 @@ const ForumPage = () => {
   return (
     <div className={cn({ chesBackgrounded: true })}>
       <div className={cn('container')}>
-        <ToggleButtonGroup
-          value={commentsLimit}
-          exclusive
-          onChange={onPerpage}
-          aria-label="Platform">
-          {limits.map(value => (
-            <ToggleButton color="warning" key={value} value={value}>
-              {value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <div className={cn('perPage')}>
+          <PrimitiveButton onClick={goBack}>Назад</PrimitiveButton>
+          <Box>
+            <span>Комментов на страницу: </span>
+            <ToggleButtonGroup
+              value={commentsLimit}
+              exclusive
+              onChange={onPerpage}
+              aria-label="Platform">
+              {limits.map(value => (
+                <ToggleButton color="warning" key={value} value={value}>
+                  {value}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </Box>
+        </div>
+        <Box className={cn('header')}>
+          <span>Тема {title}</span>
+          <span>Вопрос: {description ? description : 'Нет описания'}</span>
+        </Box>
         <ForumMessagesList messages={comments} />
         <div className={cn('controls')}>
-          {pages && (
+          {pages && pages > 1 && (
             <Pagination
               onChange={onPagination}
               count={pages}
@@ -154,7 +177,6 @@ const ForumPage = () => {
             inputName={messageFormFileds.message}
             label={'Оставить комментарий'}
             onAddMessage={onComment}
-            user={user}
             isDisabled={isLoad}
           />
         </div>
