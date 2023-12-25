@@ -15,7 +15,14 @@ export default async function getComments(req: Request, res: Response) {
     const offset = isNaN(Number(offsetQ)) ? 0 : Number(offsetQ)
 
     const comments = await Comment.findAll({
-      attributes: ['creator_id', 'text', 'comment_id', 'createdAt'],
+      attributes: [
+        'first_name',
+        'second_name',
+        'avatar',
+        'text',
+        'comment_id',
+        'createdAt',
+      ],
       where: { topic_id },
       limit,
       offset,

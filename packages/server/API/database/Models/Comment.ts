@@ -24,8 +24,20 @@ class Comment extends Model {
   text: string | undefined
 
   @AllowNull(false)
-  @Column(DataType.INTEGER)
-  creator_id: number | undefined
+  @Column(DataType.STRING)
+  first_name: string | undefined
+
+  @AllowNull(false)
+  @Column(DataType.STRING)
+  second_name: string | undefined
+
+  @AllowNull(true)
+  @Column(DataType.STRING)
+  avatar: string | undefined
+
+  @AllowNull(false)
+  @Column(DataType.STRING)
+  creator_id: string | undefined
 
   @AllowNull(false)
   @ForeignKey(() => Topic)

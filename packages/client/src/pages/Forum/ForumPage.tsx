@@ -4,6 +4,7 @@ import {
   useEffect,
   useState,
   MouseEvent,
+  useMemo,
 } from 'react'
 import NewTopicForm from './components/newTopicForm/newTopicForm'
 import ForumPreviewTable from './components/forumPreviewTable/forumPreviewTable'
@@ -12,8 +13,11 @@ import getImageUrl from '../../utils/getImageUrl'
 import { ToggleButtonGroup, ToggleButton, Pagination } from '@mui/material'
 import { getTopics, getTopicsCount } from './actions'
 import { useAppDispatch, useTypedSelector } from '../../redux/store'
-import { getForumData, isForumDataLoad, getTopicsCounts } from '../../redux/selectors'
-import Spinner from '../../components/spinner/Spinner'
+import {
+  getForumData,
+  isForumDataLoad,
+  getTopicsCounts,
+} from '../../redux/selectors'
 import {
   setTopics,
   load,
@@ -22,16 +26,24 @@ import {
 } from '../../redux/features/forumSlice'
 import bem from 'bem-ts'
 import './style.scss'
+import Loader from '../../components/loader/loader'
+import { itemsLimits } from '../../constants/forumConstants'
 
 const ForumDashboard = () => {
   const cn = bem('forumDashboard')
   const dispatch = useAppDispatch()
   const tabsArr = Object.values(forumTabs)
-  const limits = [10, 20, 30]
+  const limits = useMemo(() => itemsLimits, [itemsLimits])
   const [page, setPage] = useState(1)
-  const [topicsLimit, setTopicLimit] = useState(limits[0])
+  const [topicsLimit, setTopicLimit] = useState<number>(limits[0])
+  const [topicsOffset, setOffset] = useState(0)
+  const topics = useTypedSelector(getForumData)
+  const topicsCounts = useTypedSelector(getTopicsCounts)
+  const isLoad = useTypedSelector(isForumDataLoad)
+  const pages = topicsCounts > 0 ? Math.ceil(topicsCounts / topicsLimit) : null
+
   const onPerpage = useCallback(
-    (_event: MouseEvent<HTMLElement>, value: number) => {
+    (_e: MouseEvent<HTMLElement>, value: number) => {
       if (value !== null) {
         setTopicLimit(value)
         setOffset(0)
@@ -41,12 +53,6 @@ const ForumDashboard = () => {
     },
     [topicsLimit]
   )
-  const [topicsOffset, setOffset] = useState(0)
-
-  const topics = useTypedSelector(getForumData)
-  const topicsCounts = useTypedSelector(getTopicsCounts)
-  const isLoad = useTypedSelector(isForumDataLoad)
-  const pages = topicsCounts > 0 ? Math.ceil(topicsCounts / topicsLimit) : null
   const onPagination = useCallback(
     (_e: ChangeEvent<unknown>, page: number) => {
       const quatifier = page < 1 ? page * topicsLimit : (page - 1) * topicsLimit
@@ -65,8 +71,10 @@ const ForumDashboard = () => {
           limit: topicsLimit,
           offset: topicsOffset,
         })
-        const { data: { count } } = await getTopicsCount()
-        dispatch(setTopics({topics: data, topicsCount: count }))
+        const {
+          data: { count },
+        } = await getTopicsCount()
+        dispatch(setTopics({ topics: data, topicsCount: count }))
       } catch (err) {
         setError(err)
       } finally {
@@ -78,7 +86,37 @@ const ForumDashboard = () => {
     }
   }, [topics, topicsOffset, topicsLimit])
 
-  const Forum = () => (
+  const Topics = () => (
+    <ForumPreviewTable
+      forums={topics}
+      paginator={
+        pages &&
+        pages > 1 && (
+          <Pagination
+            onChange={onPagination}
+            count={pages}
+            page={page}
+            variant="outlined"
+          />
+        )
+      }
+      perPage={
+        <ToggleButtonGroup
+          value={topicsLimit}
+          exclusive
+          onChange={onPerpage}
+          aria-label="Platform">
+          {limits.map(value => (
+            <ToggleButton color="warning" key={value} value={value}>
+              {value}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+      }
+    />
+  )
+
+  return (
     <div className={cn({ chesBackgrounded: true })}>
       <h1 hidden>Форум игры Шашки Чапаева</h1>
       <div className={cn('container')}>
@@ -122,31 +160,7 @@ const ForumDashboard = () => {
         </div>
 
         <div className="content">
-          <section>
-            <ForumPreviewTable
-              forums={topics}
-              paginator={pages && pages > 1 && (
-                <Pagination
-                  onChange={onPagination}
-                  count={pages}
-                  page={page}
-                  variant="outlined"
-                />)}
-              perPage={
-                <ToggleButtonGroup
-                  value={topicsLimit}
-                  exclusive
-                  onChange={onPerpage}
-                  aria-label="Platform">
-                  {limits.map(value => (
-                    <ToggleButton color="warning" key={value} value={value}>
-                      {value}
-                    </ToggleButton>
-                  ))}
-                </ToggleButtonGroup>
-              }
-            />
-          </section>
+          <section>{isLoad ? <Loader /> : <Topics />}</section>
           <section>
             <h2>{forumTabs.newTopic}</h2>
             <NewTopicForm />
@@ -154,13 +168,6 @@ const ForumDashboard = () => {
         </div>
       </div>
     </div>
-  )
-
-  return (
-    <>
-      {isLoad && <Spinner />}
-      {!isLoad && <Forum />}
-    </>
   )
 }
 

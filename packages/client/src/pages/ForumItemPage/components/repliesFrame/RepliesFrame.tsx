@@ -8,7 +8,6 @@ import {
   Typography,
 } from '@mui/material'
 import Loader from '../../../../components/loader/loader'
-import Author from '../author/author'
 
 const RepliesFrame = ({ comment_id }: { comment_id: number }) => {
   const [expanded, setExpanded] = useState<string | false>(false)
@@ -62,7 +61,7 @@ const RepliesFrame = ({ comment_id }: { comment_id: number }) => {
                 p: 2,
               }}>
               <Box>
-                <Author id={creator_id} />
+                Автор
                 {getTime(new Date(createdAt))}
               </Box>
               {text}

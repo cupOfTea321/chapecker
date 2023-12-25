@@ -7,7 +7,6 @@ import bem from 'bem-ts'
 import './styles.scss'
 import AddMessageFrame from '../addMessageFrame/addMessageFrame'
 import { messageFormFileds } from '../../model'
-import Author from '../author/author'
 
 const ForumMessagesList = ({ messages }: { messages: IComment[] | 'idle' }) => {
   if (messages === 'idle') return <Loader />
@@ -39,39 +38,41 @@ const ForumMessagesList = ({ messages }: { messages: IComment[] | 'idle' }) => {
   return (
     <>
       <ul className={cn()}>
-        {messages.map(({ comment_id, text, creator_id, createdAt }) => {
-          return (
-            <li key={comment_id} className={cn('message')}>
-              <div className={cn('messageHeader')}>
-                <Author id={creator_id} />
-                <span>{getTime(new Date(createdAt))}</span>
-              </div>
-              <p>{text}</p>
-              <div className={cn('replyContainer')}>
-                <RepliesFrame comment_id={comment_id} />
-                <span
-                  className={cn('reply')}
-                  onClick={() => setRepleyFrame({ open: true, comment_id })}
-                  hidden={
-                    replyFrame.open && replyFrame.comment_id === comment_id
-                  }>
-                  Ответить
-                </span>
-                {replyFrame.open && replyFrame.comment_id === comment_id && (
-                  <AddMessageFrame
-                    onAddMessage={e => onReply(e, comment_id)}
-                    inputName={messageFormFileds.message}
-                    label="Ответить"
-                    close={() =>
-                      setRepleyFrame({ open: false, comment_id: null })
-                    }
-                    isDisabled={isSending}
-                  />
-                )}
-              </div>
-            </li>
-          )
-        })}
+        {messages.map(
+          ({ comment_id, text, first_name, second_name, createdAt }) => {
+            return (
+              <li key={comment_id} className={cn('message')}>
+                <div className={cn('messageHeader')}>
+                  <span>{first_name + ' ' + second_name}</span>
+                  <span>{getTime(new Date(createdAt))}</span>
+                </div>
+                <p>{text}</p>
+                <div className={cn('replyContainer')}>
+                  <RepliesFrame comment_id={comment_id} />
+                  <span
+                    className={cn('reply')}
+                    onClick={() => setRepleyFrame({ open: true, comment_id })}
+                    hidden={
+                      replyFrame.open && replyFrame.comment_id === comment_id
+                    }>
+                    Ответить
+                  </span>
+                  {replyFrame.open && replyFrame.comment_id === comment_id && (
+                    <AddMessageFrame
+                      onAddMessage={e => onReply(e, comment_id)}
+                      inputName={messageFormFileds.message}
+                      label="Ответить"
+                      close={() =>
+                        setRepleyFrame({ open: false, comment_id: null })
+                      }
+                      isDisabled={isSending}
+                    />
+                  )}
+                </div>
+              </li>
+            )
+          }
+        )}
       </ul>
     </>
   )

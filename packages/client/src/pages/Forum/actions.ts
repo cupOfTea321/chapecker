@@ -42,12 +42,3 @@ export const getTopicsCount = async (): Promise<{ data: { count: number } }> =>
     method: 'GET',
     url: forumCountTopicsURL,
   })
-
-export const getCommentsCount = async (
-  id: number
-): Promise<{ data: { count: number } }> =>
-  axios({
-    ...config,
-    method: 'GET',
-    url: forumCountCommentsURL + id,
-  })

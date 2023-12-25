@@ -1,13 +1,13 @@
 import {
-  memo,
   useCallback,
   useEffect,
   MouseEvent,
   useState,
   FormEvent,
   ChangeEvent,
+  useMemo,
 } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
 import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
 import { messageFormFileds } from './model'
@@ -18,34 +18,51 @@ import {
   setError,
   reload,
 } from '../../redux/features/topicSlice'
-import { getTopicData, isTopicDataLoad } from '../../redux/selectors'
-import { getComments, sendComment } from './actions'
+import {
+  getTopicData,
+  isTopicDataLoad,
+  getCommentsCount,
+  getUserData,
+} from '../../redux/selectors'
+import { getComments, loadCommentsCount, sendComment } from './actions'
 import { Pagination, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import bem from 'bem-ts'
 import './styles.scss'
+import { itemsLimits } from '../../constants/forumConstants'
+import { IUser } from '../Profile/model'
 
 const ForumPage = () => {
-  const { id } = useParams() as { id?: number }
+  const { id } = useParams()
+  const navigate = useNavigate()
+  if (!id) {
+    console.log('Что-то пошло не так')
+    return navigate(window.location.href)
+  }
   const cn = bem('forumPage')
+  const user = useTypedSelector(getUserData) as IUser
   const dispatch = useAppDispatch()
 
   const comments = useTypedSelector(getTopicData)
   const isLoad = useTypedSelector(isTopicDataLoad)
-  const limits = [10, 20, 30]
+  const limits = useMemo(() => itemsLimits, [itemsLimits])
   const [page, setPage] = useState(1)
   const [commentsLimit, setTopicLimit] = useState(limits[0])
-  const onPerpage = useCallback(
-    (_event: MouseEvent<HTMLElement>, value: number) => {
-      setTopicLimit(value)
-      dispatch(reload())
-    },
-    []
-  )
   const [commentsOffset, setOffset] = useState(0)
+  const commentsCounts = useTypedSelector(getCommentsCount)
   const pages =
-    comments.length === commentsLimit
-      ? Math.ceil(comments.length / commentsLimit)
-      : null
+    commentsCounts > 0 ? Math.ceil(commentsCounts / commentsLimit) : null
+
+  const onPerpage = useCallback(
+    (_e: MouseEvent<HTMLElement>, value: number) => {
+      if (value !== null) {
+        setTopicLimit(value)
+        setOffset(0)
+        setPage(1)
+        dispatch(reload())
+      }
+    },
+    [commentsLimit]
+  )
   const onPagination = useCallback(
     (_e: ChangeEvent<unknown>, page: number) => {
       const quatifier =
@@ -62,11 +79,14 @@ const ForumPage = () => {
       try {
         dispatch(load(true))
         const { data } = await getComments({
-          id: id ? String(id) : '0',
+          id,
           limit: commentsLimit,
           offset: commentsOffset,
         })
-        dispatch(setCommets(data))
+        const {
+          data: { count },
+        } = await loadCommentsCount(id)
+        dispatch(setCommets({ comments: data, commentsCount: count }))
       } catch (err) {
         setError(err)
       } finally {
@@ -85,9 +105,15 @@ const ForumPage = () => {
       const message: string = (e.target as HTMLFormElement)[
         messageFormFileds.message
       ].value
-
+      const { first_name, second_name, avatar } = user
       try {
-        await sendComment({ text: message, topic_id: id })
+        await sendComment({
+          text: message,
+          topic_id: id,
+          first_name,
+          second_name,
+          avatar,
+        })
         dispatch(reload())
         ;(e.target as HTMLFormElement).reset()
       } catch (err) {
@@ -128,6 +154,7 @@ const ForumPage = () => {
             inputName={messageFormFileds.message}
             label={'Оставить комментарий'}
             onAddMessage={onComment}
+            user={user}
             isDisabled={isLoad}
           />
         </div>
@@ -136,4 +163,4 @@ const ForumPage = () => {
   )
 }
 
-export default memo(ForumPage)
+export default ForumPage

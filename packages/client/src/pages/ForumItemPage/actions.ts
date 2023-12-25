@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { forumCommentsURL, forumCommentURL } from '../../API/endpoints'
+import {
+  forumCommentsURL,
+  forumCommentURL,
+  forumCountCommentsURL,
+} from '../../API/endpoints'
 import { ITopic } from '../../redux/features/forumSlice'
 
 const config = {
@@ -26,13 +30,34 @@ export const getComments = async ({
 export const sendComment = async ({
   text,
   topic_id,
+  first_name,
+  second_name,
+  avatar,
 }: {
   text: string
   topic_id: string
+  first_name: string
+  second_name: string
+  avatar: string
 }) =>
   axios({
     ...config,
     method: 'POST',
     url: forumCommentURL,
-    data: JSON.stringify({ text, topic_id }),
+    data: JSON.stringify({
+      text,
+      topic_id,
+      first_name,
+      second_name,
+      avatar,
+    }),
+  })
+
+export const loadCommentsCount = async (
+  id: string
+): Promise<{ data: { count: number } }> =>
+  axios({
+    ...config,
+    method: 'GET',
+    url: forumCountCommentsURL + id,
   })

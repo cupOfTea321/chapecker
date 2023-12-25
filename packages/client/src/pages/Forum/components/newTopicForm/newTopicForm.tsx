@@ -1,11 +1,10 @@
-import { ChangeEvent, FormEvent, memo, useCallback, useState } from 'react'
+import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { newTopicFileds } from './model'
 import { reload, load, setError } from '../../../../redux/features/forumSlice'
-
-import bem from 'bem-ts'
-import './style.scss'
 import { createTopic } from './actions'
 import { useAppDispatch } from '../../../../redux/store'
+import bem from 'bem-ts'
+import './style.scss'
 
 const NewTopicForm = () => {
   const cn = bem('newTopicForm')
@@ -14,41 +13,42 @@ const NewTopicForm = () => {
   const [labelValue, setLabelValue] = useState('')
   const [decriptionValue, setDecriptionValue] = useState('')
 
-  const callbacks = {
-    handleLabelInput: useCallback((e: ChangeEvent) => {
-      e.preventDefault()
-      const newLabelValue = (e.target as HTMLInputElement).value
-      setLabelValue(newLabelValue)
-    }, []),
-    handleTopicDescriptionInput: useCallback((e: ChangeEvent) => {
-      e.preventDefault()
-      const newDecriptionValue = (e.target as HTMLInputElement).value
-      setDecriptionValue(newDecriptionValue)
-    }, []),
-    handleStartNewTopic: useCallback(async (e: FormEvent) => {
-      e.preventDefault()
-      const data: { [x: string]: unknown } = {}
-      for (const [key, value] of new FormData(
-        e.target as HTMLFormElement
-      ).entries()) {
-        data[key] = value
-      }
-      try {
-        dispatch(load(true))
-        await createTopic(data)
-        dispatch(reload())
-      } catch (err) {
-        dispatch(setError(err))
-      } finally {
-        dispatch(load(false))
-      }
-    }, []),
-  }
+  const handleLabelInput = useCallback((e: ChangeEvent) => {
+    e.preventDefault()
+    const newLabelValue = (e.target as HTMLInputElement).value
+    setLabelValue(newLabelValue)
+  }, [])
+
+  const handleTopicDescriptionInput = useCallback((e: ChangeEvent) => {
+    e.preventDefault()
+    const newDecriptionValue = (e.target as HTMLInputElement).value
+    setDecriptionValue(newDecriptionValue)
+  }, [])
+
+  const handleStartNewTopic = useCallback(async (e: FormEvent) => {
+    e.preventDefault()
+    const data: { [x: string]: unknown } = {}
+    for (const [key, value] of new FormData(
+      e.target as HTMLFormElement
+    ).entries()) {
+      data[key] = value
+    }
+    try {
+      dispatch(load(true))
+      await createTopic(data)
+      ;(e.target as HTMLFormElement).reset()
+      dispatch(reload())
+    } catch (err) {
+      dispatch(setError(err))
+    } finally {
+      dispatch(load(false))
+    }
+  }, [])
 
   return (
     <form
       className={cn()}
-      onSubmit={callbacks.handleStartNewTopic}
+      onSubmit={handleStartNewTopic}
       encType="multipart/form-data">
       <label className={cn('field')} htmlFor={newTopicFileds.label}>
         Тема: *
@@ -57,7 +57,7 @@ const NewTopicForm = () => {
           name={newTopicFileds.label}
           className={cn('input')}
           id={newTopicFileds.label}
-          onChange={callbacks.handleLabelInput}
+          onChange={handleLabelInput}
           value={labelValue}
           placeholder={newTopicFileds.label}
           required
@@ -73,7 +73,7 @@ const NewTopicForm = () => {
           rows={5}
           cols={33}
           id={newTopicFileds.description}
-          onChange={callbacks.handleTopicDescriptionInput}
+          onChange={handleTopicDescriptionInput}
           value={decriptionValue}
           placeholder={newTopicFileds.description}
         />
@@ -89,4 +89,4 @@ const NewTopicForm = () => {
   )
 }
 
-export default memo(NewTopicForm)
+export default NewTopicForm
