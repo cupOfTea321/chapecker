@@ -1,3 +1,5 @@
+import type { Response } from 'express'
+import type { WhereOptions } from 'sequelize'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import Topic from './Models/Topic'
 import Reply from './Models/Reply'
@@ -25,6 +27,20 @@ export default function connectToPG() {
       throw new Error('Ошибка подключения к базе данных')
     })
   return sequelize
+}
+
+export async function returnModelCount(
+  model: unknown & { count: (o: object) => Promise<number> },
+  res: Response,
+  where?: WhereOptions
+) {
+  try {
+    const count = await model.count({ where })
+    res.status(200).send(JSON.stringify({ count }))
+  } catch (e) {
+    console.log(e)
+    res.status(400).send('Не получилось выбрать данные из базы данных')
+  }
 }
 
 export { default as Topic } from './Models/Topic'
