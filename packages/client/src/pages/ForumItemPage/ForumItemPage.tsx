@@ -10,6 +10,8 @@ import { forums as previeForums } from '../Forum/components/forumPreviewTable/st
 import { TForum, TMessage, messageFormFileds } from './model'
 import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
 import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
+import { useTypedSelector } from '../../redux/store'
+import { getUserData } from '../../redux/selectors'
 
 const ForumPage = () => {
   const { id } = useParams()
@@ -18,7 +20,7 @@ const ForumPage = () => {
   if (!forum) return <Navigate to="*" />
   const { theme, messages }: TForum = forum
   const [forumMessages, updateForum] = useState(messages)
-
+  const user = useTypedSelector(getUserData)
   const callbacks = {
     onAddMessage: useCallback(
       (e: FormEvent) => {
@@ -32,7 +34,7 @@ const ForumPage = () => {
         const newMesage: TMessage = {
           messageId: uuid(),
           message,
-          author: 'Admin',
+          author: user.login ? user.login : 'Author',
           time: new Date(),
         }
         forum.messages.push(newMesage)
@@ -52,6 +54,7 @@ const ForumPage = () => {
         <AddMessageFrame
           inputName={messageFormFileds.message}
           onAddMessage={callbacks.onAddMessage}
+          name={user.login}
         />
       </div>
     </div>

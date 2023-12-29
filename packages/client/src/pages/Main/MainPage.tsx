@@ -30,6 +30,7 @@ const MainPage = () => {
       <MainButton to={'start'} text={'Начать игру'} />
       <MainButton to={'board'} text={'Таблица лидеров'} />
       <MainButton to={'profile'} text={'Профиль'} />
+      <MainButton to={'forum'} text={'Форум'} />
       <Typography
         variant={'h2'}
         component={'h2'}

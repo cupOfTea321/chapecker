@@ -6,17 +6,19 @@ import './styles.scss'
 type TAddMessageFrameProps = {
   inputName: string
   onAddMessage: (e: FormEvent) => void
+  name: string
 }
 
 const AddMessageFrame = ({
   inputName,
   onAddMessage,
+  name = 'Admin',
 }: TAddMessageFrameProps) => {
   const cn = bem('addMessageFrame')
 
   return (
     <div className={cn()}>
-      <div>Admin</div>
+      <div>{name}</div>
       <form onSubmit={onAddMessage} className={cn('form')}>
         <label htmlFor={inputName} className={cn('label')}>
           <textarea
