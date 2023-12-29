@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { forumTopicsURL, forumCountTopicsURL } from '../../API/endpoints'
+import {
+  forumTopicsURL,
+  forumCountTopicsURL,
+  forumTopicURL,
+} from '../../API/endpoints'
 import { ITopic } from '../../redux/features/forumSlice'
 
 const config = {
@@ -8,16 +12,23 @@ const config = {
   timeout: 10000,
 }
 
-export const createTopic = async (data: {
-  limit: number
-  offset: number
+export const createTopic = async ({
+  title,
+  description,
+}: {
+  [x: string]: unknown
 }): Promise<void> =>
   axios({
     ...config,
-    method: 'GET',
-    url: forumTopicsURL,
-    data: JSON.stringify(data),
+    method: 'POST',
+    url: forumTopicURL,
+    data: JSON.stringify({ title, description }),
   })
+
+export interface INewTopic {
+  title: string
+  description: string
+}
 
 export const getTopics = async ({
   limit,

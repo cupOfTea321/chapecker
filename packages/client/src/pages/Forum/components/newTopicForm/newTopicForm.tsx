@@ -1,15 +1,14 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { newTopicFileds } from './model'
-import { reload, load, setError } from '../../../../redux/features/forumSlice'
-import { createTopic } from './actions'
-import { useAppDispatch } from '../../../../redux/store'
 import bem from 'bem-ts'
 import './style.scss'
 
-const NewTopicForm = () => {
+const NewTopicForm = ({
+  onNewTopic,
+}: {
+  onNewTopic: (e: FormEvent) => Promise<void>
+}) => {
   const cn = bem('newTopicForm')
-  const dispatch = useAppDispatch()
-
   const [labelValue, setLabelValue] = useState('')
   const [decriptionValue, setDecriptionValue] = useState('')
 
@@ -25,31 +24,8 @@ const NewTopicForm = () => {
     setDecriptionValue(newDecriptionValue)
   }, [])
 
-  const handleStartNewTopic = useCallback(async (e: FormEvent) => {
-    e.preventDefault()
-    const data: { [x: string]: unknown } = {}
-    for (const [key, value] of new FormData(
-      e.target as HTMLFormElement
-    ).entries()) {
-      data[key] = value
-    }
-    try {
-      dispatch(load(true))
-      await createTopic(data)
-      ;(e.target as HTMLFormElement).reset()
-      dispatch(reload())
-    } catch (err) {
-      dispatch(setError(err))
-    } finally {
-      dispatch(load(false))
-    }
-  }, [])
-
   return (
-    <form
-      className={cn()}
-      onSubmit={handleStartNewTopic}
-      encType="multipart/form-data">
+    <form className={cn()} onSubmit={onNewTopic} encType="multipart/form-data">
       <label className={cn('field')} htmlFor={newTopicFileds.label}>
         Тема: *
         <input

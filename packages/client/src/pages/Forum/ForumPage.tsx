@@ -5,13 +5,20 @@ import {
   useState,
   MouseEvent,
   useMemo,
+  FormEvent,
 } from 'react'
 import NewTopicForm from './components/newTopicForm/newTopicForm'
 import ForumPreviewTable from './components/forumPreviewTable/forumPreviewTable'
 import { forumTabs } from './model'
-import getImageUrl from '../../utils/getImageUrl'
-import { ToggleButtonGroup, ToggleButton, Pagination } from '@mui/material'
-import { getTopics, getTopicsCount } from './actions'
+import {
+  ToggleButtonGroup,
+  ToggleButton,
+  Pagination,
+  Box,
+  Tabs,
+  Tab,
+} from '@mui/material'
+import { createTopic, getTopics, getTopicsCount } from './actions'
 import { useAppDispatch, useTypedSelector } from '../../redux/store'
 import {
   getForumData,
@@ -24,10 +31,18 @@ import {
   setError,
   reload,
 } from '../../redux/features/forumSlice'
+import Loader from '../../components/loader/loader'
+import {
+  IDLE,
+  INIT_OFFSET,
+  INIT_TAB_VALUE_INDEX,
+  itemsLimits,
+} from '../../constants/forumConstants'
+import CustomTabPanel from './components/tabPanel/tabPanel'
+import AddCommentIcon from '@mui/icons-material/AddComment'
+import ListIcon from '@mui/icons-material/List'
 import bem from 'bem-ts'
 import './style.scss'
-import Loader from '../../components/loader/loader'
-import { IDLE, INIT_OFFSET, itemsLimits } from '../../constants/forumConstants'
 
 const ForumDashboard = () => {
   const cn = bem('forumDashboard')
@@ -41,6 +56,38 @@ const ForumDashboard = () => {
   const topicsCounts = useTypedSelector(getTopicsCounts)
   const isLoad = useTypedSelector(isForumDataLoad)
   const pages = topicsCounts > 0 ? Math.ceil(topicsCounts / topicsLimit) : null
+  const a11yProps = (index: number) => {
+    return {
+      id: `tab-${index}`,
+      'aria-controls': `tabpanel-${index}`,
+    }
+  }
+  const [tabTalue, setTabValue] = useState(INIT_TAB_VALUE_INDEX)
+  const handleTabChange = useCallback(
+    (_e: React.SyntheticEvent, newValue: number) => setTabValue(newValue),
+    []
+  )
+
+  const handleStartNewTopic = useCallback(async (e: FormEvent) => {
+    e.preventDefault()
+    const data: { [x: string]: unknown } = {}
+    for (const [key, value] of new FormData(
+      e.target as HTMLFormElement
+    ).entries()) {
+      data[key] = value
+    }
+    try {
+      dispatch(load(true))
+      await createTopic(data)
+      ;(e.target as HTMLFormElement).reset()
+      setTabValue(INIT_TAB_VALUE_INDEX)
+      dispatch(reload())
+    } catch (err) {
+      dispatch(setError(err))
+    } finally {
+      dispatch(load(false))
+    }
+  }, [])
 
   const onPerpage = useCallback(
     (_e: MouseEvent<HTMLElement>, value: number) => {
@@ -117,57 +164,40 @@ const ForumDashboard = () => {
   )
 
   return (
-    <div className={cn({ chesBackgrounded: true })}>
-      <h1 hidden>Форум игры Шашки Чапаева</h1>
-      <div className={cn('container')}>
-        {tabsArr.map((tab, i) => (
-          <input
-            key={tab.split(' ').join('')}
-            hidden
-            type="radio"
-            id={tab.split(' ').join('')}
-            name="tab-control"
-            defaultChecked={i === 0}
-          />
-        ))}
-        <ul className={cn('forumNavigationList')}>
-          {tabsArr.map(tab => {
-            const tabHtmlAllias = tab.split(' ').join('')
-            return (
-              <li
-                key={tabHtmlAllias}
-                className={cn('forumNavigationItem')}
-                title={tab}>
-                <label
-                  className={cn('forumNavigationItemLabel')}
-                  htmlFor={tabHtmlAllias}
-                  role="button">
-                  <img
-                    className={cn('tabPicture')}
-                    alt={tab}
-                    src={getImageUrl('../assets/' + tabHtmlAllias + '.svg')}
-                  />
-                  <span className={cn('forumNavigationItemLabelName')}>
-                    {tab}
-                  </span>
-                </label>
-              </li>
-            )
-          })}
-        </ul>
-        <div className="slider">
-          <div className="indicator"></div>
-        </div>
-
-        <div className="content">
-          <section>{isLoad ? <Loader /> : <Topics />}</section>
-          <section>
-            <h2>{forumTabs.newTopic}</h2>
-            <NewTopicForm />
-          </section>
-        </div>
-      </div>
-    </div>
+    <Box className={cn({ chesBackgrounded: true })}>
+      <Box className={cn('container')}>
+        <Tabs
+          className={cn('forumNavigationList')}
+          value={tabTalue}
+          onChange={handleTabChange}
+          aria-label="tabs">
+          {tabsArr.map((tabName, i) => (
+            <Tab
+              icon={
+                tabName === forumTabs.allTopics ? (
+                  <ListIcon />
+                ) : (
+                  <AddCommentIcon />
+                )
+              }
+              iconPosition="start"
+              key={tabName}
+              className={cn('forumNavigationItem')}
+              label={tabName}
+              {...a11yProps(i)}
+            />
+          ))}
+        </Tabs>
+        <CustomTabPanel value={tabTalue} index={0}>
+          <h2 hidden>{forumTabs.allTopics}</h2>
+          {isLoad ? <Loader /> : <Topics />}
+        </CustomTabPanel>
+        <CustomTabPanel value={tabTalue} index={1}>
+          <h2 hidden>{forumTabs.newTopic}</h2>
+          <NewTopicForm onNewTopic={handleStartNewTopic} />
+        </CustomTabPanel>
+      </Box>
+    </Box>
   )
 }
 
