@@ -6,7 +6,7 @@ networks:
 services:
   client:
     container_name: prakticum-client
-    image: prakticum-client
+    image: ghcr.io/cupoftea321/chapecker/client:09cf09600f94c4dc294a7d1b991846c0de81e709
     build:
       context: .
       dockerfile: ./Dockerfile.client
@@ -23,7 +23,7 @@ services:
 
   server:
     container_name: prakticum-server
-    image: prackicum-server
+    image: ghcr.io/cupoftea321/chapecker/server:09cf09600f94c4dc294a7d1b991846c0de81e709
     depends_on:
       - postgres
       - client
