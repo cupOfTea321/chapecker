@@ -7,9 +7,11 @@ services:
   client:
     container_name: prakticum-client
     image: prakticum-client
+    depends_on:
+      - server
     build:
       context: .
-      dockerfile: ./Dockerfile.client
+      dockerfile: Dockerfile.client
       args:
         CLIENT_PORT: ${CLIENT_PORT}
     restart: always
@@ -26,10 +28,9 @@ services:
     image: prackicum-server
     depends_on:
       - postgres
-      - client
     build:
       context: .
-      dockerfile: ./Dockerfile.server
+      dockerfile: Dockerfile.server
       args:
         NODE_ENV: ${NODE_ENV}
         SERVER_PORT: ${SERVER_PORT}
