@@ -50,11 +50,25 @@ $breakpoints: (
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
         border-radius: 5px;
         min-width: calc($tab-count * 60px);
+        display: flex;
+        flex-direction: column;
     }
 
-    &__theme {
+    &__header {
         background-color: $dark-chess-square;
+        margin-top: 15px;
+        padding: 10px;
+        color: $brigth-chess-square;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__perPage {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__controls {
+        margin-top: auto;
     }
 }
-
-@media (max-width: map-get($breakpoints, medium)) {}

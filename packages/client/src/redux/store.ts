@@ -1,8 +1,10 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit'
 
 import { yandexCoreApi } from './services/yandexCore.js'
-import user from '../redux/features/userSlice'
-import oauthservice from '../redux/features/oauthSlice.js'
+import user from './features/userSlice'
+import oauthservice from './features/oauthSlice'
+import forum from './features/forumSlice'
+import topic from './features/topicSlice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 export const createStore = (
@@ -13,6 +15,8 @@ export const createStore = (
       [yandexCoreApi.reducerPath]: yandexCoreApi.reducer,
       user,
       oauthservice,
+      forum,
+      topic,
     },
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware().concat(yandexCoreApi.middleware),

@@ -8,7 +8,7 @@ export default async function postReply(req: Request, res: Response) {
     res.status(401).send('')
     return
   }
-  const { text, topic_id } = req.body
+  const { text, topic_id, first_name, second_name, avatar } = req.body
   if (!text) {
     res.status(400).send('Пустой комментарий')
     return
@@ -17,8 +17,12 @@ export default async function postReply(req: Request, res: Response) {
     res.status(400).send('Не указан topic_id')
     return
   }
+
   try {
     await Comment.create({
+      first_name,
+      second_name,
+      avatar,
       creator_id,
       topic_id,
       text,

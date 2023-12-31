@@ -5,12 +5,41 @@
         padding: 10px 0;
         margin-bottom: 10px;
         border-bottom: 1px solid $dark-chess-square;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
     }
 
     &__messageHeader {
+        padding: 5px;
         margin-bottom: 10px;
         display: flex;
         justify-content: space-between;
         background: $brigth-chess-square;
+    }
+
+    &__replyContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: $dark-chess-square;
+    }
+
+    &__showReplies {
+        cursor: pointer;
+
+        &:hover,
+        &:active {
+            color: $main-background-color;
+        }
+    }
+
+    &__reply {
+        cursor: pointer;
+
+        &:hover,
+        &:active {
+            color: $main-background-color;
+        }
     }
 }

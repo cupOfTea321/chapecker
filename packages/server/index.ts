@@ -76,12 +76,12 @@ async function startServer() {
       } else {
         rende = await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))
       }
-      const cookies = req.cookies
+
       const { renderHTML, state } = rende
 
       const page = template
         .replace('<!--app-state-->', state)
-        .replace(`<!--app-html-->`, await renderHTML(url, cookies))
+        .replace(`<!--app-html-->`, await renderHTML(url))
 
       res.status(200).end(page)
     } catch (e) {
