@@ -4,6 +4,7 @@ import { publilRoutes, privateRoutes } from './router/router'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import { useTheme } from './utils/useTheme'
+import { Layout } from './containers/Layout'
 
 const { login, signUp, error404, noMatch } = publilRoutes
 
@@ -21,19 +22,21 @@ function App() {
   )
 
   return (
-    <div className={`App ${theme}`}>
+    <div className={theme}>
       <ErrorBoundary>
-        <Routes location={location}>
-          <Route
-            path={'*'}
-            element={
-              <ProtectedRoute>{protectedRoutes}</ProtectedRoute>
-            }></Route>
-          <Route path={login.path} element={login.element} />
-          <Route path={signUp.path} element={signUp.element} />
-          <Route path={error404.path} element={error404.element} />
-          <Route path={noMatch.path} element={noMatch.element} />
-        </Routes>
+        <Layout>
+          <Routes location={location}>
+            <Route
+              path={'*'}
+              element={
+                <ProtectedRoute>{protectedRoutes}</ProtectedRoute>
+              }></Route>
+            <Route path={login.path} element={login.element} />
+            <Route path={signUp.path} element={signUp.element} />
+            <Route path={error404.path} element={error404.element} />
+            <Route path={noMatch.path} element={noMatch.element} />
+          </Routes>
+        </Layout>
       </ErrorBoundary>
     </div>
   )

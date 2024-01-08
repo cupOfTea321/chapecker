@@ -2,12 +2,8 @@ import React, { Suspense } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { ThemeProvider } from '@mui/material'
-import { theme } from './mui'
 import App from './App'
 import { RootState, createStore } from './redux/store.js'
-import './index.scss'
-import './styles/index.css'
 import Spinner from './components/spinner/Spinner'
 
 const loadServerState = () => {
@@ -59,7 +55,6 @@ if ('serviceWorker' in navigator) {
     })
   } else {
     navigator.serviceWorker.getRegistrations().then(registrations => {
-      // eslint-disable-next-line no-restricted-syntax
       for (const registration of registrations) {
         registration.unregister().then(() => {
           console.log('Service worker unregistered')

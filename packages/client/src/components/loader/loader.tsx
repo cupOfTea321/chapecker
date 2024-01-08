@@ -3,7 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
 
 const Loader = () => (
-  <Box sx={{ display: 'flex' }}>
+  <Box sx={{ display: 'flex', margin: 'auto' }}>
     <CircularProgress color="success" />
   </Box>
 )

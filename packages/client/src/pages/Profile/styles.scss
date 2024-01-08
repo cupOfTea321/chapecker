@@ -52,6 +52,8 @@ $content-selector: "~ .content > section";
 }
 
 .profile {
+    width: 100vw;
+
     &__header {
         text-align: center;
     }
@@ -96,11 +98,12 @@ $content-selector: "~ .content > section";
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
         border-radius: 5px;
         color: $dark-theme-text-main;
-        
+
         &.dark {
             background: $dark-theme-background;
             color: $dark-theme-text-main;
         }
+
         &.light {
             background-color: $dark-theme-text-main;
             color: $dark-theme-background;
@@ -164,29 +167,29 @@ $content-selector: "~ .content > section";
             gap: 12px;
 
             .themeBtn {
-    
+
                 width: 100px;
-    
+
                 padding: 6px 0;
-    
+
                 border-radius: 8px;
-    
+
                 text-align: center;
-    
+
                 cursor: pointer;
-    
+
                 transition: background-color .3s;
                 // transition: background-color .3s, color .3s;
-    
+
                 &.dark {
                     background-color: white;
-                    
+
                     color: black;
                 }
-                
+
                 &.light {
                     background-color: black;
-                    
+
                     color: white;
                 }
             }

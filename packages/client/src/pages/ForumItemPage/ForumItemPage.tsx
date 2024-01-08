@@ -27,13 +27,7 @@ import {
   selectTopicDescription,
 } from '../../redux/selectors'
 import { getComments, loadCommentsCount, sendComment } from './actions'
-import {
-  Box,
-  Pagination,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material'
+import { Box, Pagination, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import bem from 'bem-ts'
 import './styles.scss'
 import { IDLE, INIT_OFFSET, itemsLimits } from '../../constants/forumConstants'
@@ -115,6 +109,7 @@ const ForumPage = () => {
     async (e: FormEvent) => {
       e.preventDefault()
       dispatch(load(true))
+      console.log(e)
       const message: string = (e.target as HTMLFormElement)[
         messageFormFileds.message
       ].value

@@ -5,6 +5,14 @@
     flex-direction: column;
     gap: 20px;
 
+    animation: {
+        name: content;
+        direction: normal;
+        duration: 0.3s;
+        timing-function: ease-in-out;
+        iteration-count: 1;
+    }
+
     &__field {
         display: flex;
         flex-direction: column;

@@ -5,9 +5,9 @@ import { setTitleAndDescription } from '../../../../redux/features/topicSlice'
 import { Box } from '@mui/material'
 import getToThisday from '../../../../utils/getToThisData'
 import { IDLE } from '../../../../constants/forumConstants'
+import { useAppDispatch } from '../../../../redux/store'
 import bem from 'bem-ts'
 import './styles.scss'
-import { useAppDispatch } from '../../../../redux/store'
 
 const ForumPreviewTable = ({
   perPage,

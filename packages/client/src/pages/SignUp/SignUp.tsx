@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import { AuthForm } from '../../containers/AuthForm'
-import { Layout } from '../../containers/Layout'
 import { PartialRecord } from '../../containers/AuthForm/interfaces'
 import { TFieldNames } from '../../constants/fields'
 import { signUp } from './actions'
@@ -9,6 +8,7 @@ import { privateRoutes } from '../../router/router'
 import axios from 'axios'
 import { getUserInfo } from '../../components/ProtectedRoute/actions'
 import { setUserData } from '../../redux/features/userSlice'
+import { Box } from '@mui/material'
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -40,7 +40,7 @@ const SignUp = () => {
   )
 
   return (
-    <Layout>
+    <Box sx={{ margin: 'auto' }}>
       <AuthForm defaultFormValues={defaultFormValues} onSubmit={onSubmit}>
         <AuthForm.Field required fieldName="first_name" />
         <AuthForm.Field required fieldName="second_name" />
@@ -52,7 +52,7 @@ const SignUp = () => {
         <AuthForm.Divider text="OR" />
         <AuthForm.RedirectButton title="Go to Login" redirectUrl="/login" />
       </AuthForm>
-    </Layout>
+    </Box>
   )
 }
 

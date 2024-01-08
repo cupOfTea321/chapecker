@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react'
 import { AuthForm } from '../../containers/AuthForm'
-import { Layout } from '../../containers/Layout'
 import { useNavigate } from 'react-router-dom'
 import { getYandexOAuthId, signIn } from './actions'
 import { privateRoutes } from '../../router/router'
@@ -13,6 +12,7 @@ import { getOAuthId } from '../../redux/selectors'
 import { setOAuthServiceId } from '../../redux/features/oauthSlice'
 import { appURL } from '../../API/endpoints'
 import { useTheme } from '../../utils/useTheme'
+import { Box } from '@mui/material'
 
 const Login = () => {
   const dispatch = useAppDispatch()
@@ -55,7 +55,7 @@ const Login = () => {
   }, [])
 
   return (
-    <Layout>
+    <Box sx={{ margin: 'auto' }}>
       <AuthForm onSubmit={onSubmit} defaultFormValues={defaultFormValues}>
         <AuthForm.Field required fieldName="login" />
         <AuthForm.Field required fieldName="password" />
@@ -68,7 +68,7 @@ const Login = () => {
           id="yandex-button"
         />
       </AuthForm>
-    </Layout>
+    </Box>
   )
 }
 

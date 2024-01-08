@@ -11,6 +11,14 @@ $breakpoints: (
     margin: 20px 0;
     width: 100%;
 
+    animation: {
+        name: content;
+        direction: normal;
+        duration: 0.3s;
+        timing-function: ease-in-out;
+        iteration-count: 1;
+    }
+
     &__controls {
         display: flex;
         align-items: center;

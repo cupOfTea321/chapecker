@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
-import { leadersMock } from './mock'
-import back from '../../assets/chessboard-background.png'
 import avatar from '../../assets/user.png'
 import './leaderboard.scss'
 import LeaderBox from './LeaderBox'
@@ -23,12 +21,9 @@ const LeaderBoard: React.FC = () => {
   useEffect(() => {
     leaderList()
   }, [])
+
   return (
-    <Box
-      className={'container-leaderboards'}
-      sx={{
-        background: `url(${back})`,
-      }}>
+    <Box className={'container-leaderboards'}>
       <Typography
         variant={'h1'}
         component={'h1'}
@@ -41,7 +36,7 @@ const LeaderBoard: React.FC = () => {
         Лидеры
       </Typography>
       <Box className={'table-leaderboards'}>
-        {data?.map((leader2: any, index: any) => {
+        {data?.map((leader2: any, index: number) => {
           const leader = leader2.data
           return (
             <LeaderBox
@@ -53,16 +48,6 @@ const LeaderBoard: React.FC = () => {
             />
           )
         })}
-        {leadersMock.map((leader, index) => (
-          <LeaderBox
-            key={`${leader.username}`}
-            avatar={leader.avatar ? leader.avatar : avatar}
-            username={leader.username}
-            displayName={leader.displayName}
-            score={leader.score}
-            place={index + 1}
-          />
-        ))}
       </Box>
     </Box>
   )
