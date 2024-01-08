@@ -6,10 +6,10 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <Box
       sx={{
-        minWidth: '110vw',
-        minHeight: '110vh',
+        minHeight: '100vh',
+        overflow: 'hidden',
         background: `url(${backgrouundPicture})`,
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         display: 'flex',

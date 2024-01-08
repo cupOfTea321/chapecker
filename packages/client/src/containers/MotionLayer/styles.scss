@@ -7,7 +7,6 @@
     &__container {
         min-width: 100vw;
         perspective: 1000px;
-        min-height: 100vh;
         transform-style: preserve-3d;
         transform: rotateX(var(--move-y)) rotateY(var(--move-x));
         will-change: transform;
@@ -24,22 +23,25 @@
     }
 
     &__1 {
-        transform: translateZ(-20px) scale(1.1);
-        pointer-events: none;
+        transform: translateZ(-50px) scale(1);
     }
 
     &__2 {
-        transform: translateZ(-60px) scale(.88);
-        pointer-events: none;
+        transform: translateZ(-100px) scale(.88);
     }
 
     &__4 {
-        transform: translateZ(90px) scale(.9);
-        pointer-events: none;
+        transform: translateZ(-90px) scale(.9);
     }
 
     &__5 {
-        transform: translateZ(100px) scale(.9);
+        transform: translateZ(10px) scale(.9);
+    }
+
+    &__1,
+    &__2,
+    &__4,
+    &__5 {
         pointer-events: none;
     }
 }
