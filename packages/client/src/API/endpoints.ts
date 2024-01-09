@@ -1,4 +1,4 @@
-export const baseURL = 'http://localhost:3001/api/v2'
+export const baseURL = 'https://chapecker.ya-praktikum.tech/api/v2'
 export const sourceURL = 'resources'
 export const changeAvatarURL = 'user/profile/avatar'
 export const changeProfileURL = 'user/profile'
@@ -11,10 +11,10 @@ export const yandexOAuthURL = 'oauth/yandex'
 
 export const getUserById = (id: number) => baseURL + '/user/' + id
 
-export const appURL = 'http://localhost:3000/'
+export const appURL = 'https://chapecker.ya-praktikum.tech/'
 export const forumURL = appURL.concat('forum/')
 
-export const yandexOAuthIdURL = `oauth/yandex/service-id?redirect_uri=${appURL}` // redirect to localhost [TEMPORARILY]
+export const yandexOAuthIdURL = `oauth/yandex/service-id?redirect_uri=${appURL}`
 
 export const serverURL = 'http://localhost:3001/api'
 export const proxyURL = baseURL
