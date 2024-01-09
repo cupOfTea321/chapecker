@@ -46,3 +46,5 @@ export const { load, setUserData, setError } = userSlice.actions
 export default userSlice.reducer
 
 export const getUser = (state: RootState) => state.user.data
+
+export type { IUser as User }

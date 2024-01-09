@@ -125,7 +125,7 @@ const RepliesFrame = ({ comment_id }: { comment_id: number }) => {
     return <Loader />
   }
 
-  return <Replies />
+  return <Replies /> || <Loader />
 }
 
 export default RepliesFrame
