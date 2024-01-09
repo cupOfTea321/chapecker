@@ -16,7 +16,7 @@ export const forumURL = appURL.concat('forum/')
 
 export const yandexOAuthIdURL = `oauth/yandex/service-id?redirect_uri=${appURL}`
 
-export const serverURL = 'http://localhost:3001/api'
+export const serverURL = 'https://chapecker.ya-praktikum.tech/api'
 export const proxyURL = baseURL
 
 export const forumBaseURL = serverURL + '/forum'
