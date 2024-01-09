@@ -10,9 +10,9 @@ import { getUser } from '../../redux/features/userSlice'
 import { useTypedSelector } from '../../redux/store'
 
 const enum Status {
-  start = 'start',
-  gameOver = 'game-over',
-  run = 'run',
+  start = 'старт',
+  gameOver = 'завершено',
+  run = 'играем',
 }
 
 const Game = () => {
@@ -94,15 +94,12 @@ const Game = () => {
   if (gameStatus == Status.gameOver) return <Navigate to={'/end'} />
   return (
     <PrimitivePaper class={styles.game} outerClass={styles.game__outer}>
-      <h1>THE CHAPECKER</h1>
+      <h1>Шашки Чапаева</h1>
       <div className={styles.game_area}>
         <div className={className(styles.game_score, styles['score-text'])}>
-          {`Status: ${gameStatus}`}
+          {`Статус игры: ${gameStatus}`}
         </div>
         <div className={styles.game_area}>
-          <div className={className(styles.game_score, styles['score-text'])}>
-            {`Score: ${score}`}
-          </div>
           <PrimitiveButton onClick={() => toggleFullscreen()}>
             {isFullscreen ? 'В окне' : 'Полноэкранный режим'}
           </PrimitiveButton>
