@@ -52,7 +52,7 @@ $content-selector: "~ .content > section";
 }
 
 .profile {
-    width: 100vw;
+    width: 100%;
 
     &__header {
         text-align: center;
@@ -87,12 +87,10 @@ $content-selector: "~ .content > section";
 
     &__container {
         position: relative;
-
         padding: 25px;
         top: $chess-square-witdh;
         left: 50%;
         transform: translateX(-50%);
-        position: relative;
         width: 80%;
         min-height: 90vh;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);

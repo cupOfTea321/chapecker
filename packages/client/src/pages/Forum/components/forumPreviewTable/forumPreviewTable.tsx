@@ -48,7 +48,7 @@ const ForumPreviewTable = ({
                     <Link
                       onClick={() => onItemClick({ title, description })}
                       className={cn('itemDivision', { link: true })}
-                      to={window.location.href.concat('/', String(topic_id))}>
+                      to={String(topic_id)}>
                       {title}
                     </Link>
                     <div className={cn('itemDivision', { description: true })}>

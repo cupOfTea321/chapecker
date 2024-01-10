@@ -12,12 +12,7 @@ import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
 import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
 import { messageFormFileds } from './model'
 import { useAppDispatch, useTypedSelector } from '../../redux/store'
-import {
-  load,
-  setCommets,
-  setError,
-  reload,
-} from '../../redux/features/topicSlice'
+import { load, setCommets, setError } from '../../redux/features/topicSlice'
 import {
   getTopicData,
   isTopicDataLoad,
@@ -30,7 +25,11 @@ import { getComments, loadCommentsCount, sendComment } from './actions'
 import { Box, Pagination, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import bem from 'bem-ts'
 import './styles.scss'
-import { IDLE, INIT_OFFSET, itemsLimits } from '../../constants/forumConstants'
+import {
+  RELOAD,
+  INIT_OFFSET,
+  itemsLimits,
+} from '../../constants/forumConstants'
 import { IUser } from '../Profile/model'
 import PrimitiveButton from '../../components/PrimitiveButton/PrimitiveButton'
 import { forumBaseURL } from '../../API/endpoints'
@@ -40,7 +39,7 @@ const ForumPage = () => {
   const navigate = useNavigate()
   if (!id) {
     console.log('Что-то пошло не так')
-    return <Navigate to={forumBaseURL} />
+    return <Navigate to="/" />
   }
   const cn = bem('forumPage')
   const { first_name, second_name, avatar } = useTypedSelector(
@@ -60,57 +59,59 @@ const ForumPage = () => {
   const pages =
     commentsCounts > 0 ? Math.ceil(commentsCounts / commentsLimit) : null
 
+  const loadTopics = async (quatifier?: number) => {
+    try {
+      dispatch(load(true))
+      const { data } = await getComments({
+        id,
+        limit: commentsLimit,
+        offset: quatifier !== undefined ? quatifier : commentsOffset,
+      })
+      const {
+        data: { count },
+      } = await loadCommentsCount(id)
+      dispatch(setCommets({ comments: data, commentsCount: count }))
+    } catch (err) {
+      setError(err)
+    } finally {
+      dispatch(load(false))
+    }
+  }
+
+  if (comments === RELOAD) {
+    loadTopics()
+  }
+
   const onPerpage = useCallback(
-    (_e: MouseEvent<HTMLElement>, value: number) => {
+    async (_e: MouseEvent<HTMLElement>, value: number) => {
       if (value !== null) {
         setTopicLimit(value)
         setOffset(0)
         setPage(1)
-        dispatch(reload())
+        await loadTopics()
       }
     },
     [commentsLimit]
   )
   const onPagination = useCallback(
-    (_e: ChangeEvent<unknown>, page: number) => {
+    async (_e: ChangeEvent<unknown>, page: number) => {
       const quatifier =
         page < 1 ? page * commentsLimit : (page - 1) * commentsLimit
       setOffset(quatifier)
       setPage(page)
-      dispatch(reload())
+      await loadTopics(quatifier)
     },
     [commentsOffset, setOffset]
   )
 
   useEffect(() => {
-    const loadTopics = async () => {
-      try {
-        dispatch(load(true))
-        const { data } = await getComments({
-          id,
-          limit: commentsLimit,
-          offset: commentsOffset,
-        })
-        const {
-          data: { count },
-        } = await loadCommentsCount(id)
-        dispatch(setCommets({ comments: data, commentsCount: count }))
-      } catch (err) {
-        setError(err)
-      } finally {
-        dispatch(load(false))
-      }
-    }
-    if (comments === IDLE) {
-      loadTopics()
-    }
-  }, [id, load, comments])
+    loadTopics()
+  }, [id])
 
   const onComment = useCallback(
     async (e: FormEvent) => {
       e.preventDefault()
       dispatch(load(true))
-      console.log(e)
       const message: string = (e.target as HTMLFormElement)[
         messageFormFileds.message
       ].value
@@ -123,7 +124,7 @@ const ForumPage = () => {
           second_name,
           avatar,
         })
-        dispatch(reload())
+        await loadTopics()
         ;(e.target as HTMLFormElement).reset()
       } catch (err) {
         setError(err)

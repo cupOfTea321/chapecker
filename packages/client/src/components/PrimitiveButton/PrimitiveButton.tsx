@@ -14,7 +14,6 @@ const PrimitiveButton = (props: PropsWithChildren<TPrimitiveButton>) => {
       {...props}
       children={props.children}
       className={'contained-button'}
-      type="button"
     />
   )
 }

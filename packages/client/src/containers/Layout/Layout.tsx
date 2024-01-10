@@ -7,7 +7,6 @@ const Layout = ({ children }: PropsWithChildren) => {
     <Box
       sx={{
         minHeight: '100vh',
-        overflow: 'hidden',
         background: `url(${backgrouundPicture})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',

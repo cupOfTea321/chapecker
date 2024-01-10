@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IDLE } from '../../constants/forumConstants'
+import { IDLE, RELOAD } from '../../constants/forumConstants'
 
 export interface IComment {
   comment_id: number
@@ -14,7 +14,7 @@ export interface IComment {
 export type TTopics = IComment[]
 
 export interface IInitTopicState {
-  comments: typeof IDLE | IComment[]
+  comments: typeof IDLE | typeof RELOAD | IComment[]
   commentsCount: number
   title: null | string
   discription: null | string
@@ -42,7 +42,7 @@ export const topicSlice = createSlice({
       state.discription = payload.discription
     },
     reload: state => {
-      state.comments = IDLE
+      state.comments = RELOAD
     },
     load: (state, { payload }) => {
       state.load = payload

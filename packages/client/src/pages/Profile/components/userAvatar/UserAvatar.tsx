@@ -18,7 +18,7 @@ const UserAvatar = ({ avatarSrc }: { avatarSrc: IUser['avatar'] }) => {
       <img
         className={cn('picture')}
         alt="User avatar"
-        src={baseURL.concat('/', sourceURL, '/', avatrSource)}
+        src={baseURL.concat('/', sourceURL, avatrSource)}
       />
       <span className={cn('left')}></span>
       <span className={cn('right')}></span>

@@ -21,6 +21,7 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
         const code = params.get('code')
         if (code) {
           await postOAuthInfo(code)
+          document.location.search = ''
         }
       }
 
