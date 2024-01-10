@@ -6,7 +6,6 @@ import {
   SignUpPage,
   ProfilePage,
   LeaderBoard,
-  UserPage,
   ForumPage,
   ForumItemPage,
   EndPage,
@@ -14,38 +13,51 @@ import {
   Error500,
   Error404,
 } from '../pages'
+import { protectedRoutes, publicRoutes } from '../constants/browserRoutes'
+
+const {
+  main,
+  startScreen,
+  profile,
+  board,
+  forum,
+  forumItem,
+  game,
+  error505,
+  endScreen,
+} = protectedRoutes
+const { signUp, login, error404, error500, noMatch } = publicRoutes
 
 export const publilRoutes = {
-  signUp: { path: '/signup', element: <SignUpPage />, nodeRef: createRef() },
-  login: { path: '/login', element: <LoginPage />, nodeRef: createRef() },
-  error404: { path: '/404', element: <Error404 />, nodeRef: createRef() },
-  error500: { path: '/500', element: <Error500 />, nodeRef: createRef() },
+  signUp: { path: signUp, element: <SignUpPage />, nodeRef: createRef() },
+  login: { path: login, element: <LoginPage />, nodeRef: createRef() },
+  error404: { path: error404, element: <Error404 />, nodeRef: createRef() },
+  error500: { path: error500, element: <Error500 />, nodeRef: createRef() },
   noMatch: {
-    path: '*',
+    path: noMatch,
     element: <Error404 />,
     nodeRef: createRef(),
   },
 }
 
 export const privateRoutes = {
-  mainPage: { path: '/', element: <MainPage />, nodeRef: createRef() },
+  mainPage: { path: main, element: <MainPage />, nodeRef: createRef() },
   startScreen: {
-    path: '/start',
+    path: startScreen,
     element: <StartScreen />,
     nodeRef: createRef(),
   },
-  profile: { path: '/profile', element: <ProfilePage />, nodeRef: createRef() },
-  board: { path: '/board', element: <LeaderBoard />, nodeRef: createRef() },
-  user: { path: '/user', element: <UserPage />, nodeRef: createRef() },
-  forum: { path: '/forum', element: <ForumPage />, nodeRef: createRef() },
+  profile: { path: profile, element: <ProfilePage />, nodeRef: createRef() },
+  board: { path: board, element: <LeaderBoard />, nodeRef: createRef() },
+  forum: { path: forum, element: <ForumPage />, nodeRef: createRef() },
   forumItem: {
-    path: '/forum/:id',
+    path: forumItem,
     element: <ForumItemPage />,
     nodeRef: createRef(),
   },
-  end: { path: '/end', element: <EndPage />, nodeRef: createRef() },
-  game: { path: '/game', element: <GamePage />, nodeRef: createRef() },
-  error505: { path: '/505', element: <Error500 />, nodeRef: createRef() },
+  end: { path: endScreen, element: <EndPage />, nodeRef: createRef() },
+  game: { path: game, element: <GamePage />, nodeRef: createRef() },
+  error505: { path: error505, element: <Error500 />, nodeRef: createRef() },
 }
 
 export const getAllRoutes = () => {

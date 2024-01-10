@@ -12,8 +12,9 @@ const MainButton = ({ to, text }: mainBtn) => {
   }
   return (
     <Box
-      component={'button'}
-      className={'main-btn'}
+      component="button"
+      type="button"
+      className="main-btn"
       sx={{
         background: '#769656',
         border: '1px solid #f8f8f8',

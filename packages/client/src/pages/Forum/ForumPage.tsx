@@ -167,7 +167,12 @@ const ForumDashboard = () => {
     <Box className={cn({ chesBackgrounded: true })}>
       <Box className={cn('container')}>
         <Tabs
-          className={cn('forumNavigationList')}
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: '#779954',
+            },
+          }}
+          textColor="inherit"
           value={tabTalue}
           onChange={handleTabChange}
           aria-label="tabs">

@@ -5,6 +5,7 @@ import './styles.scss'
 import PrimitiveButton from '../../../../components/PrimitiveButton/PrimitiveButton'
 import { getUserData } from '../../../../redux/selectors'
 import { useTypedSelector } from '../../../../redux/store'
+import Loader from '../../../../components/loader/loader'
 
 type TAddMessageFrameProps = {
   inputName: string
@@ -46,7 +47,13 @@ const AddMessageFrame = ({
             disabled={isDisabled}
           />
         </label>
-        <PrimitiveButton disabled={isDisabled}>{label}</PrimitiveButton>
+        <button
+          className={cn('submitButton')}
+          type="submit"
+          disabled={isDisabled}>
+          {label}
+          {isDisabled && <Loader />}
+        </button>
       </form>
     </div>
   )

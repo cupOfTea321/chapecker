@@ -3,10 +3,7 @@
 .spinner {
     &__container {
         display: flex;
-        align-items: center;
         margin: auto;
-        height: 100vh;
-        background-color: $dark-theme-background-lighter;
     }
 
     width: 48px;

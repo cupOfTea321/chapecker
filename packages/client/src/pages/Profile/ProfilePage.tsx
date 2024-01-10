@@ -1,26 +1,23 @@
-import { useState, useMemo, memo, useCallback, useRef } from 'react'
+import { useState, useMemo, useCallback, useRef } from 'react'
 import UserAvatar from './components/userAvatar/UserAvatar'
 import RadioInput from './components/radioInput/RadioInput'
 import TabItem from './components/tabItem/TabItem'
 import ChangePasswordForm from './components/changePasswordForm/ChangePasswordForm'
 import UserInfoForm from './components/userInfoForm/UserInfoForm'
-
 import { ChangePasswordFormFields, IUser, ProfileTabs } from './model'
 import { changePassword, changeUserInfo } from './actions'
-
-import bem from 'bem-ts'
-import './styles.scss'
 import { useTypedSelector } from '../../redux/store'
 import { getUserData } from '../../redux/selectors'
 import { publilRoutes } from '../../router/router'
 import { Navigate } from 'react-router-dom'
-import { User } from '../../redux/features/userSlice'
 import { useTheme } from '../../utils/useTheme'
+import bem from 'bem-ts'
+import './styles.scss'
 
 const ProfilePage = () => {
   const cn = bem('profile')
   const userinfoFromStore = useTypedSelector(getUserData)
-  const user: User | null = useMemo(
+  const user: IUser | null = useMemo(
     () => userinfoFromStore,
     [userinfoFromStore]
   )
@@ -113,7 +110,6 @@ const ProfilePage = () => {
               onEdit={onEdit}
               onAbolution={onAbolution}
               onSubmit={onUserDataChange}
-              // Remount on "reset" form )))
               key={`${isFormActive}`}
             />
           </section>
@@ -126,4 +122,4 @@ const ProfilePage = () => {
   )
 }
 
-export default memo(ProfilePage)
+export default ProfilePage

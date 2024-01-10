@@ -1,21 +1,23 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import MainButton from '../../components/MainButton'
-import back from '../../assets/chessboard-background.png'
-const EndPage = () => {
-  return (
+import { protectedRoutes } from '../../constants/browserRoutes'
+import ThreeDBox from '../../containers/MotionLayer/ThreeDBox'
+
+const { main, startScreen } = protectedRoutes
+
+const EndPage = () => (
+  <ThreeDBox>
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        background: `url(${back})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-      }}
-      className={'container'}>
+        justifyContent: ' center',
+        minHeight: '95vh',
+      }}>
       <Typography
+        color="white"
         variant={'h1'}
         component={'h1'}
         sx={{
@@ -25,10 +27,10 @@ const EndPage = () => {
         }}>
         Игра закочена
       </Typography>
-      <MainButton to={'/start'} text={'Продолжить'} />
-      <MainButton to={'/'} text={'Главное меню'} />
+      <MainButton to={startScreen} text={'Продолжить'} />
+      <MainButton to={main} text={'Главное меню'} />
     </Box>
-  )
-}
+  </ThreeDBox>
+)
 
 export default EndPage

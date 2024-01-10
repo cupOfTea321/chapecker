@@ -1,7 +1,4 @@
 import { memo, useState } from 'react'
-
-import bem from 'bem-ts'
-import './styles.scss'
 import {
   IProfileFormInputProps,
   IUser,
@@ -9,14 +6,12 @@ import {
   ProfileTabs,
 } from '../../model'
 import LabeledInput from '../input/LabeledInput'
-import PrimitiveButton from '../../../../components/PrimitiveButton/PrimitiveButton'
-import { logOut } from '../../actions'
-import { Link } from 'react-router-dom'
-
 import {
   FIELD_REGEX,
   FIELD_ERROR_MESSAGES,
 } from '../../../../constants/validations'
+import bem from 'bem-ts'
+import './styles.scss'
 
 const UserInfoForm = ({
   user,
@@ -116,11 +111,6 @@ const UserInfoForm = ({
             title="Submit change"
             value="Отправить изменения"
           />
-          <Link to="/login">
-            <PrimitiveButton onClick={logOut} id="logout-button">
-              Выйти
-            </PrimitiveButton>
-          </Link>
         </div>
       </form>
     </>

@@ -35,17 +35,12 @@
         height: 5vh;
     }
 
-    &__button {
-        &--submit {
-            cursor: pointer;
-            padding: 5px;
-            background-color: $dark-chess-square;
-            color: $brigth-chess-square;
-            border: 0;
-
-            @media(min-width: 640px) {
-                width: 30%;
-            }
-        }
+    &__submitButton {
+        width: 100%;
+        cursor: pointer;
+        padding: 5px;
+        background-color: $dark-chess-square;
+        color: $brigth-chess-square;
+        border: 0;
     }
 }

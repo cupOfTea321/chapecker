@@ -1,0 +1,55 @@
+:root {
+    --transition: 1.5s cubic-bezier(.05, .5, 0, 1);
+    --index: calc(1vw + 1vh);
+}
+
+.layer {
+    overflow: hidden;
+
+    &__container {
+        min-width: 90vw;
+        perspective: 500px;
+        transform-style: preserve-3d;
+        transform: rotateX(var(--move-y)) rotateY(var(--move-x));
+        will-change: transform;
+        transition: transform var(--transition);
+    }
+
+    &__item {
+        position: absolute;
+        inset: -5vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__1 {
+        transform: translateZ(-120px) scale(1.1);
+    }
+
+    &__2 {
+        transform: translateZ(-100px) scale(.8);
+    }
+
+    &__3 {
+        height: 97vh;
+        overflow: hidden;
+    }
+
+    &__4 {
+        transform: translateZ(-90px) scale(.5);
+    }
+
+    &__5 {
+        transform: translateZ(10px) scale(.8);
+    }
+
+    &__1,
+    &__2,
+    &__4,
+    &__5 {
+        overflow: hidden;
+        pointer-events: none;
+    }
+}

@@ -3,7 +3,7 @@
 .start-screen {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
 
     min-width: 240px;
     max-width: 500px;
@@ -14,7 +14,7 @@
     color: colors.$dark-theme-text-main;
     text-align: justify;
 
-    & > p {
+    &>p {
         margin: 0;
     }
 

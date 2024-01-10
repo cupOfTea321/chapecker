@@ -5,9 +5,9 @@ import { setTitleAndDescription } from '../../../../redux/features/topicSlice'
 import { Box } from '@mui/material'
 import getToThisday from '../../../../utils/getToThisData'
 import { IDLE } from '../../../../constants/forumConstants'
+import { useAppDispatch } from '../../../../redux/store'
 import bem from 'bem-ts'
 import './styles.scss'
-import { useAppDispatch } from '../../../../redux/store'
 
 const ForumPreviewTable = ({
   perPage,
@@ -48,7 +48,7 @@ const ForumPreviewTable = ({
                     <Link
                       onClick={() => onItemClick({ title, description })}
                       className={cn('itemDivision', { link: true })}
-                      to={window.location.href.concat('/', String(topic_id))}>
+                      to={String(topic_id)}>
                       {title}
                     </Link>
                     <div className={cn('itemDivision', { description: true })}>

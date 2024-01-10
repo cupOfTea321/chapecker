@@ -10,15 +10,15 @@ import { messageFormFileds } from '../../model'
 import getToThisday from '../../../../utils/getToThisData'
 import { useAppDispatch, useTypedSelector } from '../../../../redux/store'
 import { getUserData } from '../../../../redux/selectors'
-import { IDLE } from '../../../../constants/forumConstants'
+import { IDLE, RELOAD } from '../../../../constants/forumConstants'
 import { IUser } from '../../../Profile/model'
 
 const ForumMessagesList = ({
   messages,
 }: {
-  messages: IComment[] | typeof IDLE
+  messages: IComment[] | typeof IDLE | typeof RELOAD
 }) => {
-  if (messages === IDLE) {
+  if (messages === IDLE || messages === RELOAD) {
     return <Loader />
   }
   const { first_name, second_name, avatar } = useTypedSelector(

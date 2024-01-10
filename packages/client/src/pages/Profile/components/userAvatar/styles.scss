@@ -57,15 +57,15 @@ $circle: 40px;
 
     &__left,
     &__right {
+        will-change: transform;
         content: "";
         position: absolute;
         height: 50px;
-        min-width: 150px;
-        border-radius: 50%;
-        border-bottom: 5px solid #000;
+        width: 100px;
+        border-bottom: 15px solid $mColor;
         animation-duration: 1.5s;
         animation-timing-function: ease-in-out;
-        animation-delay: 1s;
+        animation-delay: 0ms;
         animation-iteration-count: infinite;
         animation-direction: alternate;
 
@@ -76,15 +76,15 @@ $circle: 40px;
 
     &__left {
         top: 80px;
-        left: -75px;
-        transform: rotate(5deg);
+        left: -25px;
+        transform: rotate(-5deg);
         animation-name: shakeL;
     }
 
     &__right {
         top: 80px;
-        right: -50px;
-        transform: rotate(-5deg);
+        right: -25px;
+        transform: rotate(5deg);
         animation-name: shakeR;
     }
 
