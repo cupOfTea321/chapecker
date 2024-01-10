@@ -32,6 +32,7 @@ import {
 } from '../../constants/forumConstants'
 import { IUser } from '../Profile/model'
 import PrimitiveButton from '../../components/PrimitiveButton/PrimitiveButton'
+import { forumBaseURL } from '../../API/endpoints'
 
 const ForumPage = () => {
   const { id } = useParams()
