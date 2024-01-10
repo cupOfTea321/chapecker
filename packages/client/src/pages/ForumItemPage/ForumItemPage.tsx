@@ -7,7 +7,7 @@ import {
   ChangeEvent,
   useMemo,
 } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
 import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
 import { messageFormFileds } from './model'
@@ -38,7 +38,7 @@ const ForumPage = () => {
   const navigate = useNavigate()
   if (!id) {
     console.log('Что-то пошло не так')
-    return navigate(window.location.href)
+    return <Navigate to="/" />
   }
   const cn = bem('forumPage')
   const { first_name, second_name, avatar } = useTypedSelector(
