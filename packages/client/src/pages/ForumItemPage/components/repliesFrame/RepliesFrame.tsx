@@ -82,7 +82,7 @@ const RepliesFrame = ({ comment_id }: { comment_id: number }) => {
     nextLoad && nextLoad > repliesLimit ? repliesLimit : nextLoad
 
   const Replies = () =>
-    replies.length > 0 && (
+    replies.length > 0 ? (
       <Accordion
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}>
@@ -119,6 +119,8 @@ const RepliesFrame = ({ comment_id }: { comment_id: number }) => {
           )}
         </AccordionSummary>
       </Accordion>
+    ) : (
+      <Loader />
     )
 
   if (repliesCount === IDLE) {
