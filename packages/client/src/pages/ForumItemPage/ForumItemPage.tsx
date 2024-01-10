@@ -12,12 +12,7 @@ import ForumMessagesList from './components/forumMessagesList/forumMessagesList'
 import AddMessageFrame from './components/addMessageFrame/addMessageFrame'
 import { messageFormFileds } from './model'
 import { useAppDispatch, useTypedSelector } from '../../redux/store'
-import {
-  load,
-  setCommets,
-  setError,
-  reload,
-} from '../../redux/features/topicSlice'
+import { load, setCommets, setError } from '../../redux/features/topicSlice'
 import {
   getTopicData,
   isTopicDataLoad,
@@ -30,7 +25,11 @@ import { getComments, loadCommentsCount, sendComment } from './actions'
 import { Box, Pagination, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import bem from 'bem-ts'
 import './styles.scss'
-import { IDLE, INIT_OFFSET, itemsLimits } from '../../constants/forumConstants'
+import {
+  RELOAD,
+  INIT_OFFSET,
+  itemsLimits,
+} from '../../constants/forumConstants'
 import { IUser } from '../Profile/model'
 import PrimitiveButton from '../../components/PrimitiveButton/PrimitiveButton'
 
@@ -76,6 +75,10 @@ const ForumPage = () => {
     } finally {
       dispatch(load(false))
     }
+  }
+
+  if (comments === RELOAD) {
+    loadTopics()
   }
 
   const onPerpage = useCallback(
